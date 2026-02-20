@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programs | Fitness Gym</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body data-page="internal">
+
+    <!-- Navigation Toggle (CSS Hack) -->
+    <input type="checkbox" id="nav-toggle">
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">FITNESS<span>GYM</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="programs.html#pricing" class="btn" style="padding: 8px 20px; font-size: 0.8rem;">Join
+                        Now</a></li>
+            </ul>
+            <label for="nav-toggle" class="mobile-toggle"
+                style="color: var(--theme-text); font-size: 1.5rem; cursor: pointer;">
+                <i class="fas fa-bars"></i>
+            </label>
+            <div id="theme-toggle" class="theme-toggle" title="Toggle Light/Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Header Section -->
+    <header class="section-padding programs-hero" style="text-align: center; padding-top: 150px;">
+        <div class="container fade-in">
+            <h1 style="font-size: 3.5rem;">OUR <span class="text-primary">PROGRAMS</span></h1>
+            <p style="color: var(--text-gray); max-width: 600px; margin: 20px auto;">Choose the perfect training program
+                designed to help you reach your goals faster.</p>
+        </div>
+    </header>
+
+    <!-- Programs Grid -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="grid">
+                <!-- Program 1 -->
+                <div class="card fade-in">
+                    <img src="https://scontent-bom2-3.xx.fbcdn.net/v/t39.30808-6/559360534_801935315579397_7035311934259736554_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=101&ccb=1-7&_nc_sid=e06c5d&_nc_ohc=HO97N7YhR-0Q7kNvwHxR2Js&_nc_oc=Adm2q9MwpctypogVxAkBsPUY43AKQJ_5hGOiUd0ir4i1I7Ml9gEKqyKxVyWyAZmBsE0gZ7HJ_LsD2I3nLBl3Mxtu&_nc_zt=23&_nc_ht=scontent-bom2-3.xx&_nc_gid=WZS3zFaL0ENt7MLkZjSpGQ&oh=00_Afuz8sGyt4DB75GU85srL6w-MzT0GWa_-scOS9RlPKTTpQ&oe=699E6CC1"
+                        class="card-img" alt="Bodybuilding">
+                    <div class="card-content">
+                        <h3>Bodybuilding</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">Master your physique with our
+                            specialized muscle-building protocols and expert guidance.</p>
+                        <a href="contact.html" class="text-primary" style="font-weight: 600;">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Program 2 -->
+                <div class="card fade-in">
+                    <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?q=80&w=2070&auto=format&fit=crop"
+                        class="card-img" alt="Weight Loss">
+                    <div class="card-content">
+                        <h3>Cardio Blast</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">High-intensity sessions designed to
+                            burn fat and improve your cardiovascular health.</p>
+                        <a href="contact.html" class="text-primary" style="font-weight: 600;">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Program 3 -->
+                <div class="card fade-in">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1920&auto=format&fit=crop"
+                        class="card-img" alt="Yoga">
+                    <div class="card-content">
+                        <h3>Elite Yoga</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">Find your balance and improve
+                            flexibility with our expert-led yoga sessions.</p>
+                        <a href="contact.html" class="text-primary" style="font-weight: 600;">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Program 4 -->
+                <div class="card fade-in">
+                    <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?q=80&w=2070&auto=format&fit=crop"
+                        class="card-img" alt="Crossfit">
+                    <div class="card-content">
+                        <h3>CrossFit</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">Functional movements at high intensity
+                            to build overall strength and stamina.</p>
+                        <a href="contact.html" class="text-primary" style="font-weight: 600;">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Program 5 -->
+                <div class="card fade-in">
+                    <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2070&auto=format&fit=crop"
+                        class="card-img" alt="MMA">
+                    <div class="card-content">
+                        <h3>MMA Training</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">Learn self-defense and get in peak
+                            fighting shape with our pro MMA coaches.</p>
+                        <a href="contact.html" class="text-primary" style="font-weight: 600;">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- Program 6 -->
+                <div class="card fade-in">
+                    <img src="https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?q=80&w=2070&auto=format&fit=crop"
+                        class="card-img" alt="Zumba">
+                    <div class="card-content">
+                        <h3>Power Zumba</h3>
+                        <p style="color: var(--text-gray); margin-bottom: 20px;">Dance your way to fitness with
+                            high-energy Zumba classes and global rhythms.</p>
+                        <a href="contact.html" class="text-primary" style="font-weight: 600;">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section-padding" id="pricing" style="background-color: var(--bg-dark-gray);">
+        <div class="container">
+            <h2 class="text-center text-primary">Pricing Plans</h2>
+            <h1 class="text-center" style="font-size: 2.5rem; margin: 15px 0 50px;">Choose Your Membership</h1>
+            <div class="pricing-grid">
+                <!-- Basic Plan -->
+                <div class="pricing-card fade-in">
+                    <h3>Basic</h3>
+                    <div class="price">₹1999<span>/mo</span></div>
+                    <ul>
+                        <li><i class="fas fa-check text-primary"></i> Standard Equipment</li>
+                        <li><i class="fas fa-check text-primary"></i> Locker Room Access</li>
+                        <li><i class="fas fa-check text-primary"></i>One Time training section </li>
+                        
+                    <a href="contact.html" class="btn">Get Started</a>
+                </div>
+                <!-- Pro Plan -->
+                <div class="pricing-card popular fade-in">
+                    <h3>Pro</h3>
+                    <div class="price">₹5999<span>/Qu</span></div>
+                    <ul>
+                        <li><i class="fas fa-check text-primary"></i> Unlimited Access</li>
+                        <li><i class="fas fa-check text-primary"></i> Nutrition Plan</li>
+                        <li><i class="fas fa-check text-primary"></i> Premium Equipment</li>
+                        <li><i class="fas fa-check text-primary"></i> 3 time personal Training per week</li>
+                    </ul>
+                    <a href="contact.html" class="btn">Get Started</a>
+                </div>
+                <!-- Elite Plan -->
+                <div class="pricing-card fade-in">
+                    <h3>Elite</h3>
+                    <div class="price">₹11999<span>/Yr</span></div>
+                    <ul>
+                        <li><i class="fas fa-check text-primary"></i> Steam & Sauna</li>
+                        <li><i class="fas fa-check text-primary"></i> Free Supplements</li>
+                        <li><i class="fas fa-check text-primary"></i> VIP Lounge Access</li>
+                        <li><i class="fas fa-check text-primary"></i> Dedicated Personal Trainer</li>
+                    </ul>
+                    <a href="contact.html" class="btn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="index.html" class="logo">FITNESS<span>GYM</span></a>
+                    <p style="color: var(--text-gray); margin-top: 20px;">Your ultimate destination for fitness and
+                        health.</p>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <ul style="list-style: none; color: var(--text-gray); margin-top: 20px;">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Working Hours</h3>
+                    <p style="color: var(--text-gray); margin-top: 20px;">Open 24/7 for Members</p>
+                </div>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/anuragverma7276/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/Anu7276"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/anurag-verma4/"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Fitness Gym. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

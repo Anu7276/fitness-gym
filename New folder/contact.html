@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Fitness Gym</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body data-page="internal">
+
+    <!-- Navigation Toggle (CSS Hack) -->
+    <input type="checkbox" id="nav-toggle">
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">FITNESS<span>GYM</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="programs.html#pricing" class="btn" style="padding: 8px 20px; font-size: 0.8rem;">Join
+                        Now</a></li>
+            </ul>
+            <label for="nav-toggle" class="mobile-toggle"
+                style="color: var(--theme-text); font-size: 1.5rem; cursor: pointer;">
+                <i class="fas fa-bars"></i>
+            </label>
+            <div id="theme-toggle" class="theme-toggle" title="Toggle Light/Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Header Section -->
+    <header class="section-padding"
+        style="background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop') center/cover; text-align: center; padding-top: 150px;">
+        <div class="container fade-in">
+
+            <h1 style="font-size: 3.5rem;">GET IN <span class="text-primary">TOUCH</span></h1>
+            <p style="color: var(--text-gray); max-width: 600px; margin: 20px auto;">Have questions? Our team is here to
+                help you start your fitness journey.</p>
+        </div>
+    </header>
+
+    <!-- Contact Form & Info -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="contact-container">
+                <div class="fade-in">
+                    <h2 class="text-primary">Contact Info</h2>
+                    <h1 style="font-size: 2.5rem; margin: 15px 0 30px;">Visit Our Facility</h1>
+                    <div style="margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 10px;"><i class="fas fa-location-dot text-primary"></i> University
+                            Branch</h4>
+                        <p style="color: var(--text-gray);">Limda, Waghodia, Vadodara, Gujarat 391760 (Near Parul
+                            University)</p>
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 10px;"><i class="fas fa-phone text-primary"></i> Phone Number</h4>
+                        <p style="color: var(--text-gray);">+91 7276253680 / +91 7054694177</p>
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <h4 style="margin-bottom: 10px;"><i class="fas fa-envelope text-primary"></i> Email Address</h4>
+                        <p style="color: var(--text-gray);">anuragverma7276@gmail.com<br>anuragverma705@gmail.com</p>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 10px;"><i class="fas fa-clock text-primary"></i> Working Hours</h4>
+                        <p style="color: var(--text-gray);">Mon - Sun: 24 Hours Open</p>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-in">
+                    <form id="gymContactForm">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Program</label>
+                            <select
+                                style="width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 4px;">
+                                <option>Bodybuilding</option>
+                                <option>Cardio Blast</option>
+                                <option>Elite Yoga</option>
+                                <option>CrossFit</option>
+                                <option>MMA Training</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea rows="5" placeholder="How can we help?"></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Google Maps Embed -->
+            <div class="map-container fade-in">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.025345688!2d73.3644263!3d22.289133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc94967389c93%3A0x89e00185e783424d!2sParul%20University!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trainer Section -->
+    <section class="section-padding" style="background-color: var(--bg-dark-gray);">
+        <div class="container">
+            <h2 class="text-center text-primary">Our Trainers</h2>
+            <h1 class="text-center" style="font-size: 2.5rem; margin: 15px 0 50px;">Expert Fitness Coaches</h1>
+            <div class="trainer-grid">
+                <div class="trainer-card fade-in">
+                    <img src="https://royalpatiala.in/wp-content/uploads/2022/05/IMG-20220523-WA0059-1.jpg"
+                        class="trainer-img" alt="Trainer 1">
+                    <div class="trainer-info">
+                        <h3>Mr.Aman</h3>
+                        <p>Head Coach / Bodybuilding</p>
+                    </div>
+                </div>
+                <div class="trainer-card fade-in">
+                    <img src="https://i.pinimg.com/736x/e3/c7/7b/e3c77bfc00ba5a1438a4a24cf3960bdf.jpg"
+                        class="trainer-img" alt="Trainer 2">
+                    <div class="trainer-info">
+                        <h3>Ms.Shree Leela</h3>
+                        <p>Yoga specialist</p>
+                    </div>
+                </div>
+                <div class="trainer-card fade-in">
+                    <img src="https://muscleandhealth.com/wp-content/uploads/2023/10/MHRD-Hero-768x480.png"
+                        class="trainer-img" alt="Trainer 3">
+                    <div class="trainer-info">
+                        <h3>Mr.Joesph </h3>
+                        <p>Crossfit Expert</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2026 Fitness Gym. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
