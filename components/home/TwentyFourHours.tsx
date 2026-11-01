@@ -89,7 +89,6 @@ export function TwentyFourHours() {
   // SVG Hand references
   const hourHandRef = useRef<SVGGElement>(null);
   const minuteHandRef = useRef<SVGGElement>(null);
-  const secondHandRef = useRef<SVGGElement>(null);
 
   // State
   const [mode, setMode] = useState<"now" | "preview">("preview");
@@ -150,11 +149,6 @@ export function TwentyFourHours() {
         svgOrigin: "150 150",
       });
     }
-
-    // Hide second hand in preview mode
-    if (secondHandRef.current) {
-      gsap.to(secondHandRef.current, { opacity: 0, duration: 0.25 });
-    }
   }, []);
 
   // Unified slot selector
@@ -211,14 +205,9 @@ export function TwentyFourHours() {
       const minuteAngle = (minutes + seconds / 60) * 6;
       const hourAngle = ((hours % 12) + minutes / 60 + seconds / 3600) * 30;
 
-      if (hourHandRef.current && minuteHandRef.current && secondHandRef.current) {
+      if (hourHandRef.current && minuteHandRef.current) {
         gsap.set(hourHandRef.current, { rotation: hourAngle, svgOrigin: "150 150" });
         gsap.set(minuteHandRef.current, { rotation: minuteAngle, svgOrigin: "150 150" });
-        gsap.set(secondHandRef.current, {
-          rotation: secondAngle,
-          svgOrigin: "150 150",
-          opacity: 1,
-        });
       }
 
       if (!prefersReducedMotion) {
@@ -278,17 +267,13 @@ export function TwentyFourHours() {
     gsap.registerPlugin(ScrollTrigger);
 
     // Initial hand positioning
-    if (hourHandRef.current && minuteHandRef.current && secondHandRef.current) {
+    if (hourHandRef.current && minuteHandRef.current) {
       gsap.set(hourHandRef.current, {
         rotation: SLOT_BASE_HOUR_ANGLES[0],
         svgOrigin: "150 150",
       });
       gsap.set(minuteHandRef.current, {
         rotation: 0,
-        svgOrigin: "150 150",
-      });
-      gsap.set(secondHandRef.current, {
-        opacity: 0,
         svgOrigin: "150 150",
       });
     }
@@ -554,25 +539,6 @@ export function TwentyFourHours() {
                     strokeWidth="3.5"
                     strokeLinecap="round"
                   />
-                </g>
-
-                {/* 3. Second Hand (Red, thin with counterweight - live mode only) */}
-                <g
-                  ref={secondHandRef}
-                  data-hand="second"
-                  style={{ transformBox: "view-box", transformOrigin: "150px 150px" }}
-                  className="will-change-transform"
-                >
-                  <line
-                    x1="150"
-                    y1="180"
-                    x2="150"
-                    y2="38"
-                    stroke="#F21B35"
-                    strokeWidth="1.5"
-                  />
-                  {/* Counterweight disc */}
-                  <circle cx="150" cy="172" r="3.5" fill="#F21B35" />
                 </g>
 
                 {/* Center Cap (Stationary, sitting directly above hands) */}
