@@ -1,0 +1,309 @@
+"use client";
+
+import React, { useState } from "react";
+import { siteConfig } from "@/config/site";
+import { MapPin, Phone, Mail, Clock, MessageSquare, Check, Loader2 } from "lucide-react";
+
+export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    subject: "General Inquiry",
+    message: "",
+    company_website: "", // honeypot
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          goal: `Message: ${formData.message}`,
+          program: formData.subject,
+          source: "Contact Page",
+        }),
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="w-full pt-32 pb-28 md:pb-40 bg-[#0A1A1F] text-white">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
+        {/* Header */}
+        <div className="flex flex-col items-center text-center mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F21B35]" />
+            <span className="font-heading text-xs uppercase tracking-widest text-[#B7C4C8]">
+              Get In Touch
+            </span>
+          </div>
+          <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight text-white uppercase mb-6">
+            Contact
+          </h1>
+          <p className="font-body text-base md:text-xl text-[#B7C4C8] max-w-2xl leading-relaxed">
+            Our management and concierge desk is available to assist with memberships, facility tours,
+            and personal training bookings.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Direct Info (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-8 flex flex-col gap-6">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
+                    Sanctuary Address
+                  </h3>
+                  <p className="font-body text-xs text-[#B7C4C8] mt-1 leading-relaxed">
+                    {siteConfig.contact.address}
+                  </p>
+                  <p className="font-body text-xs text-[#B7C4C8]/70 mt-0.5">
+                    Landmark: {siteConfig.contact.landmark}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 pt-6 border-t border-[#1E3840]">
+                <div className="w-10 h-10 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
+                    Direct Phone / WhatsApp
+                  </h3>
+                  <a
+                    href={`tel:${siteConfig.contact.phone}`}
+                    className="font-body text-xs text-[#B7C4C8] mt-1 hover:text-white block"
+                  >
+                    {siteConfig.contact.phoneFormatted}
+                  </a>
+                  <a
+                    href={`https://wa.me/${siteConfig.contact.whatsappNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-heading text-[10px] uppercase tracking-wider text-[#25D366] hover:underline mt-1 block"
+                  >
+                    Open WhatsApp Chat →
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 pt-6 border-t border-[#1E3840]">
+                <div className="w-10 h-10 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
+                    Electronic Mail
+                  </h3>
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="font-body text-xs text-[#B7C4C8] mt-1 hover:text-white block"
+                  >
+                    {siteConfig.contact.email}
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 pt-6 border-t border-[#1E3840]">
+                <div className="w-10 h-10 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
+                    Hours of Access
+                  </h3>
+                  <p className="font-body text-xs text-[#B7C4C8] mt-1 leading-relaxed">
+                    {siteConfig.contact.hours}
+                  </p>
+                  <p className="font-body text-[11px] text-[#B7C4C8]/70 mt-0.5">
+                    Staffed Concierge: 6:00 AM – 10:00 PM Daily
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Map Placeholder */}
+            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-6 flex flex-col items-center justify-center min-h-[200px] text-center">
+              <MapPin className="w-8 h-8 text-[#F21B35] mb-2" />
+              <h4 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
+                Waghodia Road Facility Location
+              </h4>
+              <p className="font-body text-xs text-[#B7C4C8] max-w-xs mt-1 mb-4">
+                Conveniently situated near Waghodia Chowkdi with on-site visitor parking.
+              </p>
+              <a
+                href={siteConfig.contact.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2 rounded-full border border-[#1E3840] bg-[#0A1A1F] text-white text-xs font-heading uppercase tracking-widest hover:border-white transition-colors"
+              >
+                Open Google Maps ↗
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Inquiry Form (7 cols) */}
+          <div className="lg:col-span-7">
+            {submitted ? (
+              <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-10 text-center flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full bg-[#F21B35]/20 border border-[#F21B35] flex items-center justify-center text-[#F21B35] mb-6">
+                  <Check className="w-8 h-8" />
+                </div>
+                <h3 className="font-heading text-2xl font-bold uppercase tracking-tight text-white mb-2">
+                  Message Transmitted
+                </h3>
+                <p className="font-body text-sm text-[#B7C4C8] max-w-md mb-6 leading-relaxed">
+                  Thank you for contacting FITNESSGYM. Our front desk concierge has received your note
+                  and will respond promptly within 2 hours.
+                </p>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="bg-[#0F2329] border border-[#1E3840] rounded-card p-8 md:p-10 flex flex-col gap-6"
+              >
+                <div className="hidden" aria-hidden="true">
+                  <input
+                    type="text"
+                    name="company_website"
+                    value={formData.company_website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                  />
+                </div>
+
+                <div>
+                  <h3 className="font-heading text-2xl font-bold uppercase tracking-tight text-white mb-1">
+                    Send a Direct Note
+                  </h3>
+                  <p className="font-body text-xs text-[#B7C4C8]">
+                    Questions regarding rates, equipment, or trainer availability? Submit below.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-heading text-xs uppercase tracking-wider text-white">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your name"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0A1A1F] border border-[#1E3840] text-white text-sm focus:border-white focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-heading text-xs uppercase tracking-wider text-white">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+91 98765 43210"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0A1A1F] border border-[#1E3840] text-white text-sm focus:border-white focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-heading text-xs uppercase tracking-wider text-white">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="your@email.com"
+                      className="w-full px-4 py-3 rounded-lg bg-[#0A1A1F] border border-[#1E3840] text-white text-sm focus:border-white focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-heading text-xs uppercase tracking-wider text-white">
+                      Inquiry Subject
+                    </label>
+                    <select
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg bg-[#0A1A1F] border border-[#1E3840] text-white text-sm focus:border-white focus:outline-none"
+                    >
+                      <option value="General Inquiry">General Inquiry</option>
+                      <option value="Membership Rates">Membership Rates</option>
+                      <option value="Personal Training Coaching">Personal Training Coaching</option>
+                      <option value="Corporate / Group Rates">Corporate / Group Rates</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-heading text-xs uppercase tracking-wider text-white">
+                    Your Message *
+                  </label>
+                  <textarea
+                    name="message"
+                    rows={4}
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us what you are looking for..."
+                    className="w-full px-4 py-3 rounded-lg bg-[#0A1A1F] border border-[#1E3840] text-white text-sm focus:border-white focus:outline-none resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-4 rounded-full bg-white text-[#0A1A1F] font-heading text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 hover:bg-[#F21B35] hover:text-white transition-all duration-300 shadow-xl disabled:opacity-50"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Transmitting Note...</span>
+                    </>
+                  ) : (
+                    <span>Send Message</span>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+

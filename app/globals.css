@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-ink: #0A1A1F;
+  --bg-ink-deep: #06151A;
+  --surface: #0F2329;
+  --surface-elevated: #142D35;
+  --line: #1E3840;
+  --line-light: #2A4B56;
+  --text-white: #FFFFFF;
+  --text-grey: #B7C4C8;
+  --text-muted: #7B8E94;
+  --accent-red: #F21B35;
+}
+
+html {
+  background-color: var(--bg-ink);
+  color: var(--text-grey);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  scroll-behavior: auto !important; /* Managed by Lenis */
+}
+
+body {
+  background-color: var(--bg-ink);
+  color: var(--text-grey);
+  overflow-x: hidden;
+  min-height: 100vh;
+  selection-background-color: var(--accent-red);
+  selection-color: #ffffff;
+}
+
+::selection {
+  background: #F21B35;
+  color: #FFFFFF;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A1A1F;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E3840;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2A4B56;
+}
+
+/* Focus styles for keyboard accessibility */
+*:focus-visible {
+  outline: 2px solid #F21B35;
+  outline-offset: 3px;
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Rotating badge */
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: rotate-slow 20s linear infinite;
+}
+
+/* Line reveal utility wrapper */
+.line-reveal-wrapper {
+  overflow: hidden;
+  display: block;
+}
+
+/* Magnetic button smooth cursor effect */
+.btn-magnetic {
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
