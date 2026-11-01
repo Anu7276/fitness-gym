@@ -205,10 +205,10 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
         ref={scrollIndicatorRef}
         href="#about"
         aria-label="Scroll down to about section"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full border border-[#1E3840] bg-[#0F2329]/80 backdrop-blur-sm flex items-center justify-center text-white hover:border-[#F21B35] transition-all duration-300 group"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full border border-[#1E3840] bg-[#0F2329]/80 backdrop-blur-sm flex items-center justify-center text-white hover:border-white/60 transition-all duration-300 group"
       >
         <svg
-          className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none"
+          className="absolute inset-0 w-full h-full pointer-events-none"
           viewBox="0 0 48 48"
         >
           <circle
@@ -218,17 +218,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
             fill="none"
             stroke="#1E3840"
             strokeWidth="1.5"
-          />
-          <circle
-            cx="24"
-            cy="24"
-            r="22"
-            fill="none"
-            stroke="#F21B35"
-            strokeWidth="1.5"
-            strokeDasharray="138"
-            strokeDashoffset="100"
-            className="transition-all duration-700 group-hover:stroke-dashoffset-0"
+            className="transition-colors duration-300 group-hover:stroke-white/40"
           />
         </svg>
         <ArrowDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform duration-200" />
