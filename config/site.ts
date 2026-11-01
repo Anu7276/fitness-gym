@@ -284,7 +284,7 @@ export const siteConfig = {
       slug: "bodybuilding",
       image: "/images/program-bodybuilding.jpg",
       description: "Dedicated compound barbell training and hypertrophy on an uncrowded floor built for pure focus.",
-      ambientColor: "#07141A",
+      ambientColor: "#061318",
     },
     {
       time: "07:00 AM",
@@ -295,7 +295,7 @@ export const siteConfig = {
       slug: "elite-yoga",
       image: "/images/program-yoga.jpg",
       description: "Guided morning mobility, flexibility flows, and breathwork to start your workday centered and energized.",
-      ambientColor: "#12363D",
+      ambientColor: "#0E2F38",
     },
     {
       time: "10:00 AM",
@@ -306,7 +306,7 @@ export const siteConfig = {
       slug: "cardio-blast",
       image: "/images/program-cardio.jpg",
       description: "High-intensity cardio intervals, rowers, and assault bikes to elevate endurance and conditioning.",
-      ambientColor: "#17434B",
+      ambientColor: "#14424D",
     },
     {
       time: "02:00 PM",
@@ -317,7 +317,7 @@ export const siteConfig = {
       slug: "crossfit",
       image: "/images/program-crossfit.jpg",
       description: "Olympic lifting, gymnastics, and high-intensity metcons with zero platform wait time during the afternoon lull.",
-      ambientColor: "#1A4A52",
+      ambientColor: "#174D5A",
     },
     {
       time: "06:00 PM",
@@ -328,7 +328,7 @@ export const siteConfig = {
       slug: "mma-training",
       image: "/images/program-mma.jpg",
       description: "Striking technique, heavy bag combinations, and coached martial arts conditioning for functional power.",
-      ambientColor: "#1E3440",
+      ambientColor: "#1E3745",
     },
     {
       time: "11:00 PM",
@@ -339,7 +339,7 @@ export const siteConfig = {
       slug: "power-zumba",
       image: "/images/program-zumba.jpg",
       description: "High-energy dance cardio and rhythm conditioning for late-evening workouts in a welcoming environment.",
-      ambientColor: "#0B1218",
+      ambientColor: "#081016",
     },
   ] satisfies TimeSlotItem[],
 

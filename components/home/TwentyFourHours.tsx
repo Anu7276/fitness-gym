@@ -139,14 +139,14 @@ export function TwentyFourHours() {
     if (hourHandRef.current && minuteHandRef.current) {
       gsap.to(hourHandRef.current, {
         rotation: nextCumulativeHour,
-        duration: 0.9,
-        ease: "power3.inOut",
+        duration: 1.4,
+        ease: "power2.inOut",
         svgOrigin: "150 150",
       });
       gsap.to(minuteHandRef.current, {
         rotation: nextCumulativeMinute,
-        duration: 0.9,
-        ease: "power3.inOut",
+        duration: 1.4,
+        ease: "power2.inOut",
         svgOrigin: "150 150",
       });
     }
@@ -339,7 +339,7 @@ export function TwentyFourHours() {
     <section
       ref={containerRef}
       id="24-hours"
-      className="relative w-full text-white transition-colors duration-700 ease-out overflow-x-clip"
+      className="relative w-full text-white transition-colors duration-1000 ease-in-out overflow-x-clip"
       style={{ backgroundColor: activeBg }}
       aria-label="24-Hour Rhythm at Fitness Gym"
     >
@@ -375,6 +375,15 @@ export function TwentyFourHours() {
                 viewBox="0 0 300 300"
                 className="w-full h-full relative z-10 select-none pointer-events-none"
               >
+                {/* Dynamic dial atmospheric gradient */}
+                <defs>
+                  <radialGradient id="dialAtmosphere" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor={activeBg} stopOpacity="0.4" />
+                    <stop offset="85%" stopColor="#0A1A1F" stopOpacity="0.95" />
+                    <stop offset="100%" stopColor="#061217" stopOpacity="1" />
+                  </radialGradient>
+                </defs>
+
                 {/* Outer Bezel Rim */}
                 <circle
                   cx="150"
@@ -382,7 +391,7 @@ export function TwentyFourHours() {
                   r="142"
                   stroke="#1E3840"
                   strokeWidth="2"
-                  fill="none"
+                  fill="url(#dialAtmosphere)"
                 />
                 <circle
                   cx="150"
