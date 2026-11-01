@@ -330,10 +330,10 @@ export function TwentyFourHours() {
     >
       <div
         ref={pinContainerRef}
-        className="min-h-[100svh] w-full flex flex-col justify-between py-8 md:py-12 px-4 sm:px-6 md:px-10 max-w-[1240px] mx-auto overflow-hidden"
+        className="min-h-[100svh] min-[840px]:h-[100svh] w-full flex flex-col justify-between py-6 sm:py-8 min-[840px]:py-10 px-4 sm:px-6 min-[840px]:px-8 max-w-[1240px] mx-auto overflow-x-clip"
       >
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#1E3840]/60 pb-4 shrink-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#1E3840]/60 pb-3 shrink-0">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-[#F21B35] animate-pulse" />
             <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
@@ -347,11 +347,11 @@ export function TwentyFourHours() {
         </div>
 
         {/* Center Grid: Dial (Left) + Fixed Info Card (Right) */}
-        <div className="grid grid-cols-1 min-[1100px]:grid-cols-12 gap-8 min-[1100px]:gap-12 items-center my-auto w-full py-4">
+        <div className="grid grid-cols-1 min-[840px]:grid-cols-12 gap-6 min-[840px]:gap-8 xl:gap-12 items-center my-auto w-full py-2">
           {/* LEFT: Analog Dial & Digital Readout */}
-          <div className="min-[1100px]:col-span-6 flex flex-col items-center justify-center">
-            {/* Pure Analog 12-Hour Watch Face: 280-320px below 1100px, 420px on desktop */}
-            <div className="relative w-[280px] h-[280px] sm:w-[320px] sm:h-[320px] min-[1100px]:w-[420px] min-[1100px]:h-[420px] flex items-center justify-center">
+          <div className="min-[840px]:col-span-6 flex flex-col items-center justify-center">
+            {/* Pure Analog 12-Hour Watch Face: 240-280px below 840px, 320px tablet, 390px desktop */}
+            <div className="relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] min-[840px]:w-[320px] min-[840px]:h-[320px] xl:w-[390px] xl:h-[390px] flex items-center justify-center">
               {/* Outer Case Bezel & Ambient Shadow */}
               <div className="absolute inset-0 rounded-full border border-[#1E3840] bg-[#0A1A1F]/90 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.5)]" />
 
@@ -599,9 +599,9 @@ export function TwentyFourHours() {
               )}
             </div>
 
-            {/* TIME PILLS (Real buttons with aria-pressed) */}
+            {/* TIME PILLS (Real buttons with aria-pressed, flex-wrap on smaller screens, always reachable) */}
             <div
-              className="flex items-center gap-2 mt-5 max-w-full overflow-x-auto pb-1 px-2 scrollbar-none"
+              className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 mt-4 max-w-full px-2"
               role="tablist"
               aria-label="Time slots"
             >
@@ -647,8 +647,8 @@ export function TwentyFourHours() {
           </div>
 
           {/* RIGHT: Fixed-Height Info Card */}
-          <div className="min-[1100px]:col-span-6 w-full flex justify-center min-[1100px]:justify-start">
-            <div className="w-full max-w-[480px] min-h-[400px] md:min-h-[440px] bg-[#0F2329]/95 border border-[#1E3840] rounded-card p-6 sm:p-8 flex flex-col justify-between backdrop-blur-md shadow-2xl transition-all duration-300">
+          <div className="min-[840px]:col-span-6 w-full flex justify-center min-[840px]:justify-start">
+            <div className="w-full max-w-[440px] xl:max-w-[480px] min-h-[360px] sm:min-h-[390px] bg-[#0F2329]/95 border border-[#1E3840] rounded-card p-5 sm:p-7 flex flex-col justify-between backdrop-blur-md shadow-2xl transition-all duration-300">
               <div>
                 {/* Header Row */}
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#1E3840]/60">

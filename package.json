@@ -17,6 +17,7 @@
     "next": "14.2.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "sharp": "^0.35.5",
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
@@ -29,4 +30,3 @@
     "typescript": "^5.6.3"
   }
 }
-
