@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { siteConfig } from "@/config/site";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { Check, X } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 export default function PricingPage() {
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
   const plans = siteConfig.pricing;
 
   const comparisonMatrix = [
@@ -43,14 +44,25 @@ export default function PricingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-20">
           {plans.map((plan) => {
             const isPopular = plan.popular;
+            const isSelected = selectedPlanId === plan.id;
 
             return (
               <div
                 key={plan.id}
-                className={`relative bg-[#0F2329] border rounded-card p-8 md:p-10 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 ${
-                  isPopular
-                    ? "border-[#F21B35] shadow-[0_0_25px_rgba(242,27,53,0.15)] ring-1 ring-[#F21B35]"
-                    : "border-[#1E3840] hover:border-[#444748]"
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                onClick={() => setSelectedPlanId(isSelected ? null : plan.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setSelectedPlanId(isSelected ? null : plan.id);
+                  }
+                }}
+                className={`relative bg-[#0F2329] border rounded-card p-8 md:p-10 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer select-none ${
+                  isSelected
+                    ? "border-[#F21B35] shadow-[0_0_25px_rgba(242,27,53,0.25)] ring-1 ring-[#F21B35]"
+                    : "border-[#1E3840] hover:border-[#F21B35] hover:ring-1 hover:ring-[#F21B35] hover:shadow-[0_0_25px_rgba(242,27,53,0.15)]"
                 }`}
               >
                 {isPopular && (
@@ -102,10 +114,12 @@ export default function PricingPage() {
                 <TransitionLink
                   href="/free-trial"
                   title="Free Trial"
-                  className={`w-full py-4 rounded-full font-heading text-xs uppercase tracking-widest font-semibold text-center transition-all duration-300 ${
-                    isPopular
+                  className={`w-full py-4 rounded-full font-heading text-xs uppercase tracking-widest font-semibold text-center transition-all duration-300 relative overflow-hidden group focus-visible:ring-2 focus-visible:ring-white active:scale-95 ${
+                    isSelected
+                      ? "bg-[#F21B35] text-white shadow-lg shadow-[#F21B35]/30"
+                      : isPopular
                       ? "bg-white text-[#0A1A1F] hover:bg-[#F21B35] hover:text-white"
-                      : "border border-[#1E3840] bg-[#0A1A1F] text-white hover:border-white"
+                      : "border border-[#1E3840] bg-[#0A1A1F] text-white hover:border-white hover:bg-white hover:text-[#0A1A1F]"
                   }`}
                 >
                   Join {plan.name} plan
