@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { siteConfig } from "@/config/site";
-import { MapPin, Phone, Mail, Clock, MessageSquare, Check, Loader2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Check, Loader2 } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -47,8 +47,8 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="w-full pt-32 pb-28 md:pb-40 bg-[#0A1A1F] text-white">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
+    <main className="w-full pt-32 pb-24 md:pb-32 bg-[#0A1A1F] text-white">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 md:mb-20">
           <div className="inline-flex items-center gap-2 mb-3">
@@ -58,11 +58,11 @@ export default function ContactPage() {
             </span>
           </div>
           <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight text-white uppercase mb-6">
-            Contact
+            Contact Us
           </h1>
           <p className="font-body text-base md:text-xl text-[#B7C4C8] max-w-2xl leading-relaxed">
-            Our management and concierge desk is available to assist with memberships, facility tours,
-            and personal training bookings.
+            Have questions about memberships, equipment, or training? Visit us in Vadodara, call
+            our front desk, or drop us a line below.
           </p>
         </div>
 
@@ -70,15 +70,23 @@ export default function ContactPage() {
           {/* Left Column: Direct Info (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-8 flex flex-col gap-6">
+              {siteConfig.demoMode && (
+                <div className="pb-4 border-b border-[#1E3840]">
+                  <span className="inline-block px-2.5 py-1 rounded text-[11px] font-mono uppercase tracking-wider bg-white/5 border border-[#1E3840] text-[#B7C4C8]/80">
+                    Sample contact details
+                  </span>
+                </div>
+              )}
+
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Sanctuary Address
+                    Gym Address
                   </h3>
-                  <p className="font-body text-xs text-[#B7C4C8] mt-1 leading-relaxed">
+                  <p className="font-body text-sm text-[#B7C4C8] mt-1 leading-relaxed">
                     {siteConfig.contact.address}
                   </p>
                   <p className="font-body text-xs text-[#B7C4C8]/70 mt-0.5">
@@ -93,11 +101,11 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Direct Phone / WhatsApp
+                    Phone & WhatsApp
                   </h3>
                   <a
                     href={`tel:${siteConfig.contact.phone}`}
-                    className="font-body text-xs text-[#B7C4C8] mt-1 hover:text-white block"
+                    className="font-body text-sm text-[#B7C4C8] mt-1 hover:text-white block"
                   >
                     {siteConfig.contact.phoneFormatted}
                   </a>
@@ -105,7 +113,7 @@ export default function ContactPage() {
                     href={`https://wa.me/${siteConfig.contact.whatsappNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-heading text-[10px] uppercase tracking-wider text-[#25D366] hover:underline mt-1 block"
+                    className="font-heading text-xs uppercase tracking-wider text-[#25D366] hover:underline mt-1 block"
                   >
                     Open WhatsApp Chat →
                   </a>
@@ -118,11 +126,11 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Electronic Mail
+                    Email
                   </h3>
                   <a
                     href={`mailto:${siteConfig.contact.email}`}
-                    className="font-body text-xs text-[#B7C4C8] mt-1 hover:text-white block"
+                    className="font-body text-sm text-[#B7C4C8] mt-1 hover:text-white block"
                   >
                     {siteConfig.contact.email}
                   </a>
@@ -135,32 +143,32 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Hours of Access
+                    Opening Hours
                   </h3>
-                  <p className="font-body text-xs text-[#B7C4C8] mt-1 leading-relaxed">
+                  <p className="font-body text-sm text-[#B7C4C8] mt-1 leading-relaxed">
                     {siteConfig.contact.hours}
                   </p>
-                  <p className="font-body text-[11px] text-[#B7C4C8]/70 mt-0.5">
-                    Staffed Concierge: 6:00 AM – 10:00 PM Daily
+                  <p className="font-body text-xs text-[#B7C4C8]/70 mt-0.5">
+                    Front Desk: 6:00 AM – 10:00 PM Daily
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Interactive Map Placeholder */}
+            {/* Find Us Card */}
             <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-6 flex flex-col items-center justify-center min-h-[200px] text-center">
               <MapPin className="w-8 h-8 text-[#F21B35] mb-2" />
-              <h4 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                Waghodia Road Facility Location
+              <h4 className="font-heading text-base uppercase tracking-wider text-white font-semibold">
+                Find Us
               </h4>
-              <p className="font-body text-xs text-[#B7C4C8] max-w-xs mt-1 mb-4">
-                Conveniently situated near Waghodia Chowkdi with on-site visitor parking.
+              <p className="font-body text-sm text-[#B7C4C8] max-w-xs mt-1 mb-4">
+                Conveniently situated near Waghodia Chowkdi with on-site member parking.
               </p>
               <a
                 href={siteConfig.contact.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2 rounded-full border border-[#1E3840] bg-[#0A1A1F] text-white text-xs font-heading uppercase tracking-widest hover:border-white transition-colors"
+                className="px-5 py-2.5 rounded-full border border-[#1E3840] bg-[#0A1A1F] text-white text-xs font-heading uppercase tracking-widest hover:border-white transition-colors"
               >
                 Open Google Maps ↗
               </a>
@@ -175,11 +183,11 @@ export default function ContactPage() {
                   <Check className="w-8 h-8" />
                 </div>
                 <h3 className="font-heading text-2xl font-bold uppercase tracking-tight text-white mb-2">
-                  Message Transmitted
+                  Message Sent
                 </h3>
                 <p className="font-body text-sm text-[#B7C4C8] max-w-md mb-6 leading-relaxed">
-                  Thank you for contacting FITNESSGYM. Our front desk concierge has received your note
-                  and will respond promptly within 2 hours.
+                  Thank you for contacting FITNESSGYM. Our front desk team has received your message
+                  and will get back to you promptly.
                 </p>
               </div>
             ) : (
@@ -199,10 +207,10 @@ export default function ContactPage() {
 
                 <div>
                   <h3 className="font-heading text-2xl font-bold uppercase tracking-tight text-white mb-1">
-                    Send a Direct Note
+                    Send Us a Message
                   </h3>
-                  <p className="font-body text-xs text-[#B7C4C8]">
-                    Questions regarding rates, equipment, or trainer availability? Submit below.
+                  <p className="font-body text-sm text-[#B7C4C8]">
+                    Questions regarding rates, equipment, or trainer availability? Send us a note below.
                   </p>
                 </div>
 
@@ -292,7 +300,7 @@ export default function ContactPage() {
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Transmitting Note...</span>
+                      <span>Sending Message...</span>
                     </>
                   ) : (
                     <span>Send Message</span>
@@ -306,4 +314,3 @@ export default function ContactPage() {
     </main>
   );
 }
-

@@ -11,26 +11,30 @@ function FreeTrialContent() {
   const defaultProgram = searchParams.get("program") || undefined;
 
   return (
-    <main className="w-full pt-32 pb-28 md:pb-40 bg-[#0A1A1F] text-white">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
+    <main className="w-full pt-28 pb-16 md:pb-28 bg-[#0A1A1F] text-white">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F21B35]" />
-            <span className="font-heading text-xs uppercase tracking-widest text-[#B7C4C8]">
-              Complimentary Invitation
+        <div className="flex flex-col items-center text-center mb-14 md:mb-18">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8]">
+              Free pass
             </span>
+            {siteConfig.demoMode && (
+              <span className="px-2.5 py-0.5 rounded-full bg-[#0F2329] border border-[#1E3840] text-[11px] text-[#B7C4C8]">
+                Sample offer
+              </span>
+            )}
           </div>
-          <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight text-white uppercase mb-6">
-            1-Day VIP Pass
+          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4">
+            Claim your 1-day pass
           </h1>
-          <p className="font-body text-base md:text-xl text-[#B7C4C8] max-w-2xl leading-relaxed">
-            Experience our Vadodara training facility with zero cost and zero obligation. Full access to
-            the weight room, cardio theater, and your choice of group class.
+          <p className="font-body text-[15px] md:text-base text-[#B7C4C8] max-w-xl leading-relaxed">
+            Experience our gym floor with zero cost and no commitment. Workout with full access to
+            weights, cardio equipment, and group classes.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start max-w-5xl mx-auto">
           {/* Left Column: Form (7 cols) */}
           <div className="lg:col-span-7">
             <LeadForm source="Free Trial Page" defaultProgram={defaultProgram} />
@@ -38,36 +42,36 @@ function FreeTrialContent() {
 
           {/* Right Column: Privileges Breakdown (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-8">
-              <h3 className="font-heading text-xl font-bold uppercase tracking-tight text-white mb-4">
-                What Your Pass Includes:
+            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-7">
+              <h3 className="font-heading text-lg font-bold text-white mb-4">
+                What is included with your pass:
               </h3>
-              <div className="flex flex-col gap-4 text-xs font-body text-[#B7C4C8]">
+              <div className="flex flex-col gap-3.5 text-xs font-body text-[#B7C4C8]">
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-[#F21B35] shrink-0 mt-0.5" />
-                  <span>Full access to 10,000+ sq.ft training arena and Olympic weights</span>
+                  <span>Full access to the 10,000+ sq.ft training floor and weights</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-[#F21B35] shrink-0 mt-0.5" />
-                  <span>One complimentary seat in any scheduled class (CrossFit, Yoga, Zumba, etc.)</span>
+                  <span>One free class pass (CrossFit, Yoga, Zumba, etc.)</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-[#F21B35] shrink-0 mt-0.5" />
-                  <span>Personal equipment orientation with a certified floor coach</span>
+                  <span>Equipment tour and machine guidance with a coach</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-[#F21B35] shrink-0 mt-0.5" />
-                  <span>Full locker room, rainfall shower, and towel amenities</span>
+                  <span>Locker room, rainfall showers, and towel service</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-8 flex flex-col gap-4">
+            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-7 flex flex-col gap-4">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#F21B35] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Facility Address
+                  <h4 className="font-heading text-sm font-semibold text-white">
+                    Gym Location
                   </h4>
                   <p className="font-body text-xs text-[#B7C4C8] mt-1 leading-relaxed">
                     {siteConfig.contact.address}
@@ -78,8 +82,8 @@ function FreeTrialContent() {
               <div className="flex items-start gap-3 pt-4 border-t border-[#1E3840]">
                 <Clock className="w-5 h-5 text-[#F21B35] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Operating Schedule
+                  <h4 className="font-heading text-sm font-semibold text-white">
+                    Operating Hours
                   </h4>
                   <p className="font-body text-xs text-[#B7C4C8] mt-1">
                     {siteConfig.contact.hours}
@@ -90,11 +94,11 @@ function FreeTrialContent() {
               <div className="flex items-start gap-3 pt-4 border-t border-[#1E3840]">
                 <Shield className="w-5 h-5 text-[#F21B35] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-heading text-sm uppercase tracking-wider text-white font-semibold">
-                    Honesty Policy
+                  <h4 className="font-heading text-sm font-semibold text-white">
+                    No High-Pressure Sales
                   </h4>
                   <p className="font-body text-xs text-[#B7C4C8] mt-1 leading-relaxed">
-                    No high-pressure sales calls. After your workout, you decide if FITNESSGYM fits your goals.
+                    Enjoy your workout first. If you decide to join later, we are here to help.
                   </p>
                 </div>
               </div>
@@ -108,9 +112,8 @@ function FreeTrialContent() {
 
 export default function FreeTrialPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0A1A1F] text-white pt-32 text-center">Loading pass form...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#0A1A1F] text-white pt-32 text-center font-body text-sm">Loading pass form...</div>}>
       <FreeTrialContent />
     </Suspense>
   );
 }
-

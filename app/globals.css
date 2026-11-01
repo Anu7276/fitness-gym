@@ -20,6 +20,13 @@ html {
   color: var(--text-grey);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   scroll-behavior: auto !important; /* Managed by Lenis */
+  overflow-x: clip;
+}
+
+html.is-loading,
+html.is-loading body {
+  overflow: hidden !important;
+  height: 100vh !important;
 }
 
 body {
@@ -27,8 +34,8 @@ body {
   color: var(--text-grey);
   overflow-x: hidden;
   min-height: 100vh;
-  selection-background-color: var(--accent-red);
-  selection-color: #ffffff;
+  font-size: 15px; /* Minimum text size 14px for body */
+  line-height: 1.6;
 }
 
 ::selection {
@@ -89,8 +96,25 @@ body {
   display: block;
 }
 
-/* Magnetic button smooth cursor effect */
-.btn-magnetic {
-  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+/* Container constraints: 12-column grid, max-width 1240px */
+.content-container {
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
+@media (min-width: 768px) {
+  .content-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .content-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}

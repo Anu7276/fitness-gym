@@ -57,7 +57,7 @@ export function Navbar() {
     const rect = buttonRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    buttonRef.current.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    buttonRef.current.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
   };
 
   const handleMouseLeave = () => {
@@ -76,11 +76,11 @@ export function Navbar() {
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20 h-20 flex items-center justify-between">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           {/* Logo Brand */}
           <TransitionLink
             href="/"
-            title="Sanctuary"
+            title="Home"
             className="flex items-center gap-2 font-heading text-xl md:text-2xl font-bold tracking-tight text-white uppercase group"
           >
             <svg
@@ -101,7 +101,7 @@ export function Navbar() {
           </TransitionLink>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 font-heading text-sm uppercase tracking-wider">
+          <nav className="hidden md:flex items-center gap-8 font-heading text-sm tracking-wide">
             {siteConfig.navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -137,7 +137,7 @@ export function Navbar() {
               title="Free Trial"
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="relative hidden sm:inline-flex items-center justify-center px-7 py-3 rounded-full bg-white text-[#0A1A1F] font-heading text-xs uppercase tracking-widest font-semibold overflow-hidden group transition-transform duration-200 active:scale-95"
+              className="relative hidden sm:inline-flex items-center justify-center px-7 py-3 rounded-full bg-white text-[#0A1A1F] font-heading text-xs uppercase tracking-widest font-semibold overflow-hidden group transition-transform duration-200 active:scale-95 shadow-md"
             >
               {/* Bottom slide-in fill effect */}
               <span className="absolute inset-0 w-full h-full bg-[#F21B35] transform translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0" />
@@ -149,7 +149,7 @@ export function Navbar() {
             {/* Mobile Menu Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-lg text-white hover:bg-[#0F2329] focus:outline-none"
+              className="md:hidden p-2 rounded-lg text-white hover:bg-[#0F2329] focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-6 h-6" />
@@ -238,11 +238,10 @@ export function Navbar() {
             Claim 1-Day Pass
           </TransitionLink>
           <div className="text-center font-body text-xs text-[#B7C4C8]/70">
-            {siteConfig.contact.hours} • {siteConfig.brand.badge}
+            {siteConfig.brand.badge}
           </div>
         </div>
       </div>
     </>
   );
 }
-

@@ -15,13 +15,13 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="fixed bottom-20 md:bottom-8 right-6 z-40 hidden sm:flex items-center gap-2 px-4 py-3 rounded-full bg-[#25D366] text-white shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200 group"
+      className="fixed bottom-8 right-8 z-40 hidden md:flex w-14 h-14 rounded-full bg-[#25D366] text-white shadow-2xl items-center justify-center hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 group focus-visible:ring-2 focus-visible:ring-white"
     >
-      <MessageCircle className="w-5 h-5 fill-white stroke-none" />
-      <span className="font-heading text-xs uppercase tracking-wider font-semibold">
-        WhatsApp
+      <MessageCircle className="w-7 h-7 fill-white stroke-none" />
+      {/* Tooltip on desktop hover */}
+      <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-[#0A1A1F] border border-[#1E3840] text-xs font-body text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+        Chat on WhatsApp
       </span>
     </a>
   );
 }
-

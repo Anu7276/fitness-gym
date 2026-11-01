@@ -11,13 +11,13 @@ export function MobileStickyBar() {
   )}`;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-[#0A1A1F]/95 backdrop-blur-md border-t border-[#1E3840] px-4 py-3 flex items-center justify-between gap-3">
+    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-[#0A1A1F]/95 backdrop-blur-md border-t border-[#1E3840] px-4 py-3 flex items-center justify-between gap-3 shadow-2xl">
       {/* Call Button */}
       <a
         href={`tel:${siteConfig.contact.phone}`}
-        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full border border-[#1E3840] bg-[#0F2329] text-white text-xs font-heading uppercase tracking-wider font-medium active:scale-95 transition-transform"
+        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full border border-[#1E3840] bg-[#0F2329] text-white text-xs font-heading font-medium active:scale-95 transition-transform"
       >
-        <Phone className="w-3.5 h-3.5 text-[#F21B35]" />
+        <Phone className="w-3.5 h-3.5 text-white" />
         <span>Call</span>
       </a>
 
@@ -26,9 +26,9 @@ export function MobileStickyBar() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full border border-[#1E3840] bg-[#0F2329] text-white text-xs font-heading uppercase tracking-wider font-medium active:scale-95 transition-transform"
+        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full border border-[#1E3840] bg-[#0F2329] text-white text-xs font-heading font-medium active:scale-95 transition-transform"
       >
-        <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+        <MessageCircle className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366]" />
         <span>WhatsApp</span>
       </a>
 
@@ -36,7 +36,7 @@ export function MobileStickyBar() {
       <TransitionLink
         href="/free-trial"
         title="Free Trial"
-        className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-full bg-white text-[#0A1A1F] text-xs font-heading uppercase tracking-wider font-semibold active:scale-95 transition-transform"
+        className="flex-1 flex items-center justify-center gap-1 py-2.5 rounded-full bg-white text-[#0A1A1F] text-xs font-heading font-semibold active:scale-95 transition-transform"
       >
         <span>Join</span>
         <ArrowRight className="w-3 h-3 text-[#F21B35]" />
@@ -44,4 +44,3 @@ export function MobileStickyBar() {
     </div>
   );
 }
-

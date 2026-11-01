@@ -1,19 +1,37 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { siteConfig } from "@/config/site";
+import { gsap } from "gsap";
 
-export function Preloader({ onComplete }: { onComplete?: () => void }) {
+interface PreloaderProps {
+  onComplete?: () => void;
+}
+
+export function Preloader({ onComplete }: PreloaderProps) {
   const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [quoteIndex, setQuoteIndex] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
-  const [clipRadius, setClipRadius] = useState(0);
+  const [quoteFade, setQuoteFade] = useState(true);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const wordmarkRef = useRef<HTMLDivElement>(null);
+  const dumbbellGroupRef = useRef<SVGGElement>(null);
+  const barFillRef = useRef<SVGRectElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
+  const progressLineRef = useRef<HTMLDivElement>(null);
+  const quotesRef = useRef<HTMLDivElement>(null);
+  const maskHoleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
-    // Check if user has already seen the preloader in this session
+
+    if (!siteConfig.loader.enabled) {
+      if (onComplete) onComplete();
+      return;
+    }
+
+    // Show once per session
     const hasSeen = sessionStorage.getItem("fitnessgym_preloader_seen");
     if (hasSeen) {
       if (onComplete) onComplete();
@@ -21,141 +39,222 @@ export function Preloader({ onComplete }: { onComplete?: () => void }) {
     }
 
     setShow(true);
+    document.documentElement.classList.add("is-loading");
 
-    // Duration between 1.6s and 2.2s
-    const totalDuration = 1800;
-    const interval = 25;
-    const increment = 100 / (totalDuration / interval);
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const progressTimer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + increment;
-        if (next >= 100) {
-          clearInterval(progressTimer);
-          return 100;
-        }
-        return next;
-      });
-    }, interval);
+    if (prefersReducedMotion) {
+      setTimeout(() => {
+        sessionStorage.setItem("fitnessgym_preloader_seen", "true");
+        document.documentElement.classList.remove("is-loading");
+        setShow(false);
+        if (onComplete) onComplete();
+      }, 400);
+      return;
+    }
 
-    // Quote cycle every 1.2s
-    const quoteTimer = setInterval(() => {
-      setQuoteIndex((prev) => (prev + 1) % siteConfig.preloaderQuotes.length);
+    // GSAP master timeline for the 2.4s sequence
+    const tl = gsap.timeline({
+      onComplete: () => {
+        sessionStorage.setItem("fitnessgym_preloader_seen", "true");
+        document.documentElement.classList.remove("is-loading");
+        setShow(false);
+        if (onComplete) onComplete();
+      },
+    });
+
+    // 0.00-0.40s: Wordmark appears letter by letter
+    if (wordmarkRef.current) {
+      const letters = wordmarkRef.current.querySelectorAll(".letter");
+      tl.fromTo(
+        letters,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out" },
+        0
+      );
+    }
+
+    // Dumbbell rep animation: rises 24px (0.6s, power2.out), holds 0.3s shaking 2px 3 times, lowers (0.6s, power2.in)
+    if (dumbbellGroupRef.current) {
+      // 0.20s - 0.80s: rise 24px
+      tl.to(dumbbellGroupRef.current, { y: -24, duration: 0.6, ease: "power2.out" }, 0.2);
+
+      // 0.80s - 1.16s: shake plates 2px 3 times
+      tl.to(dumbbellGroupRef.current, { x: 2, duration: 0.06, ease: "power1.inOut" }, 0.8);
+      tl.to(dumbbellGroupRef.current, { x: -2, duration: 0.06, ease: "power1.inOut" }, 0.86);
+      tl.to(dumbbellGroupRef.current, { x: 2, duration: 0.06, ease: "power1.inOut" }, 0.92);
+      tl.to(dumbbellGroupRef.current, { x: -2, duration: 0.06, ease: "power1.inOut" }, 0.98);
+      tl.to(dumbbellGroupRef.current, { x: 2, duration: 0.06, ease: "power1.inOut" }, 1.04);
+      tl.to(dumbbellGroupRef.current, { x: 0, duration: 0.06, ease: "power1.inOut" }, 1.10);
+
+      // 1.16s - 1.76s: lower 24px
+      tl.to(dumbbellGroupRef.current, { y: 0, duration: 0.6, ease: "power2.in" }, 1.16);
+    }
+
+    // Real asset loading hook + continuous progress counter 00 to 100
+    const progressObj = { value: 0 };
+    tl.to(
+      progressObj,
+      {
+        value: 100,
+        duration: 1.6,
+        ease: "power1.inOut",
+        onUpdate: () => {
+          const val = Math.round(progressObj.value);
+          const formatted = val < 10 ? `0${val}` : `${val}`;
+          if (counterRef.current) counterRef.current.innerText = formatted;
+          if (barFillRef.current) barFillRef.current.setAttribute("width", `${(val / 100) * 50}`);
+          if (progressLineRef.current) progressLineRef.current.style.width = `${val}%`;
+        },
+      },
+      0.2
+    );
+
+    // Quote rotation at 1.2s with crossfade
+    setTimeout(() => {
+      setQuoteFade(false);
+      setTimeout(() => {
+        setQuoteIndex(1);
+        setQuoteFade(true);
+      }, 150);
     }, 1200);
 
+    // 1.80-2.40s: Exit phase
+    // Wordmark & dumbbell scale to 0.9 and fade (0.3s)
+    if (wordmarkRef.current && dumbbellGroupRef.current) {
+      tl.to(
+        [wordmarkRef.current, dumbbellGroupRef.current, counterRef.current, progressLineRef.current?.parentElement, quotesRef.current],
+        { scale: 0.9, opacity: 0, duration: 0.3, ease: "power2.in" },
+        1.8
+      );
+    }
+
+    // Circular hole mask grows from center (0.6s, power3.inOut) revealing hero underneath
+    const holeObj = { radius: 0 };
+    tl.to(
+      holeObj,
+      {
+        radius: 120,
+        duration: 0.6,
+        ease: "power3.inOut",
+        onUpdate: () => {
+          if (containerRef.current) {
+            const r = holeObj.radius;
+            containerRef.current.style.maskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 5}%)`;
+            containerRef.current.style.webkitMaskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 5}%)`;
+          }
+        },
+      },
+      1.8
+    );
+
+    // Fade out preloader container completely
+    tl.to(
+      containerRef.current,
+      { opacity: 0, duration: 0.3, ease: "power2.inOut" },
+      2.1
+    );
+
+    // Trigger hero intro when hole is about half open (~2.15s)
+    tl.add(() => {
+      if (onComplete) onComplete();
+    }, 2.15);
+
     return () => {
-      clearInterval(progressTimer);
-      clearInterval(quoteTimer);
+      tl.kill();
+      document.documentElement.classList.remove("is-loading");
     };
   }, [onComplete]);
 
-  useEffect(() => {
-    if (progress >= 100 && show && !isExiting) {
-      setIsExiting(true);
-      sessionStorage.setItem("fitnessgym_preloader_seen", "true");
-
-      // Circular clip-path expansion animation: 0% -> 150% over 900ms
-      const startTime = performance.now();
-      const exitDuration = 900;
-
-      const animateExit = (time: number) => {
-        const elapsed = time - startTime;
-        const progressFrac = Math.min(elapsed / exitDuration, 1);
-        // ease power3.inOut: p < 0.5 ? 4*p^3 : 1 - (-2*p + 2)^3 / 2
-        const eased =
-          progressFrac < 0.5
-            ? 4 * Math.pow(progressFrac, 3)
-            : 1 - Math.pow(-2 * progressFrac + 2, 3) / 2;
-
-        setClipRadius(eased * 150);
-
-        // When half open, trigger onComplete to start hero reveal
-        if (progressFrac >= 0.5 && onComplete) {
-          onComplete();
-        }
-
-        if (progressFrac < 1) {
-          requestAnimationFrame(animateExit);
-        } else {
-          setShow(false);
-        }
-      };
-
-      requestAnimationFrame(animateExit);
-    }
-  }, [progress, show, isExiting, onComplete]);
-
   if (!mounted || !show) return null;
+
+  const brandName = siteConfig.brand.name; // "FITNESSGYM"
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0A1A1F] text-white select-none pointer-events-none"
-      style={{
-        clipPath: isExiting
-          ? `circle(${clipRadius}% at 50% 50%)`
-          : "circle(150% at 50% 50%)",
-        transition: isExiting ? "none" : undefined,
-      }}
-      aria-hidden="true"
+      ref={containerRef}
+      role="status"
+      aria-live="polite"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0A1A1F] text-white select-none pointer-events-none transition-opacity duration-300"
     >
-      <div
-        className={`flex flex-col items-center max-w-md px-6 text-center transition-opacity duration-300 ${
-          isExiting ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        {/* Animated Dumbbell Logo Mark */}
-        <div className="flex items-center gap-2 mb-6">
-          <svg
-            width="48"
-            height="24"
-            viewBox="0 0 48 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="shrink-0"
-          >
-            {/* Left Weight Plates */}
-            <rect x="2" y="4" width="4" height="16" rx="1" fill="#FFFFFF" />
-            <rect x="8" y="1" width="4" height="22" rx="1" fill="#FFFFFF" />
-            {/* Center Bar Background */}
-            <rect x="12" y="10" width="24" height="4" rx="2" fill="#1E3840" />
-            {/* Center Bar Red Fill Indicator */}
-            <rect
-              x="12"
-              y="10"
-              width={`${(progress / 100) * 24}`}
-              height="4"
-              rx="2"
-              fill="#F21B35"
-              className="transition-all duration-75 ease-linear"
-            />
-            {/* Right Weight Plates */}
-            <rect x="36" y="1" width="4" height="22" rx="1" fill="#FFFFFF" />
-            <rect x="42" y="4" width="4" height="16" rx="1" fill="#FFFFFF" />
-          </svg>
-          <span className="font-heading text-2xl font-bold tracking-tight text-white uppercase">
-            {siteConfig.brand.name}
-          </span>
+      <span className="sr-only">Loading {brandName}...</span>
+
+      <div className="flex flex-col items-center max-w-sm px-6 text-center">
+        {/* Letter by letter wordmark */}
+        <div ref={wordmarkRef} className="flex items-center gap-1 mb-8 overflow-hidden">
+          {brandName.split("").map((char, index) => (
+            <span
+              key={index}
+              className="letter inline-block font-heading text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase"
+            >
+              {char}
+            </span>
+          ))}
         </div>
 
-        {/* Thin Red Progress Bar */}
-        <div className="w-48 h-[2px] bg-[#1E3840] relative overflow-hidden mb-3">
+        {/* Rep Performing SVG Dumbbell (120px wide) */}
+        <div className="w-[120px] h-[44px] mb-6 flex items-center justify-center">
+          <svg
+            width="120"
+            height="44"
+            viewBox="0 0 120 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g ref={dumbbellGroupRef}>
+              {/* Left Weight Plates */}
+              <rect x="4" y="10" width="8" height="24" rx="2" fill="#FFFFFF" />
+              <rect x="16" y="6" width="10" height="32" rx="2" fill="#FFFFFF" />
+              <rect x="28" y="17" width="5" height="10" rx="1" fill="#B7C4C8" />
+
+              {/* Center Bar Background */}
+              <rect x="35" y="19" width="50" height="6" rx="3" fill="#1E3840" />
+
+              {/* Center Bar Animated Red Fill */}
+              <rect
+                ref={barFillRef}
+                x="35"
+                y="19"
+                width="0"
+                height="6"
+                rx="3"
+                fill="#F21B35"
+              />
+
+              {/* Right Weight Plates */}
+              <rect x="87" y="17" width="5" height="10" rx="1" fill="#B7C4C8" />
+              <rect x="94" y="6" width="10" height="32" rx="2" fill="#FFFFFF" />
+              <rect x="108" y="10" width="8" height="24" rx="2" fill="#FFFFFF" />
+            </g>
+          </svg>
+        </div>
+
+        {/* Tabular-number counter 00 to 100 */}
+        <div className="font-heading tabular-nums text-sm font-semibold tracking-widest text-white mb-2">
+          <span ref={counterRef}>00</span>
+          <span className="text-[#B7C4C8]/60 text-xs ml-1">%</span>
+        </div>
+
+        {/* Thin Red Progress Line */}
+        <div className="w-40 h-[2px] bg-[#1E3840] relative overflow-hidden mb-6">
           <div
-            className="h-full bg-[#F21B35] transition-all duration-75 ease-linear"
-            style={{ width: `${Math.round(progress)}%` }}
+            ref={progressLineRef}
+            className="h-full bg-[#F21B35] transition-all duration-75"
+            style={{ width: "0%" }}
           />
         </div>
 
-        {/* Percentage Counter */}
-        <div className="font-heading text-xs tracking-widest text-[#B7C4C8] mb-6">
-          {Math.round(progress)}%
-        </div>
-
-        {/* Rotating Motivational Quote */}
-        <p className="font-body text-xs text-[#B7C4C8]/80 italic max-w-xs transition-opacity duration-500 min-h-[32px] flex items-center justify-center">
+        {/* Quotes with 0.3s Crossfade */}
+        <div
+          ref={quotesRef}
+          className={`min-h-[36px] flex items-center justify-center font-body text-xs text-[#B7C4C8] italic transition-opacity duration-300 ${
+            quoteFade ? "opacity-100" : "opacity-0"
+          }`}
+        >
           &ldquo;{siteConfig.preloaderQuotes[quoteIndex]}&rdquo;
-        </p>
+        </div>
       </div>
     </div>
   );
 }
-

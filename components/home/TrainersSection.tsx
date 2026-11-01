@@ -21,23 +21,27 @@ export function TrainersSection() {
   };
 
   return (
-    <section id="trainers" className="w-full py-28 md:py-40 bg-[#06151A] text-white overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
+    <section id="trainers" className="w-full py-16 md:py-28 bg-[#06151A] text-white overflow-hidden">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F21B35]" />
-              <span className="font-heading text-xs uppercase tracking-widest text-[#B7C4C8]">
-                Master Coaches
+            <div className="flex items-center gap-3 mb-2">
+              <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8]">
+                Coaching team
               </span>
+              {siteConfig.demoMode && (
+                <span className="px-2.5 py-0.5 rounded-full bg-[#0F2329] border border-[#1E3840] text-[11px] text-[#B7C4C8]">
+                  Sample content
+                </span>
+              )}
             </div>
-            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white uppercase">
-              Trainers
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white">
+              Our trainers
             </h2>
           </div>
-          <p className="font-body text-sm text-[#B7C4C8] max-w-md leading-relaxed">
-            Every coach on our floor holds certified credentials in exercise science and biomechanics.
+          <p className="font-body text-[15px] text-[#B7C4C8] max-w-md leading-relaxed">
+            Friendly, certified fitness coaches dedicated to helping you train safely and reach your personal best.
           </p>
         </div>
 
@@ -52,7 +56,7 @@ export function TrainersSection() {
           {/* Floating "Drag" Bubble for Desktop */}
           {isHovering && (
             <div
-              className="hidden lg:flex pointer-events-none absolute z-30 w-16 h-16 rounded-full bg-white text-[#0A1A1F] items-center justify-center font-heading text-xs uppercase tracking-widest font-bold shadow-2xl transition-transform duration-75 ease-out -translate-x-1/2 -translate-y-1/2"
+              className="hidden lg:flex pointer-events-none absolute z-30 w-14 h-14 rounded-full bg-white text-[#0A1A1F] items-center justify-center font-heading text-xs uppercase tracking-wider font-bold shadow-2xl transition-transform duration-75 ease-out -translate-x-1/2 -translate-y-1/2"
               style={{
                 left: `${cursorPos.x}px`,
                 top: `${cursorPos.y}px`,
@@ -65,7 +69,7 @@ export function TrainersSection() {
           {/* Draggable Row */}
           <motion.div
             drag="x"
-            dragConstraints={{ right: 0, left: -900 }}
+            dragConstraints={{ right: 0, left: -800 }}
             className="flex gap-6 pb-6 cursor-grab active:cursor-grabbing overflow-x-auto lg:overflow-visible no-scrollbar snap-x snap-mandatory"
           >
             {siteConfig.trainers.map((trainer) => (
@@ -73,20 +77,20 @@ export function TrainersSection() {
                 key={trainer.id}
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.2 }}
-                className="w-[280px] sm:w-[320px] shrink-0 bg-[#0F2329] border border-[#1E3840] rounded-card overflow-hidden flex flex-col snap-start"
+                className="w-[280px] sm:w-[310px] shrink-0 bg-[#0F2329] border border-[#1E3840] rounded-card overflow-hidden flex flex-col snap-start"
               >
-                {/* Tall Portrait Photo: sharp 0px corners */}
-                <div className="w-full h-96 relative overflow-hidden bg-[#0A1A1F] border-b border-[#1E3840]">
+                {/* Portrait Photo: sharp 0px corners, 4:5 aspect ratio */}
+                <div className="w-full h-80 relative overflow-hidden bg-[#0A1A1F] border-b border-[#1E3840]">
                   <Image
                     src={trainer.image}
                     alt={trainer.name}
                     fill
-                    sizes="320px"
-                    className="object-cover filter brightness-[0.8] contrast-[1.1] rounded-none pointer-events-none"
+                    sizes="310px"
+                    className="object-cover filter brightness-[0.95] contrast-[1.05] rounded-none pointer-events-none"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0F2329] via-transparent to-transparent pointer-events-none" />
                   <div className="absolute top-4 left-4">
-                    <span className="bg-[#0A1A1F]/90 border border-[#1E3840] rounded-full px-3 py-1 font-heading text-[10px] uppercase tracking-wider text-[#B7C4C8]">
+                    <span className="bg-[#0A1A1F]/90 border border-[#1E3840] rounded-full px-3 py-1 font-body text-xs text-white">
                       {trainer.experience}
                     </span>
                   </div>
@@ -95,10 +99,10 @@ export function TrainersSection() {
                 {/* Trainer Info */}
                 <div className="p-6 flex flex-col flex-1 justify-between">
                   <div>
-                    <h3 className="font-heading text-xl font-bold text-white uppercase mb-1">
+                    <h3 className="font-heading text-xl font-bold text-white mb-1">
                       {trainer.name}
                     </h3>
-                    <p className="font-heading text-xs uppercase tracking-wider text-[#F21B35] font-semibold mb-3">
+                    <p className="font-body text-xs text-[#B7C4C8] font-medium mb-3">
                       {trainer.role}
                     </p>
                     <p className="font-body text-xs text-[#B7C4C8] leading-relaxed line-clamp-2">
@@ -112,20 +116,19 @@ export function TrainersSection() {
         </div>
 
         {/* Carousel Hint & Link */}
-        <div className="mt-8 flex items-center justify-between text-xs text-[#B7C4C8]">
-          <span className="font-heading uppercase tracking-widest text-[#B7C4C8]/70">
-            ← Drag to view coaches →
+        <div className="mt-6 flex items-center justify-between text-xs text-[#B7C4C8]">
+          <span className="font-body text-[#B7C4C8]/70">
+            ← Drag or swipe to see all coaches →
           </span>
           <TransitionLink
             href="/trainers"
             title="Trainers"
-            className="font-heading uppercase tracking-widest text-white hover:text-[#F21B35] transition-colors"
+            className="font-heading uppercase tracking-wider text-white hover:text-[#F21B35] font-semibold transition-colors"
           >
-            Meet Full Faculty →
+            Meet the team →
           </TransitionLink>
         </div>
       </div>
     </section>
   );
 }
-

@@ -7,7 +7,7 @@ import { TransitionLink } from "./motion/TransitionLink";
 export function Footer() {
   return (
     <footer className="w-full bg-[#06151A] border-t border-[#1E3840] py-16">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-20">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
           {/* Brand Info */}
           <div className="md:col-span-5 flex flex-col gap-4">
@@ -28,9 +28,9 @@ export function Footer() {
               <span>{siteConfig.brand.name}</span>
             </div>
             <p className="font-body text-sm text-[#B7C4C8] max-w-sm leading-relaxed">
-              {siteConfig.brand.introSummary}
+              {siteConfig.brand.aboutSummary}
             </p>
-            <div className="flex items-center gap-2 text-xs font-heading uppercase tracking-widest text-[#B7C4C8]/80 mt-2">
+            <div className="flex items-center gap-2 text-xs font-body text-[#B7C4C8] mt-2">
               <span className="w-2 h-2 rounded-full bg-[#F21B35] animate-pulse" />
               <span>{siteConfig.brand.badge}</span>
             </div>
@@ -38,7 +38,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="md:col-span-3 flex flex-col gap-3">
-            <h4 className="font-heading text-xs uppercase tracking-widest text-white font-semibold mb-2">
+            <h4 className="font-heading text-xs uppercase tracking-wider text-white font-semibold mb-1">
               Navigation
             </h4>
             {siteConfig.navigation.map((item) => (
@@ -54,26 +54,33 @@ export function Footer() {
             <TransitionLink
               href="/free-trial"
               title="Free Trial"
-              className="font-body text-sm text-[#F21B35] hover:underline"
+              className="font-body text-sm text-white hover:underline font-medium"
             >
-              1-Day VIP Pass
+              1-Day Trial Pass →
             </TransitionLink>
           </div>
 
           {/* Location & Hours */}
           <div className="md:col-span-4 flex flex-col gap-3">
-            <h4 className="font-heading text-xs uppercase tracking-widest text-white font-semibold mb-2">
-              Sanctuary Location
-            </h4>
+            <div className="flex items-center justify-between mb-1">
+              <h4 className="font-heading text-xs uppercase tracking-wider text-white font-semibold">
+                Find Us
+              </h4>
+              {siteConfig.demoMode && (
+                <span className="text-[11px] font-body text-[#B7C4C8]/80 bg-[#0F2329] px-2 py-0.5 rounded border border-[#1E3840]">
+                  Sample location
+                </span>
+              )}
+            </div>
             <p className="font-body text-sm text-[#B7C4C8] leading-relaxed">
               {siteConfig.contact.address}
               <br />
-              <span className="text-white/80">{siteConfig.contact.landmark}</span>
+              <span className="text-white">{siteConfig.contact.landmark}</span>
             </p>
-            <p className="font-body text-xs text-[#B7C4C8]/80 mt-1">
+            <p className="font-body text-xs text-[#B7C4C8] mt-1">
               Hours: <span className="text-white">{siteConfig.contact.hours}</span>
             </p>
-            <p className="font-body text-xs text-[#B7C4C8]/80">
+            <p className="font-body text-xs text-[#B7C4C8]">
               Phone:{" "}
               <a href={`tel:${siteConfig.contact.phone}`} className="text-white hover:underline">
                 {siteConfig.contact.phoneFormatted}
@@ -83,18 +90,17 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-[#1E3840]/60 flex flex-col md:flex-row items-center justify-between gap-4 font-body text-xs text-[#B7C4C8]/70">
+        <div className="pt-8 border-t border-[#1E3840]/60 flex flex-col md:flex-row items-center justify-between gap-4 font-body text-xs text-[#B7C4C8]">
           <div>
             © {new Date().getFullYear()} {siteConfig.brand.legalName}. All rights reserved.
           </div>
-          <div className="flex items-center gap-6">
-            <span>Waghodia, Vadodara, Gujarat</span>
+          <div className="flex items-center gap-4">
+            <span>Waghodia Road, Vadodara, Gujarat</span>
             <span>•</span>
-            <span className="text-white/60">White-Label Architecture v2.0</span>
+            <span className="text-white">Open 24/7/365</span>
           </div>
         </div>
       </div>
     </footer>
   );
 }
-

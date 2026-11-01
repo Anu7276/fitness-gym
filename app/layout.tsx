@@ -24,10 +24,10 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL("https://fitnessgym.in"),
   title: {
-    default: `${siteConfig.brand.name} | Boutique Athletic Sanctuary • Waghodia, Vadodara`,
+    default: `${siteConfig.brand.name} | 24/7 Gym in Waghodia, Vadodara`,
     template: `%s | ${siteConfig.brand.name}`,
   },
-  description: `${siteConfig.brand.name} — Open 24/7 in Waghodia, Vadodara. 10 years of excellence in bodybuilding, cardio blast, elite yoga, CrossFit, MMA training, and power zumba.`,
+  description: `${siteConfig.brand.name} — Open 24/7 on Waghodia Road, Vadodara. 10 years of excellence in bodybuilding, cardio, yoga, CrossFit, MMA, and zumba.`,
   keywords: [
     "Gym in Vadodara",
     "24/7 Gym Waghodia",
@@ -35,11 +35,11 @@ export const metadata: Metadata = {
     "CrossFit Vadodara",
     "Bodybuilding Waghodia",
     "MMA training Vadodara",
-    "Elite Yoga Vadodara",
+    "Yoga Vadodara",
   ],
   authors: [{ name: siteConfig.brand.name }],
   openGraph: {
-    title: `${siteConfig.brand.name} | Boutique Athletic Performance`,
+    title: `${siteConfig.brand.name} | Modern 24/7 Gym in Vadodara`,
     description: siteConfig.brand.subline,
     url: "https://fitnessgym.in",
     siteName: siteConfig.brand.name,
@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/hero.jpg",
-        width: 1920,
-        height: 1080,
-        alt: `${siteConfig.brand.name} Facility Interior`,
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.brand.name} Gym Floor`,
       },
     ],
   },
@@ -77,7 +77,7 @@ export default function RootLayout({
     "description": siteConfig.brand.subline,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Waghodia Road",
+      "streetAddress": "Plot 42, Waghodia Main Road",
       "addressLocality": "Vadodara",
       "addressRegion": "Gujarat",
       "postalCode": "390019",
@@ -92,6 +92,26 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${manrope.variable} dark`}>
       <head>
+        {/* Critical inline CSS to prevent preloader flash and lock initial scroll */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              html { background-color: #0A1A1F; }
+              html.is-loading, html.is-loading body { overflow: hidden !important; height: 100vh !important; }
+            `,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (!sessionStorage.getItem('fitnessgym_preloader_seen')) {
+                  document.documentElement.classList.add('is-loading');
+                }
+              } catch(e) {}
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -111,4 +131,3 @@ export default function RootLayout({
     </html>
   );
 }
-
