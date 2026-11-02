@@ -197,14 +197,11 @@ export function Preloader({ onComplete }: PreloaderProps) {
           ))}
         </div>
 
-        {/* REAL 3D DUMBBELL CENTERPIECE with glowing atmospheric aura */}
+        {/* REAL 3D DUMBBELL CENTERPIECE */}
         <div
           ref={dumbbellWrapperRef}
           className="relative w-full flex items-center justify-center my-1 sm:my-2"
         >
-          {/* Crimson Atmospheric Backlight Glow */}
-          <div className="absolute w-[280px] sm:w-[440px] md:w-[520px] h-[150px] sm:h-[200px] md:h-[240px] rounded-full bg-gradient-to-r from-[#F21B35]/25 via-[#F21B35]/40 to-[#FF334B]/20 blur-[55px] pointer-events-none -z-10 animate-pulse" />
-
           <Dumbbell3D />
         </div>
 
