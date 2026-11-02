@@ -10,7 +10,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
   const containerRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const imageWrapperRef = useRef<HTMLDivElement>(null);
+  const imageInnerRef = useRef<HTMLDivElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
@@ -23,13 +24,28 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
     gsap.registerPlugin(ScrollTrigger);
 
     const tl = gsap.timeline();
+    let ambientAnim: gsap.core.Tween | null = null;
 
-    // 1. Background image scales from 1.15 to 1.0 over 1.6s
-    if (imageRef.current) {
+    // 1. Cinematic entrance zoom-out: scales down from 1.32 to 1.05 over 5s
+    if (imageInnerRef.current) {
       tl.fromTo(
-        imageRef.current,
-        { scale: 1.15 },
-        { scale: 1.0, duration: 1.6, ease: "power2.out" },
+        imageInnerRef.current,
+        { scale: 1.32 },
+        {
+          scale: 1.05,
+          duration: 5.0,
+          ease: "power2.out",
+          onComplete: () => {
+            // Gentle continuous ambient breathing zoom
+            ambientAnim = gsap.to(imageInnerRef.current, {
+              scale: 1.10,
+              duration: 9,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+            });
+          },
+        },
         0
       );
     }
@@ -78,22 +94,24 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
       );
     }
 
-    // 5. Subtle parallax: hero image moves slightly slower than page
-    if (imageRef.current && containerRef.current) {
-      gsap.to(imageRef.current, {
+    // 5. Scroll-driven zoom-out: as user scrolls down through the hero, the image wrapper zooms out smoothly
+    if (imageWrapperRef.current && containerRef.current) {
+      gsap.to(imageWrapperRef.current, {
+        scale: 0.88,
         yPercent: 12,
         ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 0.6,
         },
       });
     }
 
     return () => {
       tl.kill();
+      if (ambientAnim) ambientAnim.kill();
       ScrollTrigger.getAll().forEach((st) => {
         if (st.vars.trigger === containerRef.current) st.kill();
       });
@@ -105,16 +123,26 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
       ref={containerRef}
       className="relative w-full min-h-[100svh] py-24 sm:py-28 flex flex-col items-center justify-center overflow-hidden bg-[#0A1A1F]"
     >
-      {/* Background Media: clearly visible, 48% overlay, stronger only behind text */}
-      <div ref={imageRef} className="absolute inset-0 w-full h-full z-0 will-change-transform">
-        <Image
-          src="/images/hero.jpg"
-          alt="Bright modern fitness gym floor in Waghodia Vadodara"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center filter brightness-[0.92] contrast-[1.05]"
-        />
+      {/* Background Media with multi-stage zoomout and overlays */}
+      <div
+        ref={imageWrapperRef}
+        className="absolute inset-0 w-full h-full z-0 overflow-hidden will-change-transform origin-center"
+      >
+        <div
+          ref={imageInnerRef}
+          className="relative w-full h-full will-change-transform origin-center"
+          style={{ transform: "scale(1.25)" }}
+        >
+          <Image
+            src="/images/hero.jpg"
+            alt="Bright modern fitness gym floor in Waghodia Vadodara"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center filter brightness-[0.92] contrast-[1.05]"
+          />
+        </div>
+
         {/* Balanced 48% dark overlay */}
         <div className="absolute inset-0 bg-[#0A1A1F]/48 pointer-events-none" />
 
