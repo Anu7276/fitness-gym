@@ -12,16 +12,9 @@ export function TrainersSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8]">
-                Coaching team
-              </span>
-              {siteConfig.demoMode && (
-                <span className="px-2.5 py-0.5 rounded-full bg-[#0F2329] border border-[#1E3840] text-[11px] text-[#B7C4C8]">
-                  Sample content
-                </span>
-              )}
-            </div>
+            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-2 block">
+              Coaching team
+            </span>
             <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white">
               Our trainers
             </h2>

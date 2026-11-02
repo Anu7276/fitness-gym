@@ -678,17 +678,11 @@ export function TwentyFourHours() {
                   <span className="font-heading text-xs uppercase tracking-wider text-[#B7C4C8] font-semibold">
                     {mode === "now" ? "Current Time Routine" : "Scheduled Focus"}
                   </span>
-                  {mode === "now" ? (
+                  {mode === "now" && (
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#25D366]/15 border border-[#25D366]/40 text-[11px] font-heading uppercase tracking-wider text-[#25D366]">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-ping" />
                       Open Now
                     </span>
-                  ) : (
-                    siteConfig.demoMode && (
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#0A1A1F] border border-[#1E3840] text-[11px] font-mono text-[#B7C4C8]">
-                        Sample schedule
-                      </span>
-                    )
                   )}
                 </div>
 

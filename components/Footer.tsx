@@ -66,11 +66,6 @@ export function Footer() {
               <h4 className="font-heading text-xs uppercase tracking-wider text-white font-semibold">
                 Find Us
               </h4>
-              {siteConfig.demoMode && (
-                <span className="text-[11px] font-body text-[#B7C4C8]/80 bg-[#0F2329] px-2 py-0.5 rounded border border-[#1E3840]">
-                  Sample location
-                </span>
-              )}
             </div>
             <p className="font-body text-sm text-[#B7C4C8] leading-relaxed">
               {siteConfig.contact.address}

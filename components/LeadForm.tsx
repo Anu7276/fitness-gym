@@ -119,11 +119,6 @@ export function LeadForm({ source = "Website", defaultProgram }: LeadFormProps) 
           <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8]">
             Complimentary access
           </span>
-          {siteConfig.demoMode && (
-            <span className="px-2 py-0.5 rounded-full bg-[#0A1A1F] border border-[#1E3840] text-[11px] text-[#B7C4C8]">
-              Sample offer
-            </span>
-          )}
         </div>
         <h3 className="font-heading text-2xl font-bold text-white">
           Claim your 1-day pass

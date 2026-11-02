@@ -15,16 +15,9 @@ function FreeTrialContent() {
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-14 md:mb-18">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8]">
-              Free pass
-            </span>
-            {siteConfig.demoMode && (
-              <span className="px-2.5 py-0.5 rounded-full bg-[#0F2329] border border-[#1E3840] text-[11px] text-[#B7C4C8]">
-                Sample offer
-              </span>
-            )}
-          </div>
+          <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-3">
+            Free pass
+          </span>
           <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4">
             Claim your 1-day pass
           </h1>

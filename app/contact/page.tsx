@@ -70,14 +70,6 @@ export default function ContactPage() {
           {/* Left Column: Direct Info (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-8 flex flex-col gap-6">
-              {siteConfig.demoMode && (
-                <div className="pb-4 border-b border-[#1E3840]">
-                  <span className="inline-block px-2.5 py-1 rounded text-[11px] font-mono uppercase tracking-wider bg-white/5 border border-[#1E3840] text-[#B7C4C8]/80">
-                    Sample contact details
-                  </span>
-                </div>
-              )}
-
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
                   <MapPin className="w-5 h-5" />

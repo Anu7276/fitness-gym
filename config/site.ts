@@ -74,7 +74,7 @@ export interface TimeSlotItem {
 
 export const siteConfig = {
   // SETTINGS
-  demoMode: true, // Shows subtle "Sample content" tag on unverified client items
+  demoMode: false,
   timezone: "Asia/Kolkata",
   loader: {
     enabled: true,
