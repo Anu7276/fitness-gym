@@ -184,38 +184,41 @@ export function Preloader({ onComplete }: PreloaderProps) {
     >
       <span className="sr-only">Loading {brandName}...</span>
 
-      <div className="flex flex-col items-center max-w-lg w-full px-6 text-center">
+      <div className="flex flex-col items-center max-w-2xl w-full px-4 text-center">
         {/* Letter by letter wordmark with clean spacing */}
-        <div ref={wordmarkRef} className="flex items-center gap-1 mb-3 sm:mb-5 overflow-hidden">
+        <div ref={wordmarkRef} className="flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-3 overflow-hidden">
           {brandName.split("").map((char, index) => (
             <span
               key={index}
-              className="letter inline-block font-heading text-3xl sm:text-4xl font-extrabold tracking-wider text-white uppercase"
+              className="letter inline-block font-heading text-3xl sm:text-4xl md:text-5xl font-black tracking-widest text-white uppercase drop-shadow-[0_2px_14px_rgba(255,255,255,0.25)]"
             >
               {char}
             </span>
           ))}
         </div>
 
-        {/* REAL 3D DUMBBELL (Three.js WebGL with PBR Materials & GSAP 3D Rotation) */}
+        {/* REAL 3D DUMBBELL CENTERPIECE with glowing atmospheric aura */}
         <div
           ref={dumbbellWrapperRef}
-          className="w-full flex items-center justify-center mb-2 sm:mb-3"
+          className="relative w-full flex items-center justify-center my-1 sm:my-2"
         >
+          {/* Crimson Atmospheric Backlight Glow */}
+          <div className="absolute w-[280px] sm:w-[440px] md:w-[520px] h-[150px] sm:h-[200px] md:h-[240px] rounded-full bg-gradient-to-r from-[#F21B35]/25 via-[#F21B35]/40 to-[#FF334B]/20 blur-[55px] pointer-events-none -z-10 animate-pulse" />
+
           <Dumbbell3D />
         </div>
 
         {/* Tabular-number counter 00 to 100 with clear separation */}
-        <div className="font-heading tabular-nums text-base font-bold tracking-widest text-white mb-2 flex items-center justify-center">
+        <div className="font-heading tabular-nums text-base sm:text-lg font-bold tracking-widest text-white mb-2 flex items-center justify-center">
           <span ref={counterRef}>00</span>
           <span className="text-[#F21B35] font-semibold text-xs ml-1">%</span>
         </div>
 
         {/* Crimson Progress Track Line */}
-        <div className="w-48 sm:w-56 h-[3px] bg-[#1E3840] rounded-full relative overflow-hidden mb-5">
+        <div className="w-56 sm:w-64 h-[3.5px] bg-[#1E3840] rounded-full relative overflow-hidden mb-5">
           <div
             ref={progressLineRef}
-            className="h-full bg-gradient-to-r from-[#F21B35] to-[#FF4D63] rounded-full transition-all duration-75 shadow-[0_0_12px_rgba(242,27,53,0.8)]"
+            className="h-full bg-gradient-to-r from-[#F21B35] via-[#FF334B] to-[#FF6B7D] rounded-full transition-all duration-75 shadow-[0_0_15px_rgba(242,27,53,0.9)]"
             style={{ width: "0%" }}
           />
         </div>
