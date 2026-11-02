@@ -96,6 +96,24 @@ body {
   display: block;
 }
 
+/* 3D horizontal dumbbell rotation (left-to-right) */
+@keyframes dumbbell-rotate-3d {
+  0% {
+    transform: perspective(900px) rotateY(0deg) rotateX(4deg);
+  }
+  50% {
+    transform: perspective(900px) rotateY(180deg) rotateX(-4deg);
+  }
+  100% {
+    transform: perspective(900px) rotateY(360deg) rotateX(4deg);
+  }
+}
+
+.animate-dumbbell-3d {
+  transform-style: preserve-3d;
+  animation: dumbbell-rotate-3d 3.0s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
 /* Container constraints: 12-column grid, max-width 1240px */
 .content-container {
   max-width: 1240px;
