@@ -261,3 +261,4 @@ export const galleryMedia: GalleryItem[] = [
     description: "High-pressure hot rainfall showers, vanity stations, hair dryers, and complimentary towel service.",
   },
 ];
+

@@ -109,7 +109,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
   return (
     <section
       ref={containerRef}
-      className="relative w-full min-h-[100svh] py-24 sm:py-28 flex flex-col items-center justify-center overflow-hidden bg-[#0A1A1F]"
+      className="relative w-full min-h-[85svh] py-14 lg:py-20 flex flex-col items-center justify-center overflow-hidden bg-[#0A1A1F]"
     >
       {/* Background Media with multi-stage zoomout and overlays */}
       <div

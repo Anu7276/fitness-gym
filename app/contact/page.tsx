@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { siteConfig } from "@/config/site";
 import { MapPin, Phone, Mail, Clock, Check, Loader2, Navigation } from "lucide-react";
+import { FaqSection } from "@/components/home/FaqSection";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -322,6 +323,11 @@ export default function ContactPage() {
               </form>
             )}
           </div>
+        </div>
+
+        {/* Frequently Asked Questions */}
+        <div className="mt-20 pt-16 border-t border-[#1E3840]/60">
+          <FaqSection />
         </div>
       </div>
     </main>

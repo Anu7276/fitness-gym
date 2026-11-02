@@ -17,3 +17,4 @@ export const metadata: Metadata = {
 export default function TransformationsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
+

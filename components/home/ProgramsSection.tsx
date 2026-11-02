@@ -10,172 +10,106 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function ProgramsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const photoBandRef = useRef<HTMLDivElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  // Take only top 3 programs for the home preview
+  const previewPrograms = siteConfig.programs.slice(0, 3);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const triggers: ScrollTrigger[] = [];
-
-    // 1. Expandable photo band: starts inset (~70% width, 24px radius) scaling to full width
-    if (photoBandRef.current && sectionRef.current) {
-      const bandTween = gsap.fromTo(
-        photoBandRef.current,
-        { width: "70%", borderRadius: "24px" },
-        {
-          width: "100%",
-          borderRadius: "0px",
-          ease: "none",
-          scrollTrigger: {
-            trigger: photoBandRef.current,
-            start: "top 80%",
-            end: "top 25%",
-            scrub: true,
-          },
-        }
-      );
-      if (bandTween.scrollTrigger) triggers.push(bandTween.scrollTrigger);
-    }
-
-    // 2. Scroll-Driven Staggered Entrance on Program Cards
     const cards = cardsContainerRef.current?.querySelectorAll<HTMLElement>(".program-card");
     if (cards && cards.length > 0 && cardsContainerRef.current) {
-      const cardsTween = gsap.fromTo(
+      gsap.fromTo(
         cards,
-        {
-          opacity: 0,
-          y: 60,
-          scale: 0.95,
-        },
+        { opacity: 0, y: 40, scale: 0.96 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.85,
+          duration: 0.7,
           stagger: 0.12,
           ease: "power3.out",
           scrollTrigger: {
             trigger: cardsContainerRef.current,
-            start: "top 82%",
+            start: "top 85%",
             toggleActions: "play none none reverse",
           },
         }
       );
-      if (cardsTween.scrollTrigger) triggers.push(cardsTween.scrollTrigger);
-
-      // 3. Live Parallax Scrub on each Card's Inner Image
-      cards.forEach((card) => {
-        const img = card.querySelector<HTMLElement>(".program-card-img");
-        if (img) {
-          const parallaxTween = gsap.fromTo(
-            img,
-            { yPercent: -12, scale: 1.15 },
-            {
-              yPercent: 12,
-              scale: 1.05,
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 0.8,
-              },
-            }
-          );
-          if (parallaxTween.scrollTrigger) triggers.push(parallaxTween.scrollTrigger);
-        }
-      });
     }
 
     return () => {
-      triggers.forEach((t) => t.kill());
+      ScrollTrigger.getAll().forEach((st) => {
+        if (st.vars.trigger === cardsContainerRef.current || st.vars.trigger === sectionRef.current) {
+          st.kill();
+        }
+      });
     };
   }, []);
 
   return (
-    <section ref={sectionRef} id="programs" className="w-full py-16 md:py-28 bg-[#0A1A1F] text-white">
+    <section
+      ref={sectionRef}
+      id="programs"
+      className="w-full py-14 lg:py-20 bg-[#0A1A1F] text-white"
+    >
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-14 md:mb-20">
-          <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-3 block">
-            Training programs
-          </span>
-          <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4 leading-[1.05]">
-            Six programs, one membership
-          </h2>
-          <p className="font-body text-[15px] text-[#B7C4C8] max-w-lg leading-relaxed">
-            Targeted workouts designed for real progress. All included with Pro and Elite memberships.
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-2 block">
+              Training programs
+            </span>
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.05]">
+              Targeted Programs
+            </h2>
+          </div>
+          <p className="font-body text-sm md:text-[15px] text-[#B7C4C8] max-w-md leading-relaxed">
+            Progressive overload, high-energy cardio, and restorative mobility. Led by certified coaches.
           </p>
         </div>
 
-        {/* Expandable Photo Band */}
-        <div className="w-full flex justify-center mb-16 overflow-hidden">
-          <div
-            ref={photoBandRef}
-            className="relative h-60 md:h-80 overflow-hidden border border-[#1E3840] shadow-2xl mx-auto flex items-center justify-center will-change-transform"
-          >
-            <Image
-              src="/images/band-programs.jpg"
-              alt="FITNESSGYM open training floor"
-              fill
-              sizes="(max-width: 1240px) 100vw, 1240px"
-              className="object-cover filter brightness-[0.75] contrast-[1.05]"
-            />
-            <div className="absolute inset-0 bg-[#0A1A1F]/40 pointer-events-none" />
-            <div className="relative z-10 text-center px-6">
-              <span className="font-heading text-xs uppercase tracking-wider text-white bg-[#0A1A1F]/80 px-3.5 py-1.5 rounded-full border border-[#1E3840]">
-                All skill levels welcome
-              </span>
-              <h3 className="font-heading text-2xl md:text-4xl font-bold text-white mt-3">
-                Coached by certified trainers in dedicated zones
-              </h3>
-            </div>
-          </div>
-        </div>
-
-        {/* 3x2 Grid of 6 Program Cards with Scroll Entrance and Parallax */}
+        {/* 3 Program Cards: Horizontal scroll-snap on mobile, 3-column grid on desktop */}
         <div
           ref={cardsContainerRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 -mx-6 px-6 no-scrollbar md:grid md:grid-cols-3 md:gap-8 md:mx-0 md:px-0 md:pb-0"
         >
-          {siteConfig.programs.map((program) => (
+          {previewPrograms.map((program) => (
             <article
               key={program.id}
-              className="program-card bg-[#0F2329] border border-[#1E3840] rounded-card flex flex-col overflow-hidden group hover:border-[#F21B35]/70 hover:shadow-[0_16px_36px_rgba(242,27,53,0.18)] hover:-translate-y-2 transition-all duration-300 will-change-transform"
+              className="program-card w-[82vw] shrink-0 snap-center md:w-auto bg-[#0F2329] border border-[#1E3840] rounded-card flex flex-col overflow-hidden group hover:border-[#F21B35]/70 hover:shadow-[0_12px_32px_rgba(242,27,53,0.18)] hover:-translate-y-1.5 transition-all duration-300"
             >
-              {/* Photo: sharp 0px corners, with scroll-driven parallax bleed */}
-              <div className="w-full h-64 relative overflow-hidden rounded-none border-b border-[#1E3840] bg-[#0A1A1F]">
-                <div className="program-card-img absolute -inset-y-6 inset-x-0 w-full h-[calc(100%+48px)] will-change-transform">
-                  <Image
-                    src={program.image}
-                    alt={program.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover filter brightness-[0.92] contrast-[1.05] rounded-none group-hover:scale-105 transition-transform duration-500 ease-out"
-                  />
-                </div>
+              {/* Card Image: aspect-[4/3] */}
+              <div className="relative w-full aspect-[4/3] overflow-hidden rounded-none border-b border-[#1E3840] bg-[#0A1A1F]">
+                <Image
+                  src={program.image}
+                  alt={program.name}
+                  fill
+                  sizes="(max-width: 768px) 85vw, 33vw"
+                  className="object-cover filter brightness-[0.92] contrast-[1.05] rounded-none group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
                 <div className="absolute inset-0 bg-[#0A1A1F]/20 group-hover:bg-[#0A1A1F]/35 transition-colors duration-300 pointer-events-none" />
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="bg-[#0A1A1F]/90 border border-[#1E3840] rounded-full px-3 py-1 font-body text-xs text-white">
+                <div className="absolute top-3.5 left-3.5 z-10">
+                  <span className="bg-[#0A1A1F]/90 border border-[#1E3840] rounded-full px-2.5 py-0.5 font-body text-xs text-white">
                     {program.category}
                   </span>
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-6 md:p-8 flex flex-col flex-1 justify-between">
+              <div className="p-6 md:p-7 flex flex-col flex-1 justify-between">
                 <div>
-                  <h3 className="font-heading text-2xl font-bold text-white mb-2 group-hover:text-[#F21B35] transition-colors duration-200">
+                  <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-[#F21B35] transition-colors duration-200 leading-[1.05]">
                     {program.name}
                   </h3>
-                  <p className="font-body text-[14px] text-[#B7C4C8] leading-relaxed mb-6">
+                  <p className="font-body text-xs md:text-sm text-[#B7C4C8] leading-relaxed mb-6 line-clamp-2">
                     {program.tagline}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#1E3840]/60 flex items-center justify-between">
-                  <span className="font-body text-xs text-[#B7C4C8]">
+                <div className="pt-3.5 border-t border-[#1E3840]/60 flex items-center justify-between">
+                  <span className="font-body text-xs text-[#7B8E94]">
                     {program.duration}
                   </span>
                   <TransitionLink
@@ -190,6 +124,18 @@ export function ProgramsSection() {
               </div>
             </article>
           ))}
+        </div>
+
+        {/* View All Programs CTA */}
+        <div className="mt-8 md:mt-12 flex justify-center">
+          <TransitionLink
+            href="/programs"
+            title="All Programs"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[#1E3840] bg-[#0F2329] text-white font-heading text-xs uppercase tracking-widest font-semibold hover:border-white hover:bg-white hover:text-[#0A1A1F] transition-all duration-300 shadow-lg min-h-[44px]"
+          >
+            <span>View All Programs (6)</span>
+            <ArrowRight className="w-4 h-4 text-[#F21B35]" />
+          </TransitionLink>
         </div>
       </div>
     </section>
