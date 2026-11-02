@@ -89,20 +89,10 @@ export function Footer() {
           <div>
             © {new Date().getFullYear()} {siteConfig.brand.legalName}. All rights reserved.
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-[#B7C4C8]">
-            <TransitionLink href="/privacy" title="Privacy Policy" className="hover:text-white transition-colors">
-              Privacy Policy
-            </TransitionLink>
+          <div className="flex items-center gap-4">
+            <span>Waghodia Road, Vadodara, Gujarat</span>
             <span>•</span>
-            <TransitionLink href="/terms" title="Terms of Service" className="hover:text-white transition-colors">
-              Terms &amp; Conditions
-            </TransitionLink>
-            <span>•</span>
-            <TransitionLink href="/refund-policy" title="Refund & Freeze Policy" className="hover:text-white transition-colors">
-              Refund &amp; Freeze Policy
-            </TransitionLink>
-            <span>•</span>
-            <span className="text-[#25D366] font-medium">Open 24/7/365</span>
+            <span className="text-white">Open 24/7/365</span>
           </div>
         </div>
       </div>

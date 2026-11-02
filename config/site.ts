@@ -1,5 +1,3 @@
-export * from "./content";
-
 export const fonts = {
   heading: "var(--font-heading)",
   body: "var(--font-body)",
@@ -140,12 +138,8 @@ export const siteConfig = {
   navigation: [
     { name: "Home", href: "/", title: "Home" },
     { name: "Programs", href: "/programs", title: "Programs" },
-    { name: "Timetable", href: "/schedule", title: "Class Timetable" },
     { name: "Trainers", href: "/trainers", title: "Trainers" },
-    { name: "Facility", href: "/gym", title: "Gym Facility" },
-    { name: "Results", href: "/transformations", title: "Member Transformations" },
-    { name: "Gallery", href: "/gallery", title: "Photo & Video Gallery" },
-    { name: "Calculator", href: "/calculator", title: "BMI & Calorie Calculator" },
+    { name: "Gym", href: "/gym", title: "Facility" },
     { name: "Pricing", href: "/pricing", title: "Membership" },
     { name: "Contact", href: "/contact", title: "Contact" },
   ],

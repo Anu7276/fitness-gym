@@ -1,2 +1,4 @@
-export * from "./config/site";
-export { siteConfig as default } from "./config/site";
+import { siteConfig, fonts } from "./config/site";
+
+export { siteConfig, fonts };
+export default siteConfig;
