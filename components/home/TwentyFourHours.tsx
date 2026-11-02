@@ -11,14 +11,15 @@ import { Clock, Sun, Moon, ArrowRight, RotateCcw } from "lucide-react";
 // The 6 exact preview slots from config
 const PREVIEW_SLOTS: TimeSlotItem[] = siteConfig.daySchedule as TimeSlotItem[];
 
-// Target modulo hour angles for the 6 slots (Minute hand is always 0 / 360 at :00)
-// 04:00 AM: (4 % 12) * 30 = 120°
-// 07:00 AM: (7 % 12) * 30 = 210°
-// 10:00 AM: (10 % 12) * 30 = 300°
-// 02:00 PM: (2 % 12) * 30 = 60°
-// 06:00 PM: (6 % 12) * 30 = 180°
-// 11:00 PM: (11 % 12) * 30 = 330°
-const SLOT_BASE_HOUR_ANGLES = [120, 210, 300, 60, 180, 330];
+// Cumulative angles across the 6 day slots (supports both clockwise & anticlockwise rotation):
+// Slot 0 (04:00 AM): 120°
+// Slot 1 (07:00 AM): 210°
+// Slot 2 (10:00 AM): 300°
+// Slot 3 (02:00 PM): 420°
+// Slot 4 (06:00 PM): 540°
+// Slot 5 (11:00 PM): 690°
+const SLOT_CUMULATIVE_HOURS = [120, 210, 300, 420, 540, 690];
+const SLOT_CUMULATIVE_MINUTES = [0, 360, 720, 1080, 1440, 1800];
 
 // Computes current time in siteConfig timezone (default Asia/Kolkata)
 function getZonedTime(timeZone = siteConfig.timezone || "Asia/Kolkata"): {
@@ -101,11 +102,8 @@ export function TwentyFourHours() {
     return { formattedTime: z.formattedTime, period: z.period, isDaytime: z.isDaytime };
   });
 
-  // Track cumulative angles so hands always turn clockwise without snapping
-  const cumulativeAngles = useRef({
-    hour: SLOT_BASE_HOUR_ANGLES[0], // starts at 120
-    minute: 0,
-  });
+  // Track previous slot to animate clockwise forward and anticlockwise backward
+  const prevSlotRef = useRef(0);
 
   const isProgrammaticScroll = useRef(false);
   const rafId = useRef<number | null>(null);
@@ -116,35 +114,27 @@ export function TwentyFourHours() {
   const currentSlot: TimeSlotItem = PREVIEW_SLOTS[activeIndex] ?? PREVIEW_SLOTS[0];
   const activeBg = mode === "now" ? PREVIEW_SLOTS[getClosestSlotIndex(getZonedTime().hours)].ambientColor : currentSlot.ambientColor;
 
-  // Animate hands smoothly to a preview slot (clockwise cumulative movement)
+  // Animate hands smoothly: clockwise when scrolling down, anticlockwise when scrolling up!
   const animateHandsToSlot = useCallback((targetSlotIndex: number) => {
-    const targetBaseHour = SLOT_BASE_HOUR_ANGLES[targetSlotIndex];
-    const curHour = cumulativeAngles.current.hour;
-    const curModHour = ((curHour % 360) + 360) % 360;
+    const prevSlot = prevSlotRef.current;
+    prevSlotRef.current = targetSlotIndex;
 
-    // Clockwise difference for hour hand
-    let deltaHour = (targetBaseHour - curModHour + 360) % 360;
-    if (deltaHour === 0 && targetSlotIndex !== activeIndexRef.current) {
-      deltaHour = 360;
-    }
+    const targetHour = SLOT_CUMULATIVE_HOURS[targetSlotIndex];
+    const targetMinute = SLOT_CUMULATIVE_MINUTES[targetSlotIndex];
 
-    const nextCumulativeHour = curHour + deltaHour;
-    cumulativeAngles.current.hour = nextCumulativeHour;
-
-    // Calm, slow rotation: only 1 smooth 360° rotation at most instead of multiple rapid spins
-    const nextCumulativeMinute = cumulativeAngles.current.minute + (deltaHour > 0 ? 360 : 0);
-    cumulativeAngles.current.minute = nextCumulativeMinute;
+    const diffSlots = Math.abs(targetSlotIndex - prevSlot);
+    const duration = Math.min(1.8, Math.max(0.7, 0.5 + diffSlots * 0.25));
 
     if (hourHandRef.current && minuteHandRef.current) {
       gsap.to(hourHandRef.current, {
-        rotation: nextCumulativeHour,
-        duration: 1.8,
+        rotation: targetHour,
+        duration: duration,
         ease: "power2.out",
         svgOrigin: "150 150",
       });
       gsap.to(minuteHandRef.current, {
-        rotation: nextCumulativeMinute,
-        duration: 2.2,
+        rotation: targetMinute,
+        duration: duration + 0.15,
         ease: "power2.out",
         svgOrigin: "150 150",
       });
@@ -269,7 +259,7 @@ export function TwentyFourHours() {
     // Initial hand positioning
     if (hourHandRef.current && minuteHandRef.current) {
       gsap.set(hourHandRef.current, {
-        rotation: SLOT_BASE_HOUR_ANGLES[0],
+        rotation: SLOT_CUMULATIVE_HOURS[0],
         svgOrigin: "150 150",
       });
       gsap.set(minuteHandRef.current, {
