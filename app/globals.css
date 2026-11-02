@@ -31,35 +31,11 @@ html.is-loading body {
 
 body {
   background-color: var(--bg-ink);
-  color: #E5E5E5;
+  color: var(--text-grey);
   overflow-x: hidden;
   min-height: 100vh;
-  font-size: 17px;
+  font-size: 15px; /* Minimum text size 14px for body */
   line-height: 1.6;
-}
-
-/* Typography defaults per design rules */
-h1, h2, h3, h4, h5, h6, .font-heading {
-  text-transform: uppercase;
-  line-height: 1.05;
-}
-
-.eyebrow-label {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: #F21B35;
-  font-weight: 600;
-}
-
-/* Guard against wrap beyond 3 lines on small viewport (375px) */
-@media (max-width: 375px) {
-  h1, h2, h3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
 }
 
 ::selection {

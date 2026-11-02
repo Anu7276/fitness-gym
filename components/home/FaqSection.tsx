@@ -20,13 +20,13 @@ export function FaqSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left Column (5 Cols): Heading & Contact Prompt */}
           <div className="lg:col-span-5 flex flex-col justify-start">
-            <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-3 block">
+            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-3">
               FAQ
             </span>
-            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.05]">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-6">
               Frequently asked questions
             </h2>
-            <p className="font-body text-[17px] text-[#E5E5E5] leading-[1.6] mb-8">
+            <p className="font-body text-[15px] text-[#B7C4C8] leading-relaxed mb-8">
               Everything you need to know about our Waghodia gym, hours, memberships, and trial passes.
             </p>
             <div className="p-6 bg-[#0F2329] border border-[#1E3840] rounded-card">
@@ -83,7 +83,7 @@ export function FaqSection() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <div className="px-6 pb-6 pt-1 text-[15px] font-body text-[#E5E5E5] leading-[1.6] border-t border-[#1E3840]/60">
+                        <div className="px-6 pb-6 pt-1 text-[14px] font-body text-[#B7C4C8] leading-relaxed border-t border-[#1E3840]/60">
                           {faq.answer}
                         </div>
                       </motion.div>

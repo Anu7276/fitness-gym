@@ -98,10 +98,10 @@ export function ProgramsSection() {
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-14 md:mb-20">
-          <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-3 block">
+          <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-3">
             Training programs
           </span>
-          <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4 leading-[1.05]">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
             Six programs, one membership
           </h2>
           <p className="font-body text-[15px] text-[#B7C4C8] max-w-lg leading-relaxed">

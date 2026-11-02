@@ -5,7 +5,6 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Clock, ShieldCheck, Award, Star } from "lucide-react";
 
 export function Intro() {
   const containerRef = useRef<HTMLElement>(null);
@@ -14,8 +13,6 @@ export function Intro() {
   const statRef = useRef<HTMLDivElement>(null);
   const [hasCounted, setHasCounted] = useState(false);
   const [displayYears, setDisplayYears] = useState(0);
-  const [displayMembers, setDisplayMembers] = useState(0);
-  const [displayTrainers, setDisplayTrainers] = useState(0);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -47,24 +44,20 @@ export function Intro() {
       });
     }
 
-    // Count-up animation for stats
+    // Count-up animation for verified 10 years
     if (statRef.current && !hasCounted) {
       ScrollTrigger.create({
         trigger: statRef.current,
         start: "top 85%",
         onEnter: () => {
           setHasCounted(true);
-          const obj = { years: 0, members: 0, trainers: 0 };
+          const obj = { val: 0 };
           gsap.to(obj, {
-            years: 10,
-            members: 2500,
-            trainers: 12,
-            duration: 1.5,
+            val: 10,
+            duration: 1.4,
             ease: "power2.out",
             onUpdate: () => {
-              setDisplayYears(Math.round(obj.years));
-              setDisplayMembers(Math.round(obj.members));
-              setDisplayTrainers(Math.round(obj.trainers));
+              setDisplayYears(Math.round(obj.val));
             },
           });
         },
@@ -88,91 +81,39 @@ export function Intro() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column (5 Cols): Plain English Editorial Content */}
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-3 block">
+            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-3">
               About us
             </span>
 
-            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.05] mb-6">
-              A Modern Gym Built For Real Progress
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-6">
+              {siteConfig.brand.yearsOfExcellence}
             </h2>
 
-            {/* 3 Short Benefit Lines */}
-            <div className="flex flex-col gap-3.5 mb-8">
-              <div className="flex items-start gap-3 bg-[#0F2329]/90 border border-[#1E3840] rounded-xl p-3.5">
-                <div className="w-8 h-8 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0 font-heading font-bold text-xs">
-                  <Clock className="w-4 h-4 text-[#F21B35]" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-base font-bold text-white uppercase leading-[1.05]">
-                    Open 24/7
-                  </h3>
-                  <p className="font-body text-sm text-[#E5E5E5] mt-0.5 leading-relaxed">
-                    Train whenever you want with secure biometric fingerprint access.
-                  </p>
-                </div>
-              </div>
+            <p className="font-body text-[15px] text-[#B7C4C8] leading-relaxed mb-4">
+              {siteConfig.brand.aboutSummary}
+            </p>
 
-              <div className="flex items-start gap-3 bg-[#0F2329]/90 border border-[#1E3840] rounded-xl p-3.5">
-                <div className="w-8 h-8 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
-                  <Award className="w-4 h-4 text-[#F21B35]" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-base font-bold text-white uppercase leading-[1.05]">
-                    Certified coaches
-                  </h3>
-                  <p className="font-body text-sm text-[#E5E5E5] mt-0.5 leading-relaxed">
-                    Personal guidance on lifting form, injury prevention, and nutrition.
-                  </p>
-                </div>
-              </div>
+            <p className="font-body text-[15px] text-[#B7C4C8] leading-relaxed mb-8">
+              Whether you are lifting for the first time or training for peak athletic performance, our
+              certified coaches and dedicated workout zones give you the structure to reach your goals.
+            </p>
 
-              <div className="flex items-start gap-3 bg-[#0F2329]/90 border border-[#1E3840] rounded-xl p-3.5">
-                <div className="w-8 h-8 rounded-full bg-[#0A1A1F] border border-[#1E3840] flex items-center justify-center text-[#F21B35] shrink-0">
-                  <ShieldCheck className="w-4 h-4 text-[#F21B35]" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-base font-bold text-white uppercase leading-[1.05]">
-                    Zero hidden fees
-                  </h3>
-                  <p className="font-body text-sm text-[#E5E5E5] mt-0.5 leading-relaxed">
-                    Transparent pricing, no lock-in contracts, and zero surprise charges.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Stat Counters: years, members, trainers, Google rating */}
-            <div ref={statRef} className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-[#1E3840]">
+            {/* Verified Numbers Only (Single Source of Truth) */}
+            <div ref={statRef} className="grid grid-cols-2 gap-8 pt-6 border-t border-[#1E3840]">
               <div>
-                <div className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.05]">
-                  {displayYears || 10}+
+                <div className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight">
+                  {displayYears || 10}
                 </div>
                 <div className="font-body text-xs text-[#B7C4C8] mt-1">
-                  Years
+                  Years of excellence in Vadodara
                 </div>
               </div>
               <div>
-                <div className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.05]">
-                  {displayMembers ? displayMembers.toLocaleString("en-IN") : "2,500"}+
+                <div className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight">
+                  24 / 7
                 </div>
                 <div className="font-body text-xs text-[#B7C4C8] mt-1">
-                  Members
-                </div>
-              </div>
-              <div>
-                <div className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.05]">
-                  {displayTrainers || 12}+
-                </div>
-                <div className="font-body text-xs text-[#B7C4C8] mt-1">
-                  Trainers
-                </div>
-              </div>
-              <div>
-                <div className="font-heading text-3xl sm:text-4xl font-bold text-[#F21B35] tracking-tight leading-[1.05] flex items-center gap-1">
-                  4.9 <Star className="w-4 h-4 fill-[#F21B35] stroke-none inline -mt-1" />
-                </div>
-                <div className="font-body text-xs text-[#B7C4C8] mt-1">
-                  Google Rating
+                  Open round-the-clock keyless access
                 </div>
               </div>
             </div>

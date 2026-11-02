@@ -32,10 +32,10 @@ export function ReviewsSection() {
         {/* Section Header with Google-Style Rating Badge */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-2 block">
+            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-2 block">
               Member reviews
             </span>
-            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.05]">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white">
               What our members say
             </h2>
           </div>
@@ -48,7 +48,7 @@ export function ReviewsSection() {
               ))}
             </div>
             <span className="font-heading text-xs font-semibold uppercase tracking-wider text-white">
-              4.9 rating on Google • 500+ Reviews
+              5.0 rating on Google • Vadodara
             </span>
           </div>
         </div>
@@ -61,7 +61,7 @@ export function ReviewsSection() {
           onTouchEnd={() => setIsPaused(false)}
           className="relative max-w-3xl mx-auto"
         >
-          <div className="min-h-[240px] flex items-center">
+          <div className="min-h-[220px] flex items-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={reviews[currentIndex].id}
@@ -71,16 +71,11 @@ export function ReviewsSection() {
                 transition={{ duration: 0.35 }}
                 className="w-full bg-[#0F2329] border border-[#1E3840] rounded-card p-8 md:p-10 shadow-xl"
               >
-                {/* Star Row & Goal Result Badge */}
-                <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-                  <div className="flex gap-1 text-[#F21B35]">
-                    {[...Array(reviews[currentIndex].rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-[#F21B35] stroke-none" />
-                    ))}
-                  </div>
-                  <span className="px-3 py-1 rounded-full bg-[#F21B35]/15 border border-[#F21B35]/40 text-xs font-heading uppercase tracking-wider text-[#F21B35] font-semibold">
-                    🎯 {reviews[currentIndex].goalResult}
-                  </span>
+                {/* Star Row */}
+                <div className="flex gap-1 mb-5 text-[#F21B35]">
+                  {[...Array(reviews[currentIndex].rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#F21B35] stroke-none" />
+                  ))}
                 </div>
 
                 {/* Quote */}
@@ -91,21 +86,16 @@ export function ReviewsSection() {
                 {/* Author Info */}
                 <div className="flex items-center justify-between border-t border-[#1E3840] pt-5">
                   <div>
-                    <h4 className="font-heading text-base font-bold text-white leading-[1.05]">
+                    <h4 className="font-heading text-base font-bold text-white">
                       {reviews[currentIndex].author}
                     </h4>
-                    <p className="font-body text-xs text-[#B7C4C8] mt-0.5">
+                    <p className="font-body text-xs text-[#B7C4C8]">
                       {reviews[currentIndex].role}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <span className="font-body text-xs text-[#25D366] font-medium block">
-                      {reviews[currentIndex].duration}
-                    </span>
-                    <span className="font-body text-[11px] text-[#7B8E94]">
-                      {reviews[currentIndex].date}
-                    </span>
-                  </div>
+                  <span className="font-body text-xs text-[#B7C4C8]/70">
+                    {reviews[currentIndex].date}
+                  </span>
                 </div>
               </motion.div>
             </AnimatePresence>

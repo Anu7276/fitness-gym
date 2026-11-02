@@ -1,8 +1,3 @@
-export const fonts = {
-  heading: "var(--font-heading)",
-  body: "var(--font-body)",
-};
-
 export interface ProgramItem {
   id: string;
   name: string;
@@ -24,7 +19,6 @@ export interface TrainerItem {
   role: string;
   experience: string;
   speciality: string;
-  certifications: string[];
   image: string;
   bio: string;
   isSample?: boolean;
@@ -37,7 +31,6 @@ export interface PricingPlan {
   price: number;
   period: string;
   periodLabel: string;
-  perMonthApprox?: string;
   popular?: boolean;
   description: string;
   features: string[];
@@ -47,8 +40,6 @@ export interface TestimonialItem {
   id: string;
   author: string;
   role: string;
-  goalResult: string;
-  duration: string;
   quote: string;
   rating: number;
   date?: string;
@@ -85,30 +76,24 @@ export const siteConfig = {
   // SETTINGS
   demoMode: false,
   timezone: "Asia/Kolkata",
-  fonts: {
-    heading: "var(--font-heading)",
-    body: "var(--font-body)",
-  },
   loader: {
     enabled: true,
     minDuration: 1.6,
     maxDuration: 2.4,
   },
 
-  // REAL BRAND FACTS
+  // REAL BRAND FACTS (Preserved exactly from source)
   brand: {
     name: "FITNESSGYM",
     legalName: "FITNESSGYM Vadodara",
-    tagline: "Vadodara's 24/7 Gym. Train When You Want.",
-    subline: "Pro coaches, clean equipment, no lock-in contracts. Try a free day pass.",
-    heroLine1: "Vadodara's 24/7 Gym.",
-    heroLine2: "Train When You Want.",
+    tagline: "Build your stronger self",
+    subline: "Train with purpose. Build strength. Become the best version of yourself.",
     badge: "Open 24/7 • Waghodia, Vadodara",
     foundedYear: 2014,
     yearsOfExcellence: "10 years of excellence in fitness",
     aboutHeading: "A modern gym built for real progress",
     aboutSummary:
-      "For 10 years, FITNESSGYM has been Waghodia's dedicated home for strength, conditioning, and healthy living.",
+      "For 10 years, FITNESSGYM has been Waghodia's dedicated home for strength, conditioning, and healthy living. We combine clean modern equipment, round-the-clock access, and experienced personal coaching in an welcoming environment focused on your personal best.",
     facilityArea: "10,000+ sq.ft training floor",
     accessType: "24/7 keyless access",
   },
@@ -369,56 +354,57 @@ export const siteConfig = {
   ] satisfies TimeSlotItem[],
 
   // TRAINER FACULTY
+  // SAMPLE: replace before delivery with real trainer profiles
   trainers: [
     {
       id: "trainer-1",
       name: "Rajesh Sharma",
       role: "Head Strength Coach",
       experience: "10 years coaching",
-      certifications: ["CSCS", "K11 Master Trainer"],
-      speciality: "Barbell strength, progressive overload & powerlifting form",
+      speciality: "Strength training & barbell technique",
       image: "/images/trainer-1.jpg",
       bio: "Focuses on teaching lifters clean barbell technique, smart progressive overload, and building functional strength.",
+      isSample: true,
     },
     {
       id: "trainer-2",
       name: "Priya Patel",
       role: "Mobility & Yoga Specialist",
       experience: "8 years coaching",
-      certifications: ["RYT-500", "ACE-CPT"],
-      speciality: "Postural realignment, joint mobility & functional yoga flows",
+      speciality: "Joint mobility, posture & yoga",
       image: "/images/trainer-2.jpg",
       bio: "Helps members regain pain-free movement, improve hip and shoulder mobility, and build core stability.",
+      isSample: true,
     },
     {
       id: "trainer-3",
       name: "Vikram Rathore",
       role: "Conditioning & CrossFit Coach",
       experience: "7 years coaching",
-      certifications: ["CrossFit Level 2", "ACSM Conditioning"],
-      speciality: "High-intensity metcons, kettlebells & athletic stamina",
+      speciality: "Aerobic fitness & kettlebell training",
       image: "/images/trainer-3.jpg",
       bio: "Leads fun, high-energy group workouts designed to build athletic endurance, agility, and stamina.",
+      isSample: true,
     },
     {
       id: "trainer-4",
       name: "Neha Mehta",
       role: "Movement & Group Fitness Lead",
       experience: "6 years coaching",
-      certifications: ["ZIN Licensed", "ACE Group Fitness"],
-      speciality: "High-energy dance cardio, core endurance & fat loss",
+      speciality: "Zumba, dance fitness & weight loss",
       image: "/images/trainer-4.jpg",
       bio: "Brings infectious energy to every class, making cardio workouts feel enjoyable and encouraging for beginners.",
+      isSample: true,
     },
     {
       id: "trainer-5",
       name: "Arjun Deshmukh",
       role: "Combat Striking Coach",
       experience: "9 years coaching",
-      certifications: ["WAKO Certified", "AIBA Boxing Coach"],
-      speciality: "Boxing fundamentals, heavy bag drills & combat agility",
+      speciality: "Boxing footwork & martial conditioning",
       image: "/images/trainer-5.jpg",
       bio: "Teaches fundamental striking mechanics and athletic bag workouts that build confidence and reflexes.",
+      isSample: true,
     },
   ],
 
@@ -465,7 +451,6 @@ export const siteConfig = {
       price: 11999,
       period: "year",
       periodLabel: "Per year (12 months)",
-      perMonthApprox: "Works out to about ₹999/month",
       popular: false,
       description: "Complete annual membership with personalized nutrition guidance and VIP perks.",
       features: [
@@ -479,71 +464,32 @@ export const siteConfig = {
     },
   ],
 
-  // 6 REAL VERIFIED TESTIMONIALS
+  // 3 REAL PRESERVED TESTIMONIALS
   testimonials: [
     {
       id: "testimonial-1",
       author: "Aditya Singh",
-      role: "Waghodia Road",
-      goalResult: "Lost 14 kg & gained lean muscle",
-      duration: "Member for 14 months",
+      role: "Member since 2022 • Waghodia",
       quote:
-        "The 24/7 access fits my shift timings perfectly. With coach Rajesh's guidance on barbell lifts, I lost 14 kg and feel stronger than ever.",
+        "FITNESSGYM has completely changed my perspective on fitness. The 24/7 access fits my irregular schedule perfectly, and the trainers are genuinely knowledgeable without being pushy.",
       rating: 5,
       date: "Verified member",
     },
     {
       id: "testimonial-2",
-      author: "Sneha Desai",
-      role: "Vadodara",
-      goalResult: "Cured chronic back pain & built posture",
-      duration: "Member for 8 months",
+      author: "Ved Yadav",
+      role: "Member since 2021 • Vadodara",
       quote:
-        "I joined with terrible desk-job posture and lower back pain. Priya's mobility coaching and yoga classes completely eliminated my pain.",
+        "The best gym facility in Waghodia without question. Top-tier equipment, pristine cleanliness, and an environment that makes you want to push your limits every single day.",
       rating: 5,
       date: "Verified member",
     },
     {
       id: "testimonial-3",
-      author: "Ved Yadav",
-      role: "Vadodara",
-      goalResult: "Increased squat & deadlift by 45 kg",
-      duration: "Member for 2 years",
+      author: "Khushi Yadav",
+      role: "Member since 2023 • Waghodia",
       quote:
-        "Top-tier equipment, calibrated plates, and zero wait times for squat racks even during peak evening hours. The best gym in Vadodara by far.",
-      rating: 5,
-      date: "Verified member",
-    },
-    {
-      id: "testimonial-4",
-      author: "Khushi Patel",
-      role: "Waghodia Road",
-      goalResult: "Dropped 2 dress sizes with Zumba & Yoga",
-      duration: "Member for 10 months",
-      quote:
-        "Neha's Power Zumba classes are incredible! It never feels like a chore, and the welcoming community made me stay consistent for 10 months straight.",
-      rating: 5,
-      date: "Verified member",
-    },
-    {
-      id: "testimonial-5",
-      author: "Rahul Verma",
-      role: "Alkapuri, Vadodara",
-      goalResult: "Completed first Spartan race injury-free",
-      duration: "Member for 1.5 years",
-      quote:
-        "Vikram's CrossFit conditioning workouts took my stamina to an athletic level. The community pushes you forward every single day.",
-      rating: 5,
-      date: "Verified member",
-    },
-    {
-      id: "testimonial-6",
-      author: "Ananya Mehta",
-      role: "Sayajigunj, Vadodara",
-      goalResult: "Built consistent 4x/week gym habit",
-      duration: "Member for 6 months",
-      quote:
-        "As a beginner, I was worried about gym intimidation. The staff gave me a full walkthrough on day one and made me feel completely at home.",
+        "The group classes—especially Elite Yoga and Power Zumba—are incredible. The community is welcoming and the facility feels upscale, secure, and thoughtfully designed.",
       rating: 5,
       date: "Verified member",
     },
@@ -595,55 +541,43 @@ export const siteConfig = {
     },
   ],
 
-  // 8 FREQUENTLY ASKED QUESTIONS (2-3 Sentences Each)
+  // FREQUENTLY ASKED QUESTIONS
   faqs: [
     {
-      id: "faq-location",
-      question: "Where is the gym located, and is parking available?",
+      id: "faq-1",
+      question: "Is FITNESSGYM really open 24 hours every day?",
       answer:
-        "We are located on Waghodia Main Road near Waghodia Chowkdi, right opposite Crystal Plaza in Vadodara. Our facility includes dedicated, well-lit parking for both two-wheelers and cars. It is easily accessible from any part of East Vadodara.",
+        "Yes. Members receive secure biometric fingerprint access to train at any time of the day or night, 365 days a year.",
     },
     {
-      id: "faq-pass",
-      question: "How does the free 1-day pass work, and what is included?",
+      id: "faq-2",
+      question: "Where are you located in Vadodara?",
       answer:
-        "Your free pass gives you complete unrestricted access to all weights, cardio machines, and locker amenities. You can also join any live group class scheduled on that day and get a guided machine orientation from a floor coach. There is zero fee and zero sales pressure.",
+        "We are located on Waghodia Main Road, near Waghodia Chowkdi in Vadodara, with dedicated parking for cars and two-wheelers.",
     },
     {
-      id: "faq-beginners",
-      question: "I am a complete beginner. Will someone guide me on day one?",
+      id: "faq-3",
+      question: "What is included in the Free 1-Day Pass?",
       answer:
-        "Yes, absolutely. Every new visitor receives a personal equipment walkthrough and form demo from our floor trainers. We will show you proper machine settings, safe lifting form, and help you select comfortable starting weights so you feel confident right away.",
+        "You get full access to the gym floor, cardio equipment, and any group fitness class on that day, plus a guided tour from our staff.",
     },
     {
-      id: "faq-pausing",
-      question: "Can I pause or freeze my membership if I travel or get sick?",
+      id: "faq-4",
+      question: "Are personal trainers available for beginners?",
       answer:
-        "Yes, we offer flexible membership hold options to fit your lifestyle. Elite annual members can freeze their membership for up to 30 days at zero extra cost. Pro members can also arrange temporary travel pauses by notifying our front desk team in advance.",
+        "Yes. Every new member receives a free equipment walkthrough. Pro and Elite memberships include regular personal coach consultations.",
     },
     {
-      id: "faq-hygiene",
-      question: "What hygiene and sanitation standards do you follow?",
+      id: "faq-5",
+      question: "Can I pause my membership if I travel?",
       answer:
-        "Our dedicated crew disinfects all benches, bars, and machines throughout the day. Sanitizing wipe stations and hand sanitizers are placed across all training zones, and air purifiers keep the training floor fresh. Locker rooms and hot rainfall showers are deep-cleaned daily.",
+        "Elite members can pause their membership for up to 30 days at no cost. Pro members can arrange pauses with front desk staff.",
     },
     {
-      id: "faq-payments",
-      question: "What payment options are accepted, and are there any hidden fees?",
+      id: "faq-6",
+      question: "What hygiene and safety measures do you have?",
       answer:
-        "We accept all major UPI apps (GPay, PhonePe, Paytm), credit/debit cards, net banking, and cash at the desk. The price listed is all-inclusive with zero surprise registration or locker fees. Easy zero-cost monthly EMI options are also available on annual plans.",
-    },
-    {
-      id: "faq-timings",
-      question: "Is the gym really open 24 hours every day, including Sundays?",
-      answer:
-        "Yes, our doors are open 24 hours a day, 7 days a week, 365 days a year without exceptions. Active members access the facility seamlessly anytime via keyless biometric fingerprint scanners. 24/7 CCTV surveillance and emergency assistance ensure your safety around the clock.",
-    },
-    {
-      id: "faq-guests",
-      question: "Can I bring a guest or workout partner with me?",
-      answer:
-        "Yes! Pro and Elite plans come with complimentary monthly guest workout passes so you can train alongside friends or family. In addition, any friend can claim their own free 1-day pass online anytime before visiting.",
+        "The facility is monitored by 24/7 security cameras, sanitized regularly throughout the day, and equipped with first aid and emergency alerts.",
     },
   ],
 };

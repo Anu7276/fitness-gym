@@ -15,10 +15,10 @@ export function PricingSection() {
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-14 md:mb-20">
-          <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-3 block">
+          <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-3">
             Simple pricing
           </span>
-          <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4 leading-[1.05]">
+          <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4">
             Membership plans
           </h2>
           <p className="font-body text-[15px] text-[#B7C4C8] max-w-lg leading-relaxed">
@@ -75,24 +75,16 @@ export function PricingSection() {
                     {plan.description}
                   </p>
 
-                  {/* Price Block: large and bold with a small muted period label */}
+                  {/* Price Block */}
                   <div className="mb-8 pb-8 border-b border-[#1E3840]">
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">
+                    <div className="flex items-baseline gap-1">
+                      <span className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight">
                         {formatPrice(plan.price)}
-                      </span>
-                      <span className="font-body text-xs text-[#7B8E94]">
-                        /{plan.period}
                       </span>
                     </div>
                     <span className="font-body text-xs text-[#B7C4C8] mt-1 block">
                       {plan.periodLabel}
                     </span>
-                    {plan.perMonthApprox && (
-                      <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#25D366]/10 border border-[#25D366]/30 text-xs font-body font-semibold text-[#25D366]">
-                        <span>⚡ {plan.perMonthApprox}</span>
-                      </div>
-                    )}
                   </div>
 
                   {/* Feature Checklist */}

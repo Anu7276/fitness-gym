@@ -62,7 +62,7 @@ export function FinalCta() {
           <div className="lg:col-span-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="w-2 h-2 rounded-full bg-[#F21B35] animate-pulse" />
-              <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold">
+              <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8]">
                 {siteConfig.brand.badge}
               </span>
             </div>

@@ -88,22 +88,14 @@ export default function PricingPage() {
                   </p>
 
                   <div className="mb-8 pb-8 border-b border-[#1E3840]">
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">
+                    <div className="flex items-baseline gap-1">
+                      <span className="font-heading text-4xl md:text-5xl font-bold text-white tracking-tight">
                         {formatPrice(plan.price)}
-                      </span>
-                      <span className="font-body text-xs text-[#7B8E94]">
-                        /{plan.period}
                       </span>
                     </div>
                     <span className="font-body text-xs text-[#B7C4C8] mt-1 block">
                       {plan.periodLabel}
                     </span>
-                    {plan.perMonthApprox && (
-                      <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#25D366]/10 border border-[#25D366]/30 text-xs font-body font-semibold text-[#25D366]">
-                        <span>⚡ {plan.perMonthApprox}</span>
-                      </div>
-                    )}
                   </div>
 
                   <div className="flex flex-col gap-3.5 mb-10">

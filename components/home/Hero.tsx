@@ -131,8 +131,8 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
           />
         </div>
 
-        {/* Strengthened 55% dark overlay */}
-        <div className="absolute inset-0 bg-black/[0.55] pointer-events-none" />
+        {/* Balanced 48% dark overlay */}
+        <div className="absolute inset-0 bg-[#0A1A1F]/48 pointer-events-none" />
 
         {/* Radial backing to guarantee crisp white text contrast without darkening the whole photo */}
         <div
@@ -151,25 +151,25 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
       {/* Hero Content - Constrained to 1240px */}
       <div className="relative z-10 max-w-[1240px] w-full mx-auto px-6 md:px-10 pt-20 flex flex-col items-center text-center">
         {/* Display Headline with Line-by-Line Reveal Mask */}
-        <h1 className="font-heading text-[clamp(3rem,8vw,7rem)] font-extrabold tracking-tight text-white uppercase leading-[1.05] mb-6 max-w-5xl drop-shadow-md">
+        <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white uppercase leading-[0.98] mb-6 max-w-4xl drop-shadow-md">
           <span className="line-reveal-wrapper">
             <span ref={line1Ref} className="inline-block will-change-transform">
-              Vadodara&apos;s 24/7 Gym.
+              Build Your
             </span>
-          </span>{" "}
+          </span>
           <span className="line-reveal-wrapper">
             <span ref={line2Ref} className="inline-block will-change-transform text-white">
-              Train When You Want.
+              Stronger Self
             </span>
           </span>
         </h1>
 
-        {/* Plain English Subline with Mobile Contrast Specs */}
+        {/* Plain English Subline */}
         <p
           ref={sublineRef}
-          className="font-body font-medium text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.6)] text-[17px] md:text-xl max-w-2xl mx-auto mb-10 leading-[1.6]"
+          className="font-body text-base md:text-xl text-[#B7C4C8] max-w-xl mx-auto mb-10 leading-relaxed drop-shadow"
         >
-          Pro coaches, clean equipment, no lock-in contracts. Try a free day pass.
+          {siteConfig.brand.subline}
         </p>
 
         {/* CTA Cluster */}
@@ -180,14 +180,14 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
           <TransitionLink
             href="/free-trial"
             title="Free Trial"
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-[#0A1A1F] font-heading text-xs uppercase tracking-widest font-bold text-center hover:bg-[#F21B35] hover:text-white transition-all duration-300 shadow-xl active:scale-95"
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-[#0A1A1F] font-heading text-xs uppercase tracking-widest font-semibold text-center hover:bg-[#F21B35] hover:text-white transition-all duration-300 shadow-xl active:scale-95"
           >
             Claim 1-Day Pass
           </TransitionLink>
           <TransitionLink
             href="/programs"
             title="Programs"
-            className="w-full sm:w-auto px-8 py-4 rounded-full border border-white/50 bg-white/[0.12] backdrop-blur-md text-white font-heading text-xs uppercase tracking-widest font-semibold text-center hover:bg-white/20 hover:border-white transition-all duration-300 active:scale-95 shadow-lg"
+            className="w-full sm:w-auto px-8 py-4 rounded-full border border-[#1E3840] bg-[#0F2329]/80 backdrop-blur-sm text-white font-heading text-xs uppercase tracking-widest font-medium text-center hover:border-white transition-all duration-300 active:scale-95"
           >
             Explore Programs
           </TransitionLink>
