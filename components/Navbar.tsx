@@ -4,28 +4,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import { TransitionLink } from "./motion/TransitionLink";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const buttonRef = useRef<HTMLAnchorElement>(null);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setMoreDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,8 +101,8 @@ export function Navbar() {
           </TransitionLink>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-8 font-heading text-xs xl:text-sm tracking-wider uppercase font-semibold">
-            {(siteConfig.primaryNavigation || siteConfig.navigation.slice(0, 6)).map((item) => {
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 font-heading text-xs xl:text-sm tracking-wider uppercase font-semibold">
+            {siteConfig.navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <TransitionLink
@@ -127,9 +114,11 @@ export function Navbar() {
                   }`}
                 >
                   <span>{item.name}</span>
+                  {/* Active Red Dot */}
                   {isActive && (
                     <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F21B35]" />
                   )}
+                  {/* Underline slide in from left on hover */}
                   <span
                     className={`absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 ease-out group-hover:w-full ${
                       isActive ? "hidden" : ""
@@ -138,74 +127,6 @@ export function Navbar() {
                 </TransitionLink>
               );
             })}
-
-            {/* "More" Dropdown Menu */}
-            <div ref={dropdownRef} className="relative">
-              {(() => {
-                const moreItems = siteConfig.moreNavigation || [];
-                const isAnyMoreActive = moreItems.some((item) => pathname === item.href);
-                return (
-                  <>
-                    <button
-                      onClick={() => setMoreDropdownOpen((prev) => !prev)}
-                      className={`inline-flex items-center gap-1.5 py-1 tracking-wider uppercase transition-colors duration-200 ${
-                        isAnyMoreActive || moreDropdownOpen
-                          ? "text-white"
-                          : "text-[#B7C4C8] hover:text-white"
-                      }`}
-                      aria-expanded={moreDropdownOpen}
-                      aria-haspopup="true"
-                    >
-                      <span>More</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          moreDropdownOpen ? "rotate-180 text-[#F21B35]" : ""
-                        }`}
-                      />
-                      {isAnyMoreActive && (
-                        <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F21B35]" />
-                      )}
-                    </button>
-
-                    {/* Dropdown Menu Popover */}
-                    {moreDropdownOpen && (
-                      <div className="absolute top-full right-0 mt-3 w-64 bg-[#0F2329]/95 backdrop-blur-xl border border-[#1E3840] rounded-xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                        {moreItems.map((item) => {
-                          const isActive = pathname === item.href;
-                          return (
-                            <TransitionLink
-                              key={item.href}
-                              href={item.href}
-                              title={item.title}
-                              onClick={() => setMoreDropdownOpen(false)}
-                              className={`flex flex-col p-3 rounded-lg transition-all ${
-                                isActive
-                                  ? "bg-[#1E3840] text-white"
-                                  : "hover:bg-[#1E3840]/60 text-[#B7C4C8] hover:text-white"
-                              }`}
-                            >
-                              <div className="flex items-center justify-between">
-                                <span className="font-heading text-xs tracking-wider uppercase font-bold">
-                                  {item.name}
-                                </span>
-                                {isActive && (
-                                  <span className="w-1.5 h-1.5 rounded-full bg-[#F21B35]" />
-                                )}
-                              </div>
-                              {item.description && (
-                                <span className="font-body text-[11px] normal-case tracking-normal text-[#7B8E94] mt-0.5">
-                                  {item.description}
-                                </span>
-                              )}
-                            </TransitionLink>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </>
-                );
-              })()}
-            </div>
           </nav>
 
           {/* Join Now Action & Mobile Toggle */}
@@ -274,26 +195,25 @@ export function Navbar() {
 
         {/* Drawer Links Staggered */}
         <div className="flex flex-col gap-4 my-auto overflow-y-auto max-h-[65vh] py-4 pr-2">
-          {/* Primary Links */}
-          {(siteConfig.primaryNavigation || siteConfig.navigation.slice(0, 6)).map((item, index) => {
+          {siteConfig.navigation.map((item, index) => {
             const isActive = pathname === item.href;
             return (
               <div
                 key={item.href}
                 style={{
-                  transitionDelay: mobileMenuOpen ? `${index * 60}ms` : "0ms",
+                  transitionDelay: mobileMenuOpen ? `${index * 80}ms` : "0ms",
                 }}
-                className={`transform transition-all duration-400 ${
+                className={`transform transition-all duration-500 ${
                   mobileMenuOpen
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-6 opacity-0"
+                    : "translate-y-8 opacity-0"
                 }`}
               >
                 <TransitionLink
                   href={item.href}
                   title={item.title}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`font-heading text-2xl sm:text-3xl font-medium tracking-tight uppercase flex items-center justify-between ${
+                  className={`font-heading text-3xl font-medium tracking-tight uppercase flex items-center justify-between ${
                     isActive ? "text-white font-bold" : "text-[#B7C4C8]"
                   }`}
                 >
@@ -305,40 +225,6 @@ export function Navbar() {
               </div>
             );
           })}
-
-          {/* More Subpages Section */}
-          {siteConfig.moreNavigation && siteConfig.moreNavigation.length > 0 && (
-            <div className="pt-4 mt-2 border-t border-[#1E3840]/60">
-              <span className="text-[11px] font-heading uppercase tracking-[0.15em] text-[#F21B35] font-semibold block mb-3">
-                More Features & Tools
-              </span>
-              <div className="grid grid-cols-2 gap-2.5">
-                {siteConfig.moreNavigation.map((item) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <TransitionLink
-                      key={item.href}
-                      href={item.href}
-                      title={item.title}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`p-3 rounded-lg border text-left transition-all ${
-                        isActive
-                          ? "bg-[#1E3840] border-[#F21B35] text-white"
-                          : "bg-[#0F2329] border-[#1E3840] text-[#B7C4C8] hover:text-white"
-                      }`}
-                    >
-                      <div className="font-heading text-xs uppercase tracking-wider font-bold">
-                        {item.name}
-                      </div>
-                      <div className="font-body text-[10px] text-[#7B8E94] truncate mt-0.5">
-                        {item.title}
-                      </div>
-                    </TransitionLink>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Drawer Footer CTA */}

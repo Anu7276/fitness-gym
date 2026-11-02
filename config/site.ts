@@ -97,18 +97,6 @@ export const siteConfig = {
     maxDuration: 2.4,
   },
 
-  // SECTION TOGGLES (Home page sections render conditionally)
-  sections: {
-    hero: true,
-    stats: true,
-    programs: true,
-    trainers: true,
-    pricing: true,
-    reviews: true,
-    faq: false,
-    cta: true,
-  },
-
   // REAL BRAND FACTS
   brand: {
     name: "FITNESSGYM",
@@ -149,20 +137,6 @@ export const siteConfig = {
   },
 
   // NAVIGATION & PAGE TITLES
-  primaryNavigation: [
-    { name: "Home", href: "/", title: "Home" },
-    { name: "Programs", href: "/programs", title: "Programs" },
-    { name: "Trainers", href: "/trainers", title: "Trainers" },
-    { name: "Facility", href: "/gym", title: "Gym Facility" },
-    { name: "Pricing", href: "/pricing", title: "Membership" },
-    { name: "Contact", href: "/contact", title: "Contact" },
-  ],
-  moreNavigation: [
-    { name: "Timetable", href: "/schedule", title: "Class Timetable", description: "Weekly class schedule & coaches" },
-    { name: "BMI Calculator", href: "/calculator", title: "BMI & Calorie Calculator", description: "Calculate BMI, TDEE & macro targets" },
-    { name: "Transformations", href: "/transformations", title: "Member Transformations", description: "Real before & after results" },
-    { name: "Gallery", href: "/gallery", title: "Photo & Video Gallery", description: "Facility & equipment tour" },
-  ],
   navigation: [
     { name: "Home", href: "/", title: "Home" },
     { name: "Programs", href: "/programs", title: "Programs" },

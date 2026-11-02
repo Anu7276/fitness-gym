@@ -164,15 +164,6 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   padding-right: 1.5rem;
 }
 
-/* Hide scrollbar utility for horizontal scroll-snap carousels */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 @media (min-width: 768px) {
   .content-container {
     padding-left: 2.5rem;

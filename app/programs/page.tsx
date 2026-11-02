@@ -5,7 +5,6 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { ArrowRight, Flame, Clock, MapPin, Dumbbell } from "lucide-react";
-import { MethodTimeline } from "@/components/home/MethodTimeline";
 
 export default function ProgramsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -134,11 +133,6 @@ export default function ProgramsPage() {
               </div>
             </article>
           ))}
-        </div>
-
-        {/* How We Train: 4-Pillar Methodology */}
-        <div className="mt-20 pt-16 border-t border-[#1E3840]/60">
-          <MethodTimeline />
         </div>
       </div>
     </main>

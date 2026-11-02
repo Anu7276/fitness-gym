@@ -42,7 +42,7 @@ export function FinalCta() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full py-14 lg:py-20 bg-[#06151A] text-white border-t border-[#1E3840] overflow-hidden"
+      className="relative w-full py-16 md:py-28 bg-[#06151A] text-white border-t border-[#1E3840] overflow-hidden"
     >
       {/* Background Photo Band with Overlay */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">

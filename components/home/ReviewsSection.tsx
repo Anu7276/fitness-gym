@@ -27,7 +27,7 @@ export function ReviewsSection() {
   };
 
   return (
-    <section className="w-full py-14 lg:py-20 bg-[#06151A] text-white overflow-hidden border-t border-[#1E3840]/60">
+    <section className="w-full py-16 md:py-28 bg-[#06151A] text-white overflow-hidden">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         {/* Section Header with Google-Style Rating Badge */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

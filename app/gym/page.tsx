@@ -5,7 +5,6 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { ShieldCheck, Wind, KeyRound, Sparkles } from "lucide-react";
-import { TwentyFourHours } from "@/components/home/TwentyFourHours";
 
 export default function GymPage() {
   const zones = siteConfig.gymZones;
@@ -92,11 +91,6 @@ export default function GymPage() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* 24-Hour Rhythm Scrubber Widget */}
-        <div className="mb-16">
-          <TwentyFourHours />
         </div>
 
         {/* Book Tour CTA Card */}

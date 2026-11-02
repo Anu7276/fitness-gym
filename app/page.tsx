@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { siteConfig } from "@/config/site";
 import { Preloader } from "@/components/Preloader";
 import { Hero } from "@/components/home/Hero";
-import { StatsStrip } from "@/components/home/StatsStrip";
+import { Marquee } from "@/components/home/Marquee";
+import { Intro } from "@/components/home/Intro";
 import { ProgramsSection } from "@/components/home/ProgramsSection";
+import { TwentyFourHours } from "@/components/home/TwentyFourHours";
 import { TrainersSection } from "@/components/home/TrainersSection";
+import { MethodTimeline } from "@/components/home/MethodTimeline";
 import { PricingSection } from "@/components/home/PricingSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { FaqSection } from "@/components/home/FaqSection";
@@ -14,45 +16,44 @@ import { FinalCta } from "@/components/home/FinalCta";
 
 export default function HomePage() {
   const [heroCanAnimate, setHeroCanAnimate] = useState(false);
-  const sections = siteConfig.sections || {
-    hero: true,
-    stats: true,
-    programs: true,
-    trainers: true,
-    pricing: true,
-    reviews: true,
-    faq: false,
-    cta: true,
-  };
 
   return (
     <main className="w-full bg-[#0A1A1F]">
-      {/* 3D Rep Dumbbell Preloader */}
+      {/* 1. Rebuilt GSAP Preloader with 120px Rep Dumbbell & Letter Wordmark */}
       <Preloader onComplete={() => setHeroCanAnimate(true)} />
 
-      {/* 1. Hero Section (min-h-[85svh], line-by-line reveal) */}
-      {sections.hero && <Hero startAnimation={heroCanAnimate} />}
+      {/* 2. Hero Section (Clearly visible photo, balanced 48% overlay, line-by-line reveal) */}
+      <Hero startAnimation={heroCanAnimate} />
 
-      {/* 2. Stats Strip (3 benefit lines + 4 verified stat counters) */}
-      {sections.stats && <StatsStrip />}
+      {/* 3. Program Marquee Strip */}
+      <Marquee />
 
-      {/* 3. Programs Preview (3 cards + View All, horizontal scroll-snap on mobile) */}
-      {sections.programs && <ProgramsSection />}
+      {/* 4. About Us (Text left, two offset photos right, verified 10-year numbers only) */}
+      <Intro />
 
-      {/* 4. Trainers Preview (3 coaches + Meet the Team, horizontal scroll-snap on mobile) */}
-      {sections.trainers && <TrainersSection />}
+      {/* 5. Programs (Photo band + six cards) */}
+      <ProgramsSection />
 
-      {/* 5. Pricing (3 compact cards with approx monthly breakdown) */}
-      {sections.pricing && <PricingSection />}
+      {/* 6. 24-Hour Rhythm Dial (Interactive scrubber & pinned scroll) */}
+      <TwentyFourHours />
 
-      {/* 6. Member Reviews (Single carousel with Google 4.9 rating badge) */}
-      {sections.reviews && <ReviewsSection />}
+      {/* 7. Trainers Carousel (Draggable row with drag cursor) */}
+      <TrainersSection />
 
-      {/* 7. Optional Home FAQ (Disabled by default, full FAQ lives on /contact) */}
-      {sections.faq && <FaqSection />}
+      {/* 8. How We Train Timeline (4 pillars with rotating badge) */}
+      <MethodTimeline />
 
-      {/* 8. Final CTA with 1-Day Trial Form */}
-      {sections.cta && <FinalCta />}
+      {/* 9. Membership (Three outlined cards, Pro highlighted) */}
+      <PricingSection />
+
+      {/* 10. Reviews (Three real verified testimonials) */}
+      <ReviewsSection />
+
+      {/* 11. FAQ (Two columns with animated accordion) */}
+      <FaqSection />
+
+      {/* 12. Final Call to Action with Short Free-Trial Form */}
+      <FinalCta />
     </main>
   );
 }
