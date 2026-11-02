@@ -3,7 +3,8 @@
 import React from "react";
 import { siteConfig } from "@/config/site";
 import { TransitionLink } from "./motion/TransitionLink";
-import { Phone, MessageCircle, ArrowRight } from "lucide-react";
+import { Phone, ArrowRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 export function MobileStickyBar() {
   const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsappNumber}?text=${encodeURIComponent(
@@ -28,7 +29,7 @@ export function MobileStickyBar() {
         rel="noopener noreferrer"
         className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full border border-[#1E3840] bg-[#0F2329] text-white text-xs font-heading font-medium active:scale-95 transition-transform"
       >
-        <MessageCircle className="w-3.5 h-3.5 text-[#25D366] fill-[#25D366]" />
+        <WhatsAppIcon className="w-3.5 h-3.5 fill-[#25D366]" />
         <span>WhatsApp</span>
       </a>
 
