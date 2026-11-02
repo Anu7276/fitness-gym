@@ -11,7 +11,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
   const containerRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
   const line1Ref = useRef<HTMLSpanElement>(null);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
@@ -32,16 +31,6 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
         { scale: 1.15 },
         { scale: 1.0, duration: 1.6, ease: "power2.out" },
         0
-      );
-    }
-
-    // Status badge fade in
-    if (badgeRef.current) {
-      tl.fromTo(
-        badgeRef.current,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        0.2
       );
     }
 
@@ -145,17 +134,6 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
 
       {/* Hero Content - Constrained to 1240px */}
       <div className="relative z-10 max-w-[1240px] w-full mx-auto px-6 md:px-10 pt-20 flex flex-col items-center text-center">
-        {/* Status Badge with pulsing red dot */}
-        <div
-          ref={badgeRef}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#0F2329]/90 border border-[#1E3840] mb-8 shadow-sm backdrop-blur-sm"
-        >
-          <span className="w-2 h-2 rounded-full bg-[#F21B35] animate-pulse" />
-          <span className="font-heading text-xs uppercase tracking-wider text-[#B7C4C8]">
-            {siteConfig.brand.badge}
-          </span>
-        </div>
-
         {/* Display Headline with Line-by-Line Reveal Mask */}
         <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white uppercase leading-[0.98] mb-6 max-w-4xl drop-shadow-md">
           <span className="line-reveal-wrapper">
