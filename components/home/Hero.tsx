@@ -103,7 +103,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[720px] flex items-center justify-center overflow-hidden bg-[#0A1A1F]"
+      className="relative w-full min-h-[100svh] py-24 sm:py-28 flex flex-col items-center justify-center overflow-hidden bg-[#0A1A1F]"
     >
       {/* Background Media: clearly visible, 48% overlay, stronger only behind text */}
       <div ref={imageRef} className="absolute inset-0 w-full h-full z-0 will-change-transform">
@@ -159,7 +159,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
         {/* CTA Cluster */}
         <div
           ref={ctaClusterRef}
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-10 sm:mb-12"
         >
           <TransitionLink
             href="/free-trial"
@@ -176,31 +176,31 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
             Explore Programs
           </TransitionLink>
         </div>
-      </div>
 
-      {/* Circular Scroll Down Indicator */}
-      <a
-        ref={scrollIndicatorRef}
-        href="#about"
-        aria-label="Scroll down to about section"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full border border-[#1E3840] bg-[#0F2329]/80 backdrop-blur-sm flex items-center justify-center text-white hover:border-white/60 transition-all duration-300 group"
-      >
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          viewBox="0 0 48 48"
+        {/* Circular Scroll Down Indicator - Perfectly centered in between below CTAs */}
+        <a
+          ref={scrollIndicatorRef}
+          href="#about"
+          aria-label="Scroll down to about section"
+          className="relative z-10 w-12 h-12 rounded-full border border-[#1E3840] bg-[#0F2329]/80 backdrop-blur-sm flex items-center justify-center text-white hover:border-[#F21B35] hover:shadow-[0_0_20px_rgba(242,27,53,0.3)] transition-all duration-300 group"
         >
-          <circle
-            cx="24"
-            cy="24"
-            r="22"
-            fill="none"
-            stroke="#1E3840"
-            strokeWidth="1.5"
-            className="transition-colors duration-300 group-hover:stroke-white/40"
-          />
-        </svg>
-        <ArrowDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform duration-200" />
-      </a>
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 48 48"
+          >
+            <circle
+              cx="24"
+              cy="24"
+              r="22"
+              fill="none"
+              stroke="#1E3840"
+              strokeWidth="1.5"
+              className="transition-colors duration-300 group-hover:stroke-white/40"
+            />
+          </svg>
+          <ArrowDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform duration-200" />
+        </a>
+      </div>
     </section>
   );
 }
