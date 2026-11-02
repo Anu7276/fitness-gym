@@ -82,7 +82,7 @@ function createPlateFaceTexture(weightText = "25 KG") {
 
   // Embossed White Wordmark
   ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 32px 'Outfit', 'Arial Black', sans-serif";
+  ctx.font = "bold 34px 'Outfit', 'Arial Black', sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText("FITNESSGYM", 256, 110);
@@ -115,14 +115,13 @@ export function Dumbbell3D() {
     const container = mountRef.current;
     if (!container) return;
 
-    const width = container.clientWidth || 440;
-    const height = container.clientHeight || 220;
+    const width = container.clientWidth || 480;
+    const height = container.clientHeight || 240;
 
-    // 1. Scene & Camera with Generous Frustum (Guarantees ZERO clipping at any angle)
+    // 1. Scene & Camera (Tuned for ~22% larger size while guaranteeing zero edge clipping)
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    // At z=4.3, full vertical visible height is ~3.0 units, easily enclosing the 1.64-unit plate stack with 80% margin!
-    camera.position.set(0, 0.2, 4.3);
+    camera.position.set(0, 0.22, 3.65);
     camera.lookAt(0, 0, 0);
 
     // 2. High-Performance WebGL Renderer
@@ -138,32 +137,32 @@ export function Dumbbell3D() {
     container.appendChild(renderer.domElement);
 
     // 3. Multi-Point Studio Lighting Setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
     scene.add(ambientLight);
 
     // Front Camera Key Light: keeps faces brightly illuminated when rotating toward camera
-    const frontKeyLight = new THREE.DirectionalLight(0xffffff, 3.4);
-    frontKeyLight.position.set(0, 2.5, 4.8);
+    const frontKeyLight = new THREE.DirectionalLight(0xffffff, 3.6);
+    frontKeyLight.position.set(0, 2.8, 5.0);
     scene.add(frontKeyLight);
 
     // Top-Right Specular Chrome Highlight
-    const topLight = new THREE.DirectionalLight(0xffffff, 3.8);
-    topLight.position.set(3.5, 4.2, 2.8);
+    const topLight = new THREE.DirectionalLight(0xffffff, 4.0);
+    topLight.position.set(3.8, 4.5, 3.0);
     scene.add(topLight);
 
     // Left Cool-Steel Rim Light
-    const leftFill = new THREE.DirectionalLight(0x7dd3fc, 2.4);
-    leftFill.position.set(-4.0, -0.6, 1.8);
+    const leftFill = new THREE.DirectionalLight(0x7dd3fc, 2.6);
+    leftFill.position.set(-4.2, -0.6, 2.0);
     scene.add(leftFill);
 
     // Intense Red Gym Underglow
-    const crimsonRim = new THREE.PointLight(0xf21b35, 7.5, 10);
+    const crimsonRim = new THREE.PointLight(0xf21b35, 8.0, 10);
     crimsonRim.position.set(0, -1.0, -1.6);
     scene.add(crimsonRim);
 
     // Dynamic Orbiting Specular Glint Light that sweeps across rims as dumbbell spins
-    const orbitLight = new THREE.PointLight(0xffffff, 2.8, 8);
-    orbitLight.position.set(1.2, 1.5, 2.2);
+    const orbitLight = new THREE.PointLight(0xffffff, 3.2, 8);
+    orbitLight.position.set(1.4, 1.8, 2.5);
     scene.add(orbitLight);
 
     // 4. Materials & Textures
@@ -174,33 +173,33 @@ export function Dumbbell3D() {
     const chromeMat = new THREE.MeshStandardMaterial({
       color: 0xf8fafc,
       metalness: 0.98,
-      roughness: 0.10,
+      roughness: 0.08,
     });
 
     const knurledBarMat = new THREE.MeshStandardMaterial({
       color: 0xe2e8f0,
       metalness: 0.94,
-      roughness: 0.24,
+      roughness: 0.22,
       map: knurlTexture || undefined,
     });
 
     const ironBodyMat = new THREE.MeshStandardMaterial({
-      color: 0x1a2830,
-      metalness: 0.78,
-      roughness: 0.26,
+      color: 0x1b2931,
+      metalness: 0.80,
+      roughness: 0.24,
     });
 
     const plate25Materials = [
       ironBodyMat,
       new THREE.MeshStandardMaterial({
         map: plateFaceTex25 || undefined,
-        metalness: 0.72,
-        roughness: 0.24,
+        metalness: 0.74,
+        roughness: 0.22,
       }),
       new THREE.MeshStandardMaterial({
         map: plateFaceTex25 || undefined,
-        metalness: 0.72,
-        roughness: 0.24,
+        metalness: 0.74,
+        roughness: 0.22,
       }),
     ];
 
@@ -208,20 +207,20 @@ export function Dumbbell3D() {
       ironBodyMat,
       new THREE.MeshStandardMaterial({
         map: plateFaceTex15 || undefined,
-        metalness: 0.72,
-        roughness: 0.24,
+        metalness: 0.74,
+        roughness: 0.22,
       }),
       new THREE.MeshStandardMaterial({
         map: plateFaceTex15 || undefined,
-        metalness: 0.72,
-        roughness: 0.24,
+        metalness: 0.74,
+        roughness: 0.22,
       }),
     ];
 
     const redCollarMat = new THREE.MeshStandardMaterial({
       color: 0xf21b35,
       metalness: 0.94,
-      roughness: 0.18,
+      roughness: 0.16,
     });
 
     // Disposables tracker
@@ -241,37 +240,40 @@ export function Dumbbell3D() {
     const dumbbell = new THREE.Group();
     scene.add(dumbbell);
 
-    // Solid Knurled Steel Center Handle Bar (Length 2.4, Radius 0.12)
-    const barGeo = new THREE.CylinderGeometry(0.12, 0.12, 2.4, 36);
+    // Initial forward isometric tilt so the top bevel and bar depth are always visible
+    dumbbell.rotation.x = 0.24;
+
+    // Solid Knurled Steel Center Handle Bar (Length 2.55, Radius 0.13)
+    const barGeo = new THREE.CylinderGeometry(0.13, 0.13, 2.55, 36);
     barGeo.rotateZ(Math.PI / 2);
     disposables.push(barGeo);
     const barMesh = new THREE.Mesh(barGeo, knurledBarMat);
     dumbbell.add(barMesh);
 
     // Polished Chrome Inner Grip Collar Stops
-    const stopGeo = new THREE.TorusGeometry(0.17, 0.035, 16, 36);
+    const stopGeo = new THREE.TorusGeometry(0.18, 0.038, 16, 36);
     stopGeo.rotateY(Math.PI / 2);
     disposables.push(stopGeo);
 
     const stopL = new THREE.Mesh(stopGeo, chromeMat);
-    stopL.position.x = -0.54;
+    stopL.position.x = -0.58;
     dumbbell.add(stopL);
 
     const stopR = new THREE.Mesh(stopGeo, chromeMat);
-    stopR.position.x = 0.54;
+    stopR.position.x = 0.58;
     dumbbell.add(stopR);
 
     // Competition Anodized Red Quick-Lock Collars
-    const collarGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.13, 36);
+    const collarGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.14, 36);
     collarGeo.rotateZ(Math.PI / 2);
     disposables.push(collarGeo);
 
     const collarL = new THREE.Mesh(collarGeo, redCollarMat);
-    collarL.position.x = -0.66;
+    collarL.position.x = -0.71;
     dumbbell.add(collarL);
 
     const collarR = new THREE.Mesh(collarGeo, redCollarMat);
-    collarR.position.x = 0.66;
+    collarR.position.x = 0.71;
     dumbbell.add(collarR);
 
     // Helper: Add Olympic Bumper Plate with textured faces and chamfered chrome rims
@@ -289,7 +291,7 @@ export function Dumbbell3D() {
       dumbbell.add(pMesh);
 
       // Polished outer rim chamfer ring
-      const rGeo = new THREE.TorusGeometry(radius, 0.022, 16, 44);
+      const rGeo = new THREE.TorusGeometry(radius, 0.024, 16, 44);
       rGeo.rotateY(Math.PI / 2);
       disposables.push(rGeo);
       const rMesh = new THREE.Mesh(rGeo, chromeMat);
@@ -297,73 +299,84 @@ export function Dumbbell3D() {
       dumbbell.add(rMesh);
     }
 
-    // Left Stepped Olympic Plate Stack (Max Radius 0.82 fits inside camera view with 80% safety margin)
-    addTexturedPlate(0.50, 0.15, -0.82, plate15Materials);
-    addTexturedPlate(0.66, 0.18, -1.02, plate25Materials);
-    addTexturedPlate(0.82, 0.21, -1.24, plate25Materials);
+    // Left Stepped Olympic Plate Stack (~22% larger, fully contained within frustum)
+    addTexturedPlate(0.52, 0.16, -0.88, plate15Materials);
+    addTexturedPlate(0.70, 0.19, -1.09, plate25Materials);
+    addTexturedPlate(0.88, 0.22, -1.33, plate25Materials);
 
     // Right Stepped Olympic Plate Stack
-    addTexturedPlate(0.50, 0.15, 0.82, plate15Materials);
-    addTexturedPlate(0.66, 0.18, 1.02, plate25Materials);
-    addTexturedPlate(0.82, 0.21, 1.24, plate25Materials);
+    addTexturedPlate(0.52, 0.16, 0.88, plate15Materials);
+    addTexturedPlate(0.70, 0.19, 1.09, plate25Materials);
+    addTexturedPlate(0.88, 0.22, 1.33, plate25Materials);
 
     // Mirror-Chrome Heavy End Nuts / Retaining Sleeves
-    const nutGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.15, 32);
+    const nutGeo = new THREE.CylinderGeometry(0.19, 0.19, 0.16, 32);
     nutGeo.rotateZ(Math.PI / 2);
     disposables.push(nutGeo);
 
     const nutL = new THREE.Mesh(nutGeo, chromeMat);
-    nutL.position.x = -1.41;
+    nutL.position.x = -1.50;
     dumbbell.add(nutL);
 
     const nutR = new THREE.Mesh(nutGeo, chromeMat);
-    nutR.position.x = 1.41;
+    nutR.position.x = 1.50;
     dumbbell.add(nutR);
 
     // Center axle bolt head detail
-    const boltGeo = new THREE.CylinderGeometry(0.10, 0.10, 0.04, 24);
+    const boltGeo = new THREE.CylinderGeometry(0.11, 0.11, 0.045, 24);
     boltGeo.rotateZ(Math.PI / 2);
     disposables.push(boltGeo);
 
     const boltL = new THREE.Mesh(boltGeo, redCollarMat);
-    boltL.position.x = -1.50;
+    boltL.position.x = -1.59;
     dumbbell.add(boltL);
 
     const boltR = new THREE.Mesh(boltGeo, redCollarMat);
-    boltR.position.x = 1.50;
+    boltR.position.x = 1.59;
     dumbbell.add(boltR);
 
-    // 6. GSAP 3D Left-to-Right Continuous Rotation
+    // 6. Impressive 3D Gyroscopic Rotation Animation
+    // Continuous 360-degree spin left-to-right (crisp and steady 2.8s loop)
     const spinTween = gsap.to(dumbbell.rotation, {
       y: "+=" + Math.PI * 2,
-      duration: 3.2,
+      duration: 2.8,
       repeat: -1,
       ease: "none",
     });
 
-    // Subtle physical weight float & tilt
-    const tiltTween = gsap.to(dumbbell.rotation, {
-      x: 0.11,
-      z: 0.05,
-      duration: 1.6,
+    // Gyroscopic pitch tilt oscillation (0.16 to 0.32 rad) for full depth reveal
+    const tiltXTween = gsap.to(dumbbell.rotation, {
+      x: 0.32,
+      duration: 1.8,
       yoyo: true,
       repeat: -1,
       ease: "sine.inOut",
     });
 
+    // Gyroscopic bank roll oscillation on Z axis
+    const rollZTween = gsap.to(dumbbell.rotation, {
+      z: 0.08,
+      duration: 2.2,
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
+    });
+
+    // Zero-gravity weight float
     const floatTween = gsap.to(dumbbell.position, {
-      y: 0.04,
-      duration: 1.3,
+      y: 0.05,
+      duration: 1.4,
       yoyo: true,
       repeat: -1,
       ease: "sine.inOut",
     });
 
-    // Orbit light gentle sway for dynamic chrome glints
+    // Orbit specular light sweeps across chrome edges
     const orbitTween = gsap.to(orbitLight.position, {
-      x: -1.2,
-      z: 3.0,
-      duration: 2.0,
+      x: -1.6,
+      y: 2.2,
+      z: 3.2,
+      duration: 1.9,
       yoyo: true,
       repeat: -1,
       ease: "sine.inOut",
@@ -381,7 +394,8 @@ export function Dumbbell3D() {
     return () => {
       cancelAnimationFrame(animId);
       spinTween.kill();
-      tiltTween.kill();
+      tiltXTween.kill();
+      rollZTween.kill();
       floatTween.kill();
       orbitTween.kill();
       renderer.dispose();
@@ -399,7 +413,7 @@ export function Dumbbell3D() {
   return (
     <div
       ref={mountRef}
-      className="w-[320px] sm:w-[420px] md:w-[460px] h-[175px] sm:h-[210px] md:h-[230px] flex items-center justify-center filter drop-shadow-[0_14px_40px_rgba(242,27,53,0.45)] pointer-events-none"
+      className="w-[350px] sm:w-[450px] md:w-[500px] h-[190px] sm:h-[230px] md:h-[250px] flex items-center justify-center filter drop-shadow-[0_16px_45px_rgba(242,27,53,0.5)] pointer-events-none"
     />
   );
 }
