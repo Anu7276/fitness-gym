@@ -86,7 +86,7 @@ export const siteConfig = {
   brand: {
     name: "FITNESSGYM",
     legalName: "FITNESSGYM Vadodara",
-    tagline: "Build your stronger self.",
+    tagline: "Build your stronger self",
     subline: "Train with purpose. Build strength. Become the best version of yourself.",
     badge: "Open 24/7 • Waghodia, Vadodara",
     foundedYear: 2014,

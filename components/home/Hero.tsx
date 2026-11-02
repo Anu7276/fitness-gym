@@ -159,7 +159,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
           </span>
           <span className="line-reveal-wrapper">
             <span ref={line2Ref} className="inline-block will-change-transform text-white">
-              Stronger Self.
+              Stronger Self
             </span>
           </span>
         </h1>
