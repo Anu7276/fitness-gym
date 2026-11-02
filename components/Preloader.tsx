@@ -11,17 +11,18 @@ interface PreloaderProps {
 export function Preloader({ onComplete }: PreloaderProps) {
   const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(false);
-  const [quoteIndex, setQuoteIndex] = useState(0);
+
+  // Pool of quotes
+  const quotes = siteConfig.preloaderQuotes;
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const [quoteFade, setQuoteFade] = useState(true);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const wordmarkRef = useRef<HTMLDivElement>(null);
-  const dumbbellGroupRef = useRef<SVGGElement>(null);
-  const barFillRef = useRef<SVGRectElement>(null);
+  const dumbbellSvgRef = useRef<SVGSVGElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
   const progressLineRef = useRef<HTMLDivElement>(null);
   const quotesRef = useRef<HTMLDivElement>(null);
-  const maskHoleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -31,12 +32,9 @@ export function Preloader({ onComplete }: PreloaderProps) {
       return;
     }
 
-    // Show once per session
-    const hasSeen = sessionStorage.getItem("fitnessgym_preloader_seen");
-    if (hasSeen) {
-      if (onComplete) onComplete();
-      return;
-    }
+    // Pick a random starting quote on each reload so it's always different
+    const randomStart = Math.floor(Math.random() * quotes.length);
+    setCurrentQuoteIndex(randomStart);
 
     setShow(true);
     document.documentElement.classList.add("is-loading");
@@ -46,7 +44,6 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
     if (prefersReducedMotion) {
       setTimeout(() => {
-        sessionStorage.setItem("fitnessgym_preloader_seen", "true");
         document.documentElement.classList.remove("is-loading");
         setShow(false);
         if (onComplete) onComplete();
@@ -54,118 +51,124 @@ export function Preloader({ onComplete }: PreloaderProps) {
       return;
     }
 
-    // GSAP master timeline for the 2.4s sequence
+    // Master GSAP timeline
     const tl = gsap.timeline({
       onComplete: () => {
-        sessionStorage.setItem("fitnessgym_preloader_seen", "true");
         document.documentElement.classList.remove("is-loading");
         setShow(false);
         if (onComplete) onComplete();
       },
     });
 
-    // 0.00-0.40s: Wordmark appears letter by letter
+    // 0.00-0.35s: Wordmark appears letter by letter
     if (wordmarkRef.current) {
       const letters = wordmarkRef.current.querySelectorAll(".letter");
       tl.fromTo(
         letters,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out" },
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.35, stagger: 0.025, ease: "power2.out" },
         0
       );
     }
 
-    // Dumbbell rep animation: rises 24px (0.6s, power2.out), holds 0.3s shaking 2px 3 times, lowers (0.6s, power2.in)
-    if (dumbbellGroupRef.current) {
-      // 0.20s - 0.80s: rise 24px
-      tl.to(dumbbellGroupRef.current, { y: -24, duration: 0.6, ease: "power2.out" }, 0.2);
-
-      // 0.80s - 1.16s: shake plates 2px 3 times
-      tl.to(dumbbellGroupRef.current, { x: 2, duration: 0.06, ease: "power1.inOut" }, 0.8);
-      tl.to(dumbbellGroupRef.current, { x: -2, duration: 0.06, ease: "power1.inOut" }, 0.86);
-      tl.to(dumbbellGroupRef.current, { x: 2, duration: 0.06, ease: "power1.inOut" }, 0.92);
-      tl.to(dumbbellGroupRef.current, { x: -2, duration: 0.06, ease: "power1.inOut" }, 0.98);
-      tl.to(dumbbellGroupRef.current, { x: 2, duration: 0.06, ease: "power1.inOut" }, 1.04);
-      tl.to(dumbbellGroupRef.current, { x: 0, duration: 0.06, ease: "power1.inOut" }, 1.10);
-
-      // 1.16s - 1.76s: lower 24px
-      tl.to(dumbbellGroupRef.current, { y: 0, duration: 0.6, ease: "power2.in" }, 1.16);
+    // Smooth continuous 360° spin for the big dumbbell
+    if (dumbbellSvgRef.current) {
+      tl.fromTo(
+        dumbbellSvgRef.current,
+        { scale: 0.7, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.4)" },
+        0.1
+      );
     }
 
-    // Real asset loading hook + continuous progress counter 00 to 100
+    // Real progress counter 00 to 100
     const progressObj = { value: 0 };
     tl.to(
       progressObj,
       {
         value: 100,
-        duration: 1.6,
+        duration: 1.8,
         ease: "power1.inOut",
         onUpdate: () => {
           const val = Math.round(progressObj.value);
           const formatted = val < 10 ? `0${val}` : `${val}`;
           if (counterRef.current) counterRef.current.innerText = formatted;
-          if (barFillRef.current) barFillRef.current.setAttribute("width", `${(val / 100) * 50}`);
           if (progressLineRef.current) progressLineRef.current.style.width = `${val}%`;
         },
       },
-      0.2
+      0.15
     );
 
-    // Quote rotation at 1.2s with crossfade
-    setTimeout(() => {
+    // Dynamic quote transitions: switch quotes at ~0.75s and ~1.45s so multiple appear!
+    const quoteTimer1 = setTimeout(() => {
       setQuoteFade(false);
       setTimeout(() => {
-        setQuoteIndex(1);
+        setCurrentQuoteIndex((prev) => (prev + 1) % quotes.length);
         setQuoteFade(true);
-      }, 150);
-    }, 1200);
+      }, 180);
+    }, 750);
 
-    // 1.80-2.40s: Exit phase
-    // Wordmark & dumbbell scale to 0.9 and fade (0.3s)
-    if (wordmarkRef.current && dumbbellGroupRef.current) {
+    const quoteTimer2 = setTimeout(() => {
+      setQuoteFade(false);
+      setTimeout(() => {
+        setCurrentQuoteIndex((prev) => (prev + 2) % quotes.length);
+        setQuoteFade(true);
+      }, 180);
+    }, 1450);
+
+    // 1.95-2.45s: Exit phase
+    if (wordmarkRef.current && dumbbellSvgRef.current) {
       tl.to(
-        [wordmarkRef.current, dumbbellGroupRef.current, counterRef.current, progressLineRef.current?.parentElement, quotesRef.current],
-        { scale: 0.9, opacity: 0, duration: 0.3, ease: "power2.in" },
-        1.8
+        [
+          wordmarkRef.current,
+          dumbbellSvgRef.current,
+          counterRef.current?.parentElement,
+          progressLineRef.current?.parentElement,
+          quotesRef.current,
+        ],
+        { scale: 0.88, opacity: 0, duration: 0.3, ease: "power2.in" },
+        1.95
       );
     }
 
-    // Circular hole mask grows from center (0.6s, power3.inOut) revealing hero underneath
+    // Circular hole mask grows from center (0.55s, power3.inOut) revealing hero underneath
     const holeObj = { radius: 0 };
     tl.to(
       holeObj,
       {
-        radius: 120,
-        duration: 0.6,
+        radius: 130,
+        duration: 0.55,
         ease: "power3.inOut",
         onUpdate: () => {
           if (containerRef.current) {
             const r = holeObj.radius;
-            containerRef.current.style.maskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 5}%)`;
-            containerRef.current.style.webkitMaskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 5}%)`;
+            containerRef.current.style.maskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 6}%)`;
+            containerRef.current.style.webkitMaskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 6}%)`;
           }
         },
       },
-      1.8
+      2.0
     );
 
     // Fade out preloader container completely
     tl.to(
       containerRef.current,
-      { opacity: 0, duration: 0.3, ease: "power2.inOut" },
-      2.1
+      { opacity: 0, duration: 0.25, ease: "power2.inOut" },
+      2.25
     );
 
-    // Trigger hero intro when hole is about half open (~2.15s)
+    // Trigger hero intro when hole opens
     tl.add(() => {
       if (onComplete) onComplete();
-    }, 2.15);
+    }, 2.2);
 
     return () => {
+      clearTimeout(quoteTimer1);
+      clearTimeout(quoteTimer2);
       tl.kill();
       document.documentElement.classList.remove("is-loading");
     };
-  }, [onComplete]);
+  }, [onComplete, quotes]);
 
   if (!mounted || !show) return null;
 
@@ -180,79 +183,290 @@ export function Preloader({ onComplete }: PreloaderProps) {
     >
       <span className="sr-only">Loading {brandName}...</span>
 
-      <div className="flex flex-col items-center max-w-sm px-6 text-center">
+      <div className="flex flex-col items-center max-w-md px-6 text-center">
         {/* Letter by letter wordmark */}
         <div ref={wordmarkRef} className="flex items-center gap-1 mb-8 overflow-hidden">
           {brandName.split("").map((char, index) => (
             <span
               key={index}
-              className="letter inline-block font-heading text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase"
+              className="letter inline-block font-heading text-3xl sm:text-4xl font-extrabold tracking-wider text-white uppercase"
             >
               {char}
             </span>
           ))}
         </div>
 
-        {/* Rep Performing SVG Dumbbell (120px wide) */}
-        <div className="w-[120px] h-[44px] mb-6 flex items-center justify-center">
+        {/* REAL BIG ROTATING DUMBBELL (280x120 SVG with continuous 360° spin & red power glow) */}
+        <div className="w-[240px] sm:w-[280px] h-[105px] sm:h-[120px] mb-8 flex items-center justify-center relative">
           <svg
-            width="120"
-            height="44"
-            viewBox="0 0 120 44"
+            ref={dumbbellSvgRef}
+            width="280"
+            height="120"
+            viewBox="0 0 280 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full animate-[spin_2.8s_linear_infinite] origin-[140px_60px] drop-shadow-[0_0_28px_rgba(242,27,53,0.45)]"
           >
-            <g ref={dumbbellGroupRef}>
-              {/* Left Weight Plates */}
-              <rect x="4" y="10" width="8" height="24" rx="2" fill="#FFFFFF" />
-              <rect x="16" y="6" width="10" height="32" rx="2" fill="#FFFFFF" />
-              <rect x="28" y="17" width="5" height="10" rx="1" fill="#B7C4C8" />
+            <defs>
+              {/* Chrome steel handle gradient */}
+              <linearGradient id="steelBarGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#9AAAB4" />
+                <stop offset="25%" stopColor="#FFFFFF" />
+                <stop offset="55%" stopColor="#4A5C67" />
+                <stop offset="100%" stopColor="#182329" />
+              </linearGradient>
 
-              {/* Center Bar Background */}
-              <rect x="35" y="19" width="50" height="6" rx="3" fill="#1E3840" />
+              {/* Cast iron matte plates gradient */}
+              <linearGradient id="castIronPlateGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#121F24" />
+                <stop offset="50%" stopColor="#2A3D46" />
+                <stop offset="100%" stopColor="#0F1A1E" />
+              </linearGradient>
 
-              {/* Center Bar Animated Red Fill */}
-              <rect
-                ref={barFillRef}
-                x="35"
-                y="19"
-                width="0"
-                height="6"
-                rx="3"
-                fill="#F21B35"
-              />
+              {/* Competition anodized red collar gradient */}
+              <linearGradient id="anodizedRedGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#FF4A60" />
+                <stop offset="40%" stopColor="#F21B35" />
+                <stop offset="100%" stopColor="#8A0B1A" />
+              </linearGradient>
 
-              {/* Right Weight Plates */}
-              <rect x="87" y="17" width="5" height="10" rx="1" fill="#B7C4C8" />
-              <rect x="94" y="6" width="10" height="32" rx="2" fill="#FFFFFF" />
-              <rect x="108" y="10" width="8" height="24" rx="2" fill="#FFFFFF" />
-            </g>
+              {/* Real knurling cross-hatch texture pattern */}
+              <pattern id="knurlGrip" width="5" height="5" patternUnits="userSpaceOnUse">
+                <path d="M0 5L5 0M0 0L5 5" stroke="rgba(255,255,255,0.25)" strokeWidth="0.85" />
+              </pattern>
+            </defs>
+
+            {/* Central Knurled Chrome Steel Bar */}
+            <rect x="92" y="52" width="96" height="16" rx="5" fill="url(#steelBarGrad)" />
+            <rect x="98" y="52" width="84" height="16" rx="2" fill="url(#knurlGrip)" />
+
+            {/* Red Anodized Competition Collars with Metallic Edge */}
+            <rect
+              x="88"
+              y="46"
+              width="7"
+              height="28"
+              rx="2.5"
+              fill="url(#anodizedRedGrad)"
+              stroke="#FFA0AD"
+              strokeWidth="0.6"
+            />
+            <rect
+              x="185"
+              y="46"
+              width="7"
+              height="28"
+              rx="2.5"
+              fill="url(#anodizedRedGrad)"
+              stroke="#FFA0AD"
+              strokeWidth="0.6"
+            />
+
+            {/* ================= LEFT WEIGHT PLATES ================= */}
+            {/* Inner spacer plate */}
+            <rect
+              x="78"
+              y="34"
+              width="10"
+              height="52"
+              rx="3"
+              fill="url(#castIronPlateGrad)"
+              stroke="#3D535E"
+              strokeWidth="1.2"
+            />
+            {/* Mid plate (10 KG) */}
+            <rect
+              x="54"
+              y="18"
+              width="22"
+              height="84"
+              rx="4"
+              fill="url(#castIronPlateGrad)"
+              stroke="#4E6B7A"
+              strokeWidth="1.4"
+            />
+            <line
+              x1="65"
+              y1="22"
+              x2="65"
+              y2="98"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.2"
+              strokeDasharray="3 4"
+            />
+
+            {/* Outer heavy plate (20 KG) with chamfer and embossed weight marks */}
+            <rect
+              x="26"
+              y="8"
+              width="26"
+              height="104"
+              rx="5"
+              fill="url(#castIronPlateGrad)"
+              stroke="#6B8F9F"
+              strokeWidth="1.6"
+            />
+            <rect
+              x="31"
+              y="15"
+              width="16"
+              height="90"
+              rx="3.5"
+              fill="none"
+              stroke="rgba(0,0,0,0.55)"
+              strokeWidth="1.6"
+            />
+            <text
+              x="39"
+              y="56"
+              fontFamily="sans-serif"
+              fontSize="10"
+              fontWeight="900"
+              fill="#A2BDCB"
+              textAnchor="middle"
+            >
+              20
+            </text>
+            <text
+              x="39"
+              y="68"
+              fontFamily="sans-serif"
+              fontSize="8"
+              fontWeight="800"
+              fill="#74919F"
+              textAnchor="middle"
+            >
+              KG
+            </text>
+
+            {/* Outer steel lock nut / retaining bolt */}
+            <rect
+              x="17"
+              y="46"
+              width="9"
+              height="28"
+              rx="2.5"
+              fill="url(#steelBarGrad)"
+              stroke="#3E5460"
+              strokeWidth="1"
+            />
+            <circle cx="21.5" cy="60" r="2.5" fill="#182329" />
+
+            {/* ================= RIGHT WEIGHT PLATES ================= */}
+            {/* Inner spacer plate */}
+            <rect
+              x="192"
+              y="34"
+              width="10"
+              height="52"
+              rx="3"
+              fill="url(#castIronPlateGrad)"
+              stroke="#3D535E"
+              strokeWidth="1.2"
+            />
+            {/* Mid plate (10 KG) */}
+            <rect
+              x="204"
+              y="18"
+              width="22"
+              height="84"
+              rx="4"
+              fill="url(#castIronPlateGrad)"
+              stroke="#4E6B7A"
+              strokeWidth="1.4"
+            />
+            <line
+              x1="215"
+              y1="22"
+              x2="215"
+              y2="98"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1.2"
+              strokeDasharray="3 4"
+            />
+
+            {/* Outer heavy plate (20 KG) with chamfer and embossed weight marks */}
+            <rect
+              x="228"
+              y="8"
+              width="26"
+              height="104"
+              rx="5"
+              fill="url(#castIronPlateGrad)"
+              stroke="#6B8F9F"
+              strokeWidth="1.6"
+            />
+            <rect
+              x="233"
+              y="15"
+              width="16"
+              height="90"
+              rx="3.5"
+              fill="none"
+              stroke="rgba(0,0,0,0.55)"
+              strokeWidth="1.6"
+            />
+            <text
+              x="241"
+              y="56"
+              fontFamily="sans-serif"
+              fontSize="10"
+              fontWeight="900"
+              fill="#A2BDCB"
+              textAnchor="middle"
+            >
+              20
+            </text>
+            <text
+              x="241"
+              y="68"
+              fontFamily="sans-serif"
+              fontSize="8"
+              fontWeight="800"
+              fill="#74919F"
+              textAnchor="middle"
+            >
+              KG
+            </text>
+
+            {/* Outer steel lock nut / retaining bolt */}
+            <rect
+              x="254"
+              y="46"
+              width="9"
+              height="28"
+              rx="2.5"
+              fill="url(#steelBarGrad)"
+              stroke="#3E5460"
+              strokeWidth="1"
+            />
+            <circle cx="258.5" cy="60" r="2.5" fill="#182329" />
           </svg>
         </div>
 
         {/* Tabular-number counter 00 to 100 */}
-        <div className="font-heading tabular-nums text-sm font-semibold tracking-widest text-white mb-2">
+        <div className="font-heading tabular-nums text-base font-bold tracking-widest text-white mb-2 flex items-center justify-center">
           <span ref={counterRef}>00</span>
-          <span className="text-[#B7C4C8]/60 text-xs ml-1">%</span>
+          <span className="text-[#F21B35] font-semibold text-xs ml-1">%</span>
         </div>
 
-        {/* Thin Red Progress Line */}
-        <div className="w-40 h-[2px] bg-[#1E3840] relative overflow-hidden mb-6">
+        {/* Crimson Progress Track Line */}
+        <div className="w-48 sm:w-56 h-[3px] bg-[#1E3840] rounded-full relative overflow-hidden mb-6">
           <div
             ref={progressLineRef}
-            className="h-full bg-[#F21B35] transition-all duration-75"
+            className="h-full bg-gradient-to-r from-[#F21B35] to-[#FF4D63] rounded-full transition-all duration-75 shadow-[0_0_12px_rgba(242,27,53,0.8)]"
             style={{ width: "0%" }}
           />
         </div>
 
-        {/* Quotes with 0.3s Crossfade */}
+        {/* Dynamic Fitness Quotes with Smooth Crossfade */}
         <div
           ref={quotesRef}
-          className={`min-h-[36px] flex items-center justify-center font-body text-xs text-[#B7C4C8] italic transition-opacity duration-300 ${
-            quoteFade ? "opacity-100" : "opacity-0"
+          className={`min-h-[44px] flex items-center justify-center font-body text-xs sm:text-sm text-[#B7C4C8] italic px-4 transition-all duration-300 transform ${
+            quoteFade ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
           }`}
         >
-          &ldquo;{siteConfig.preloaderQuotes[quoteIndex]}&rdquo;
+          &ldquo;{quotes[currentQuoteIndex]}&rdquo;
         </div>
       </div>
     </div>

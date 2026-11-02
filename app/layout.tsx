@@ -105,9 +105,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (!sessionStorage.getItem('fitnessgym_preloader_seen')) {
-                  document.documentElement.classList.add('is-loading');
-                }
+                document.documentElement.classList.add('is-loading');
               } catch(e) {}
             `,
           }}

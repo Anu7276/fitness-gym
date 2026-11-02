@@ -129,13 +129,23 @@ export const siteConfig = {
     { name: "Contact", href: "/contact", title: "Contact" },
   ],
 
-  // PRELOADER QUOTES (Exact required sequence)
+  // PRELOADER QUOTES (Rotated dynamically during loading)
   preloaderQuotes: [
     "Your only competition is who you were yesterday.",
-    "No shortcuts. Just consistency.",
-    "Stronger every rep. Better every day.",
     "Discipline builds what motivation starts.",
-    "Train hard. Stay consistent.",
+    "Pain is temporary. Pride is forever.",
+    "No shortcuts. Just relentless consistency.",
+    "The body achieves what the mind believes.",
+    "Stronger than yesterday. Ready for tomorrow.",
+    "Every rep counts. Make every second matter.",
+    "Fall in love with the grind and results will follow.",
+    "Sweat today. Dominate tomorrow.",
+    "Champions are forged in the silence of hard work.",
+    "Push past your limits — that is where growth lives.",
+    "Consistency is the true superpower.",
+    "Excuses don't build strength. Action does.",
+    "Show up for yourself, especially when it's hard.",
+    "Greatness is built rep by rep, day by day.",
   ],
 
   // 6 REAL PRESERVED PROGRAMS
