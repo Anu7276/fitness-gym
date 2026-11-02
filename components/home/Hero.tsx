@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { TransitionLink } from "../motion/TransitionLink";
-import { ArrowDown } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -16,7 +15,6 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
   const line2Ref = useRef<HTMLSpanElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
   const ctaClusterRef = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!startAnimation) return;
@@ -84,17 +82,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
       );
     }
 
-    // 4. Scroll indicator appears
-    if (scrollIndicatorRef.current) {
-      tl.fromTo(
-        scrollIndicatorRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.8, ease: "power2.out" },
-        1.3
-      );
-    }
-
-    // 5. Scroll-driven zoom-out: as user scrolls down through the hero, the image wrapper zooms out smoothly
+    // 4. Scroll-driven zoom-out: as user scrolls down through the hero, the image wrapper zooms out smoothly
     if (imageWrapperRef.current && containerRef.current) {
       gsap.to(imageWrapperRef.current, {
         scale: 0.88,
@@ -187,7 +175,7 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
         {/* CTA Cluster */}
         <div
           ref={ctaClusterRef}
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-10 sm:mb-12"
+          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
         >
           <TransitionLink
             href="/free-trial"
@@ -204,30 +192,6 @@ export function Hero({ startAnimation = true }: { startAnimation?: boolean }) {
             Explore Programs
           </TransitionLink>
         </div>
-
-        {/* Circular Scroll Down Indicator - Perfectly centered in between below CTAs */}
-        <a
-          ref={scrollIndicatorRef}
-          href="#about"
-          aria-label="Scroll down to about section"
-          className="relative z-10 w-12 h-12 rounded-full border border-[#1E3840] bg-[#0F2329]/80 backdrop-blur-sm flex items-center justify-center text-white hover:border-[#F21B35] hover:shadow-[0_0_20px_rgba(242,27,53,0.3)] transition-all duration-300 group"
-        >
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none"
-            viewBox="0 0 48 48"
-          >
-            <circle
-              cx="24"
-              cy="24"
-              r="22"
-              fill="none"
-              stroke="#1E3840"
-              strokeWidth="1.5"
-              className="transition-colors duration-300 group-hover:stroke-white/40"
-            />
-          </svg>
-          <ArrowDown className="w-4 h-4 text-white group-hover:translate-y-0.5 transition-transform duration-200" />
-        </a>
       </div>
     </section>
   );
