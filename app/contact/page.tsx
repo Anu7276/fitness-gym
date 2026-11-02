@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { siteConfig } from "@/config/site";
-import { MapPin, Phone, Mail, Clock, Check, Loader2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Check, Loader2, Navigation } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -147,23 +147,44 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Find Us Card */}
-            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card p-6 flex flex-col items-center justify-center min-h-[200px] text-center">
-              <MapPin className="w-8 h-8 text-[#F21B35] mb-2" />
-              <h4 className="font-heading text-base uppercase tracking-wider text-white font-semibold">
-                Find Us
-              </h4>
-              <p className="font-body text-sm text-[#B7C4C8] max-w-xs mt-1 mb-4">
-                Conveniently situated near Waghodia Chowkdi with on-site member parking.
-              </p>
-              <a
-                href={siteConfig.contact.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-full border border-[#1E3840] bg-[#0A1A1F] text-white text-xs font-heading uppercase tracking-widest hover:border-white transition-colors"
-              >
-                Open Google Maps ↗
-              </a>
+            {/* Google Map Embed & Get Directions */}
+            <div className="bg-[#0F2329] border border-[#1E3840] rounded-card overflow-hidden shadow-2xl flex flex-col">
+              <div className="relative w-full h-[280px] bg-[#0A1A1F]">
+                <iframe
+                  title="FITNESSGYM Waghodia Road Google Map"
+                  src="https://maps.google.com/maps?q=Waghodia+Road,+Near+Waghodia+Chowkdi,+Vadodara,+Gujarat+390019&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(95%)" }}
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full"
+                />
+                <div className="absolute top-3 left-3 px-3 py-1 bg-[#0A1A1F]/90 border border-[#1E3840] text-xs font-body text-white rounded-md backdrop-blur-sm flex items-center gap-1.5 shadow-md">
+                  <MapPin className="w-3.5 h-3.5 text-[#F21B35]" />
+                  <span>Waghodia Chowkdi, Vadodara</span>
+                </div>
+              </div>
+              <div className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#1E3840]">
+                <div>
+                  <h4 className="font-heading text-base font-bold text-white uppercase leading-[1.05]">
+                    On-Site Member Parking
+                  </h4>
+                  <p className="font-body text-xs text-[#B7C4C8] mt-1">
+                    Spacious, well-lit parking for cars &amp; two-wheelers.
+                  </p>
+                </div>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Plot+42+Waghodia+Main+Road+Near+Waghodia+Chowkdi+Vadodara+Gujarat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#F21B35] text-white text-xs font-heading uppercase tracking-widest font-bold hover:bg-[#d0142b] transition-all flex items-center justify-center gap-2 shrink-0 active:scale-95 shadow-lg shadow-[#F21B35]/20"
+                >
+                  <Navigation className="w-4 h-4" />
+                  <span>Get Directions</span>
+                </a>
+              </div>
             </div>
           </div>
 

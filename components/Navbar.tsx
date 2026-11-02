@@ -101,7 +101,7 @@ export function Navbar() {
           </TransitionLink>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 font-heading text-sm tracking-wide">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 font-heading text-xs xl:text-sm tracking-wider uppercase font-semibold">
             {siteConfig.navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -109,7 +109,7 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   title={item.title}
-                  className={`relative py-1 text-sm font-medium transition-colors duration-200 group ${
+                  className={`relative py-1 transition-colors duration-200 group ${
                     isActive ? "text-white" : "text-[#B7C4C8] hover:text-white"
                   }`}
                 >
@@ -149,7 +149,7 @@ export function Navbar() {
             {/* Mobile Menu Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-lg text-white hover:bg-[#0F2329] focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="lg:hidden p-2 rounded-lg text-white hover:bg-[#0F2329] focus:outline-none focus-visible:ring-2 focus-visible:ring-white min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-6 h-6" />
@@ -160,14 +160,14 @@ export function Navbar() {
 
       {/* Full-Screen Mobile Drawer */}
       <div
-        className={`fixed inset-0 z-[9995] bg-[#0A1A1F] flex flex-col justify-between p-8 transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 z-[9995] bg-[#0A1A1F] flex flex-col justify-between p-6 sm:p-8 transition-all duration-500 lg:hidden ${
           mobileMenuOpen
             ? "opacity-100 pointer-events-auto translate-x-0"
             : "opacity-0 pointer-events-none translate-x-full"
         }`}
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2 font-heading text-xl font-bold tracking-tight text-white uppercase">
             <svg
               width="28"
@@ -186,7 +186,7 @@ export function Navbar() {
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="p-2 rounded-full border border-[#1E3840] text-white hover:bg-[#0F2329]"
+            className="p-2.5 rounded-full border border-[#1E3840] text-white hover:bg-[#0F2329] min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label="Close Navigation Menu"
           >
             <X className="w-6 h-6" />
@@ -194,7 +194,7 @@ export function Navbar() {
         </div>
 
         {/* Drawer Links Staggered */}
-        <div className="flex flex-col gap-6 my-auto">
+        <div className="flex flex-col gap-4 my-auto overflow-y-auto max-h-[65vh] py-4 pr-2">
           {siteConfig.navigation.map((item, index) => {
             const isActive = pathname === item.href;
             return (
