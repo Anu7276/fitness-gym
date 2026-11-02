@@ -92,6 +92,7 @@ export function TwentyFourHours() {
 
   // State
   const [mode, setMode] = useState<"now" | "preview">("preview");
+  const [showSecondHand, setShowSecondHand] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0); // 0 to 5
   const activeIndexRef = useRef(0);
 
@@ -130,22 +131,21 @@ export function TwentyFourHours() {
     const nextCumulativeHour = curHour + deltaHour;
     cumulativeAngles.current.hour = nextCumulativeHour;
 
-    // The minute hand makes full 360-degree rotations corresponding to hours passed
-    const hoursPassed = Math.max(1, Math.round(deltaHour / 30));
-    const nextCumulativeMinute = cumulativeAngles.current.minute + hoursPassed * 360;
+    // Calm, slow rotation: only 1 smooth 360° rotation at most instead of multiple rapid spins
+    const nextCumulativeMinute = cumulativeAngles.current.minute + (deltaHour > 0 ? 360 : 0);
     cumulativeAngles.current.minute = nextCumulativeMinute;
 
     if (hourHandRef.current && minuteHandRef.current) {
       gsap.to(hourHandRef.current, {
         rotation: nextCumulativeHour,
-        duration: 1.4,
-        ease: "power2.inOut",
+        duration: 1.8,
+        ease: "power2.out",
         svgOrigin: "150 150",
       });
       gsap.to(minuteHandRef.current, {
         rotation: nextCumulativeMinute,
-        duration: 1.4,
-        ease: "power2.inOut",
+        duration: 2.2,
+        ease: "power2.out",
         svgOrigin: "150 150",
       });
     }
@@ -523,22 +523,39 @@ export function TwentyFourHours() {
                   />
                 </g>
 
-                {/* 2. Minute Hand (Longer, thin, white) */}
+                {/* 2. Second Stick / Minute Hand (Sleek red sports hand, slow rotation, toggleable) */}
                 <g
                   ref={minuteHandRef}
                   data-hand="minute"
-                  style={{ transformBox: "view-box", transformOrigin: "150px 150px" }}
-                  className="will-change-transform"
+                  style={{
+                    transformBox: "view-box",
+                    transformOrigin: "150px 150px",
+                    display: showSecondHand ? "block" : "none",
+                  }}
+                  className="will-change-transform filter drop-shadow-[0_0_8px_rgba(242,27,53,0.7)]"
                 >
+                  {/* Crimson hand shaft */}
                   <line
                     x1="150"
-                    y1="168"
+                    y1="172"
                     x2="150"
-                    y2="52"
-                    stroke="#FFFFFF"
-                    strokeWidth="3.5"
+                    y2="50"
+                    stroke="#F21B35"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                   />
+                  {/* Glowing white precision tip */}
+                  <line
+                    x1="150"
+                    y1="56"
+                    x2="150"
+                    y2="48"
+                    stroke="#FFFFFF"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                  {/* Center red pivot ring */}
+                  <circle cx="150" cy="150" r="4.5" fill="#F21B35" />
                 </g>
 
                 {/* Center Cap (Stationary, sitting directly above hands) */}
@@ -586,17 +603,33 @@ export function TwentyFourHours() {
                 )}
               </p>
 
-              {/* Switch back to live button if in preview mode */}
-              {mode === "preview" && (
+              {/* Clock controls: switch to live & toggle second stick visibility */}
+              <div className="mt-2.5 flex flex-wrap items-center justify-center gap-3">
+                {mode === "preview" && (
+                  <button
+                    type="button"
+                    onClick={() => setSlot(0, "now")}
+                    className="inline-flex items-center gap-1.5 text-xs text-[#B7C4C8] hover:text-white transition-colors"
+                  >
+                    <RotateCcw className="w-3 h-3 text-[#F21B35]" />
+                    <span>Switch to live clock</span>
+                  </button>
+                )}
+
                 <button
                   type="button"
-                  onClick={() => setSlot(0, "now")}
-                  className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#B7C4C8] hover:text-white transition-colors"
+                  onClick={() => setShowSecondHand((prev) => !prev)}
+                  className="inline-flex items-center gap-1.5 text-xs text-[#B7C4C8]/90 hover:text-white transition-colors px-3 py-1 rounded-full border border-[#1E3840] hover:border-[#F21B35]/60 bg-[#0F2329]/70"
+                  title="Toggle second stick visibility"
                 >
-                  <RotateCcw className="w-3 h-3 text-[#F21B35]" />
-                  <span>Switch to live clock</span>
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                      showSecondHand ? "bg-[#F21B35]" : "bg-[#B7C4C8]/40"
+                    }`}
+                  />
+                  <span>{showSecondHand ? "Second stick: On (Red)" : "Second stick: Removed"}</span>
                 </button>
-              )}
+              </div>
             </div>
 
             {/* TIME PILLS (Real buttons with aria-pressed, flex-wrap on smaller screens, always reachable) */}
