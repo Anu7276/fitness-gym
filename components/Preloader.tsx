@@ -184,9 +184,9 @@ export function Preloader({ onComplete }: PreloaderProps) {
     >
       <span className="sr-only">Loading {brandName}...</span>
 
-      <div className="flex flex-col items-center max-w-md px-6 text-center">
+      <div className="flex flex-col items-center max-w-lg w-full px-6 text-center">
         {/* Letter by letter wordmark with clean spacing */}
-        <div ref={wordmarkRef} className="flex items-center gap-1 mb-6 sm:mb-8 overflow-hidden">
+        <div ref={wordmarkRef} className="flex items-center gap-1 mb-3 sm:mb-5 overflow-hidden">
           {brandName.split("").map((char, index) => (
             <span
               key={index}
@@ -200,7 +200,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
         {/* REAL 3D DUMBBELL (Three.js WebGL with PBR Materials & GSAP 3D Rotation) */}
         <div
           ref={dumbbellWrapperRef}
-          className="w-full flex items-center justify-center mb-4 sm:mb-6"
+          className="w-full flex items-center justify-center mb-2 sm:mb-3"
         >
           <Dumbbell3D />
         </div>
