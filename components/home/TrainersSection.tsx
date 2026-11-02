@@ -12,10 +12,10 @@ export function TrainersSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-[#B7C4C8] mb-2 block">
+            <span className="text-[12px] uppercase tracking-[0.15em] text-[#F21B35] font-semibold mb-2 block">
               Coaching team
             </span>
-            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white">
+            <h2 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white leading-[1.05]">
               Our trainers
             </h2>
           </div>
@@ -59,15 +59,31 @@ export function TrainersSection() {
                     {/* Trainer Info */}
                     <div className="p-6 flex flex-col flex-1 justify-between">
                       <div>
-                        <h3 className="font-heading text-xl font-bold text-white mb-1 group-hover:text-[#F21B35] transition-colors">
+                        {/* Certifications Badge Pills */}
+                        <div className="flex flex-wrap gap-1.5 mb-2.5">
+                          {trainer.certifications?.map((cert, cIdx) => (
+                            <span
+                              key={cIdx}
+                              className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#F21B35]/15 border border-[#F21B35]/30 text-[#F21B35] font-semibold"
+                            >
+                              {cert}
+                            </span>
+                          ))}
+                        </div>
+                        <h3 className="font-heading text-xl font-bold text-white mb-1 group-hover:text-[#F21B35] transition-colors leading-[1.05]">
                           {trainer.name}
                         </h3>
                         <p className="font-body text-xs text-[#B7C4C8] font-medium mb-3">
                           {trainer.role}
                         </p>
-                        <p className="font-body text-xs text-[#B7C4C8] leading-relaxed line-clamp-2">
-                          {trainer.speciality}
-                        </p>
+                        <div className="pt-2.5 border-t border-[#1E3840]">
+                          <span className="text-[10px] uppercase tracking-wider font-semibold text-[#7B8E94] block mb-0.5">
+                            Specialty
+                          </span>
+                          <p className="font-body text-xs text-[#E5E5E5] leading-relaxed line-clamp-2">
+                            {trainer.speciality}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>

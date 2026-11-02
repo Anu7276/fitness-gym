@@ -326,7 +326,7 @@ export function TwentyFourHours() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#1E3840]/60 pb-3 shrink-0">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-[#F21B35] animate-pulse" />
-            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
+            <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-[1.05]">
               Open 24 hours every day
             </h2>
           </div>

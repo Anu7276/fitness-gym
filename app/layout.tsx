@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Manrope } from "next/font/google";
+import { Barlow_Condensed, Manrope } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
@@ -9,15 +9,16 @@ import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { MobileStickyBar } from "@/components/MobileStickyBar";
 
-const outfit = Outfit({
+const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  weight: ["600", "700", "800"],
+  variable: "--font-heading",
   display: "swap",
 });
 
 const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -90,7 +91,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${outfit.variable} ${manrope.variable} dark`}>
+    <html lang="en" className={`${barlowCondensed.variable} ${manrope.variable} dark`}>
       <head>
         {/* Critical inline CSS to prevent preloader flash and lock initial scroll */}
         <style

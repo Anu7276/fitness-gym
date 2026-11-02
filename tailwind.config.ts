@@ -34,8 +34,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["var(--font-outfit)", "sans-serif"],
-        body: ["var(--font-manrope)", "sans-serif"],
+        heading: ["var(--font-heading)", "var(--font-outfit)", "sans-serif"],
+        body: ["var(--font-body)", "var(--font-manrope)", "sans-serif"],
       },
       borderRadius: {
         card: "12px",

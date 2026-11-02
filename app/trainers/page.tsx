@@ -53,18 +53,28 @@ export default function TrainersPage() {
               {/* Info */}
               <div className="p-6 md:p-8 flex flex-col flex-1 justify-between">
                 <div>
-                  <h2 className="font-heading text-2xl font-bold text-white mb-1">
+                  <div className="flex flex-wrap gap-1.5 mb-2.5">
+                    {trainer.certifications?.map((cert, cIdx) => (
+                      <span
+                        key={cIdx}
+                        className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#F21B35]/15 border border-[#F21B35]/30 text-[#F21B35] font-semibold"
+                      >
+                        {cert}
+                      </span>
+                    ))}
+                  </div>
+                  <h2 className="font-heading text-2xl font-bold text-white mb-1 leading-[1.05]">
                     {trainer.name}
                   </h2>
                   <p className="font-body text-xs text-[#B7C4C8] font-medium mb-3">
                     {trainer.role}
                   </p>
-                  <p className="font-body text-[14px] text-[#B7C4C8] leading-relaxed mb-4">
+                  <p className="font-body text-[14px] text-[#E5E5E5] leading-relaxed mb-4">
                     {trainer.bio}
                   </p>
                   <div className="pt-3 border-t border-[#1E3840] text-xs text-[#B7C4C8]">
-                    <strong className="text-white block mb-0.5">Speciality:</strong>
-                    {trainer.speciality}
+                    <strong className="text-white block mb-0.5 uppercase tracking-wider text-[11px] font-heading">Specialty:</strong>
+                    <span className="text-[#E5E5E5]">{trainer.speciality}</span>
                   </div>
                 </div>
 
