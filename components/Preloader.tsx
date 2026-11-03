@@ -25,11 +25,27 @@ export function Preloader({ onComplete }: PreloaderProps) {
   const progressLineRef = useRef<HTMLDivElement>(null);
   const quotesRef = useRef<HTMLDivElement>(null);
 
+  // Guarantee the preloader runs strictly ONCE and never double-fires
+  const hasRunRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   useEffect(() => {
+    if (hasRunRef.current) return;
+    hasRunRef.current = true;
+
     setMounted(true);
 
     if (!siteConfig.loader.enabled) {
-      if (onComplete) onComplete();
+      if (onCompleteRef.current) onCompleteRef.current();
+      return;
+    }
+
+    // Skip duplicate loading if already loaded in this tab session
+    if (typeof window !== "undefined" && window.sessionStorage.getItem("fitnessgym_preloaded")) {
+      document.documentElement.classList.remove("is-loading");
+      setShow(false);
+      if (onCompleteRef.current) onCompleteRef.current();
       return;
     }
 
@@ -47,7 +63,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
       setTimeout(() => {
         document.documentElement.classList.remove("is-loading");
         setShow(false);
-        if (onComplete) onComplete();
+        if (onCompleteRef.current) onCompleteRef.current();
       }, 400);
       return;
     }
@@ -55,9 +71,14 @@ export function Preloader({ onComplete }: PreloaderProps) {
     // Master GSAP timeline
     const tl = gsap.timeline({
       onComplete: () => {
+        if (typeof window !== "undefined") {
+          try {
+            window.sessionStorage.setItem("fitnessgym_preloaded", "1");
+          } catch {}
+        }
         document.documentElement.classList.remove("is-loading");
         setShow(false);
-        if (onComplete) onComplete();
+        if (onCompleteRef.current) onCompleteRef.current();
       },
     });
 
@@ -141,7 +162,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
 
     // Trigger hero entrance after preloader starts fading out cleanly
     tl.add(() => {
-      if (onComplete) onComplete();
+      if (onCompleteRef.current) onCompleteRef.current();
     }, 2.25);
 
     return () => {
@@ -150,7 +171,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
       tl.kill();
       document.documentElement.classList.remove("is-loading");
     };
-  }, [onComplete, quotes]);
+  }, []);
 
   if (!mounted || !show) return null;
 

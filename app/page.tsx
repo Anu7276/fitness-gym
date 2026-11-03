@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Preloader } from "@/components/Preloader";
 import { Hero } from "@/components/home/Hero";
 import { Marquee } from "@/components/home/Marquee";
@@ -17,10 +17,14 @@ import { FinalCta } from "@/components/home/FinalCta";
 export default function HomePage() {
   const [heroCanAnimate, setHeroCanAnimate] = useState(false);
 
+  const handleComplete = useCallback(() => {
+    setHeroCanAnimate(true);
+  }, []);
+
   return (
     <main className="w-full bg-[#0A1A1F]">
       {/* 1. Rebuilt GSAP Preloader with 120px Rep Dumbbell & Letter Wordmark */}
-      <Preloader onComplete={() => setHeroCanAnimate(true)} />
+      <Preloader onComplete={handleComplete} />
 
       {/* 2. Hero Section (Clearly visible photo, balanced 48% overlay, line-by-line reveal) */}
       <Hero startAnimation={heroCanAnimate} />
