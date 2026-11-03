@@ -117,7 +117,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
       }, 180);
     }, 1450);
 
-    // 1.95-2.45s: Exit phase
+    // 1.95-2.45s: Smooth exit phase - fade out loader content first, then fade out preloader backdrop cleanly
     if (wordmarkRef.current && dumbbellWrapperRef.current) {
       tl.to(
         [
@@ -127,41 +127,22 @@ export function Preloader({ onComplete }: PreloaderProps) {
           progressLineRef.current?.parentElement,
           quotesRef.current,
         ],
-        { scale: 0.88, opacity: 0, duration: 0.3, ease: "power2.in" },
+        { scale: 0.92, opacity: 0, duration: 0.28, ease: "power2.inOut" },
         1.95
       );
     }
 
-    // Circular hole mask grows from center (0.55s, power3.inOut) revealing hero underneath
-    const holeObj = { radius: 0 };
-    tl.to(
-      holeObj,
-      {
-        radius: 130,
-        duration: 0.55,
-        ease: "power3.inOut",
-        onUpdate: () => {
-          if (containerRef.current) {
-            const r = holeObj.radius;
-            containerRef.current.style.maskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 6}%)`;
-            containerRef.current.style.webkitMaskImage = `radial-gradient(circle at 50% 50%, transparent ${r}%, black ${r + 6}%)`;
-          }
-        },
-      },
-      2.0
-    );
-
-    // Fade out preloader container completely
+    // Smoothly fade out entire preloader container (no circular hole cutouts)
     tl.to(
       containerRef.current,
-      { opacity: 0, duration: 0.25, ease: "power2.inOut" },
-      2.25
+      { opacity: 0, duration: 0.35, ease: "power2.inOut" },
+      2.12
     );
 
-    // Trigger hero intro when hole opens
+    // Trigger hero entrance after preloader starts fading out cleanly
     tl.add(() => {
       if (onComplete) onComplete();
-    }, 2.2);
+    }, 2.25);
 
     return () => {
       clearTimeout(quoteTimer1);
@@ -180,7 +161,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
       ref={containerRef}
       role="status"
       aria-live="polite"
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0A1A1F] text-white select-none pointer-events-none transition-opacity duration-300"
+      className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#0A1A1F] text-white select-none pointer-events-none transition-opacity duration-300"
     >
       <span className="sr-only">Loading {brandName}...</span>
 

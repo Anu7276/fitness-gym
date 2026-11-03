@@ -414,7 +414,7 @@ export function Dumbbell3D() {
   return (
     <div
       ref={mountRef}
-      className="w-[350px] sm:w-[450px] md:w-[500px] h-[210px] sm:h-[245px] md:h-[265px] flex items-center justify-center filter drop-shadow-[0_14px_40px_rgba(242,27,53,0.45)] pointer-events-none"
+      className="w-[320px] sm:w-[440px] md:w-[490px] h-[195px] sm:h-[240px] md:h-[260px] flex items-center justify-center filter drop-shadow-[0_14px_40px_rgba(242,27,53,0.45)] pointer-events-none"
     />
   );
 }
